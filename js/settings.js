@@ -21,7 +21,9 @@ const CVISettings = {
         blockedWordList: '',
         arrowsEnabled: true,
         arrowColor: '#FFFF00',
-        preloadWords: ''
+        preloadWords: '',
+        imageSize: 55,
+        imageLabelSize: 48
     },
 
     current: {},
@@ -147,6 +149,22 @@ const CVISettings = {
         if (maxKeys && maxKeysValue) {
             maxKeys.addEventListener('input', function() {
                 maxKeysValue.textContent = this.value;
+            });
+        }
+
+        var imageSize = document.getElementById('image-size');
+        var imageSizeValue = document.getElementById('image-size-value');
+        if (imageSize && imageSizeValue) {
+            imageSize.addEventListener('input', function() {
+                imageSizeValue.textContent = this.value + 'vh';
+            });
+        }
+
+        var imageLabelSize = document.getElementById('image-label-size');
+        var imageLabelSizeValue = document.getElementById('image-label-size-value');
+        if (imageLabelSize && imageLabelSizeValue) {
+            imageLabelSize.addEventListener('input', function() {
+                imageLabelSizeValue.textContent = this.value + 'px';
             });
         }
 
@@ -339,6 +357,16 @@ const CVISettings = {
         var preloadWords = document.getElementById('preload-words');
         if (preloadWords) preloadWords.value = this.current.preloadWords;
 
+        var imageSize = document.getElementById('image-size');
+        var imageSizeValue = document.getElementById('image-size-value');
+        if (imageSize) imageSize.value = this.current.imageSize;
+        if (imageSizeValue) imageSizeValue.textContent = this.current.imageSize + 'vh';
+
+        var imageLabelSize = document.getElementById('image-label-size');
+        var imageLabelSizeValue = document.getElementById('image-label-size-value');
+        if (imageLabelSize) imageLabelSize.value = this.current.imageLabelSize;
+        if (imageLabelSizeValue) imageLabelSizeValue.textContent = this.current.imageLabelSize + 'px';
+
         // Populate session word history
         this._populateWordHistory();
     },
@@ -400,6 +428,12 @@ const CVISettings = {
 
         var preloadWords = document.getElementById('preload-words');
         if (preloadWords) this.current.preloadWords = preloadWords.value;
+
+        var imageSize = document.getElementById('image-size');
+        if (imageSize) this.current.imageSize = parseInt(imageSize.value);
+
+        var imageLabelSize = document.getElementById('image-label-size');
+        if (imageLabelSize) this.current.imageLabelSize = parseInt(imageLabelSize.value);
     },
 
     /**
@@ -446,6 +480,18 @@ const CVISettings = {
         var imagePanel = document.getElementById('image-panel');
         if (imagePanel) {
             imagePanel.style.backgroundColor = this.current.imageBgColor;
+        }
+
+        // Apply image size
+        var wordImage = document.getElementById('word-image');
+        if (wordImage) {
+            wordImage.style.maxHeight = this.current.imageSize + 'vh';
+        }
+
+        // Apply image label size
+        var imageLabel = document.getElementById('image-label');
+        if (imageLabel) {
+            imageLabel.style.fontSize = this.current.imageLabelSize + 'px';
         }
 
         // Apply arrow settings — refresh arrow state if images module is live
