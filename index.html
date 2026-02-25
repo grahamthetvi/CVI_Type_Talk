@@ -52,8 +52,10 @@
             <p>Type letters to hear them spoken aloud.</p>
             <p>Press <strong>Space</strong> or <strong>Enter</strong> to hear the whole word and see a picture.</p>
             <p>Press <strong>Backspace</strong> to delete a letter.</p>
-            <p>Press <strong>Ctrl+Shift+M</strong> to toggle words-per-minute display.</p>
-            <p>Press <strong>Ctrl+Shift+L</strong> to toggle letters-per-minute display.</p>
+            <p>Press <strong>← →</strong> arrow keys to flip through pictures of the same word.</p>
+            <p>Press <strong>Ctrl+Shift+M</strong> to show words-per-minute speed.</p>
+            <p>Press <strong>Ctrl+Shift+L</strong> to show letters-per-minute speed.</p>
+            <p>Press <strong>Ctrl+Shift+C</strong> to clear the screen.</p>
             <button id="start-button" class="start-button" autofocus>
                 Start Typing
             </button>
@@ -239,7 +241,7 @@
             <!-- Image Navigation Arrow Settings -->
             <section class="settings-section">
                 <h3>Image Navigation Arrows</h3>
-                <p class="setting-note">Arrows let you flip between multiple photos of the same word.</p>
+                <p class="setting-note">Arrows let you flip between multiple photos of the same word. You can also use the ← → arrow keys on the keyboard.</p>
                 <div class="setting-row">
                     <label for="arrows-enabled">Show Navigation Arrows:</label>
                     <input type="checkbox" id="arrows-enabled" checked>
@@ -260,6 +262,26 @@
                         <option value="#A52A2A">Brown</option>
                         <option value="#808080">Gray</option>
                         <option value="#000000">Black</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label for="arrow-size">Arrow Button Size:</label>
+                    <input type="range" id="arrow-size" min="32" max="120" value="56" aria-describedby="arrow-size-value">
+                    <span id="arrow-size-value" aria-live="polite">56px</span>
+                </div>
+            </section>
+
+            <!-- Mouse Cursor Settings -->
+            <section class="settings-section">
+                <h3>Mouse Cursor</h3>
+                <p class="setting-note">Change the mouse cursor style. A large pointer can help children identify where to click to flip through pictures. Note: browsers limit cursor customization — for flipping pictures, the keyboard arrow keys (← →) always work regardless of cursor style.</p>
+                <div class="setting-row">
+                    <label for="cursor-style">Cursor Style:</label>
+                    <select id="cursor-style">
+                        <option value="default">Default arrow</option>
+                        <option value="pointer">Hand / Pointer</option>
+                        <option value="crosshair">Crosshair</option>
+                        <option value="none">Hidden (eye-gaze / switch access)</option>
                     </select>
                 </div>
             </section>

@@ -127,6 +127,18 @@ const CVIKeyboard = {
         // Ignore other modifier combos (let browser handle Ctrl+C, etc.)
         if (event.ctrlKey || event.metaKey || event.altKey) return;
 
+        // Arrow keys: navigate photos (bypass rate-limiting — these aren't typing actions)
+        if (key === 'ArrowLeft') {
+            event.preventDefault();
+            CVIImages.showPrevPhoto();
+            return;
+        }
+        if (key === 'ArrowRight') {
+            event.preventDefault();
+            CVIImages.showNextPhoto();
+            return;
+        }
+
         // Get current settings
         var settings = CVISettings ? CVISettings.getSettings() : null;
         var minInterval = settings ? settings.typingInterval : this.minInterval;

@@ -151,10 +151,10 @@ body {
 .word-image {
     display: block;
     width: auto;
-    height: auto;
+    height: 55vh;
     min-width: 0;
     max-width: 100%;
-    max-height: 55vh;
+    max-height: calc(100vh - 180px); /* always leave room for label/attribution */
     object-fit: contain;
     border: 3px solid #FFFFFF;
     border-radius: 8px;
@@ -521,7 +521,8 @@ body {
     }
 
     .word-image {
-        max-height: 30vh;
+        height: 30vh;
+        max-height: calc(45vh - 80px);
     }
 
     .overlay-content h1 {

@@ -21,6 +21,8 @@ const CVISettings = {
         blockedWordList: '',
         arrowsEnabled: true,
         arrowColor: '#FFFF00',
+        arrowSize: 56,
+        cursorStyle: 'default',
         preloadWords: '',
         imageSize: 55,
         imageLabelSize: 48
@@ -165,6 +167,14 @@ const CVISettings = {
         if (imageLabelSize && imageLabelSizeValue) {
             imageLabelSize.addEventListener('input', function() {
                 imageLabelSizeValue.textContent = this.value + 'px';
+            });
+        }
+
+        var arrowSize = document.getElementById('arrow-size');
+        var arrowSizeValue = document.getElementById('arrow-size-value');
+        if (arrowSize && arrowSizeValue) {
+            arrowSize.addEventListener('input', function() {
+                arrowSizeValue.textContent = this.value + 'px';
             });
         }
 
@@ -354,6 +364,14 @@ const CVISettings = {
         var arrowColor = document.getElementById('arrow-color');
         if (arrowColor) arrowColor.value = this.current.arrowColor;
 
+        var arrowSize = document.getElementById('arrow-size');
+        var arrowSizeValue = document.getElementById('arrow-size-value');
+        if (arrowSize) arrowSize.value = this.current.arrowSize || 56;
+        if (arrowSizeValue) arrowSizeValue.textContent = (this.current.arrowSize || 56) + 'px';
+
+        var cursorStyle = document.getElementById('cursor-style');
+        if (cursorStyle) cursorStyle.value = this.current.cursorStyle || 'default';
+
         var preloadWords = document.getElementById('preload-words');
         if (preloadWords) preloadWords.value = this.current.preloadWords;
 
@@ -426,6 +444,12 @@ const CVISettings = {
         var arrowColor = document.getElementById('arrow-color');
         if (arrowColor) this.current.arrowColor = arrowColor.value;
 
+        var arrowSize = document.getElementById('arrow-size');
+        if (arrowSize) this.current.arrowSize = parseInt(arrowSize.value);
+
+        var cursorStyle = document.getElementById('cursor-style');
+        if (cursorStyle) this.current.cursorStyle = cursorStyle.value;
+
         var preloadWords = document.getElementById('preload-words');
         if (preloadWords) this.current.preloadWords = preloadWords.value;
 
@@ -482,11 +506,15 @@ const CVISettings = {
             imagePanel.style.backgroundColor = this.current.imageBgColor;
         }
 
-        // Apply image size
+        // Apply image size — use height (not max-height) so the slider
+        // forces the image to actually fill the requested amount of space.
         var wordImage = document.getElementById('word-image');
         if (wordImage) {
-            wordImage.style.maxHeight = this.current.imageSize + 'vh';
+            wordImage.style.height = this.current.imageSize + 'vh';
         }
+
+        // Apply cursor style
+        document.body.style.cursor = this.current.cursorStyle;
 
         // Apply image label size
         var imageLabel = document.getElementById('image-label');
