@@ -151,10 +151,10 @@ body {
 .word-image {
     display: block;
     width: auto;
-    height: 55vh;
+    height: auto;
     min-width: 0;
     max-width: 100%;
-    max-height: calc(100vh - 180px); /* always leave room for label/attribution */
+    max-height: min(55vh, calc(100vh - 180px)); /* scale with slider; always leave room for label/attribution */
     object-fit: contain;
     border: 3px solid #FFFFFF;
     border-radius: 8px;
@@ -647,7 +647,6 @@ body {
     }
 
     .word-image {
-        height: 30vh;
         max-height: calc(45vh - 80px);
     }
 
