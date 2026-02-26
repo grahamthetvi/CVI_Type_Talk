@@ -63,6 +63,51 @@
         </div>
     </div>
 
+    <!-- Settings Guide (shown once, first time settings are opened) -->
+    <div id="settings-guide-modal" class="settings-guide-overlay" role="dialog"
+         aria-labelledby="guide-title" aria-modal="true" hidden>
+        <div class="settings-guide-content">
+            <h2 id="guide-title">⚙️ Settings Guide</h2>
+            <p class="guide-intro">Here's a quick overview of everything you can customise:</p>
+
+            <div class="guide-section">
+                <h3>🔤 Text Appearance</h3>
+                <p>Change the font style, size, and colour of the typing display, plus the background colour.</p>
+            </div>
+            <div class="guide-section">
+                <h3>🔵 Bubble Letters</h3>
+                <p>Add a coloured outline around every letter to make text pop against any background.</p>
+            </div>
+            <div class="guide-section">
+                <h3>⏱ Typing Control</h3>
+                <p>Set a minimum delay between key presses — helpful for students who press keys accidentally or too quickly.</p>
+            </div>
+            <div class="guide-section">
+                <h3>🖼 Image Display</h3>
+                <p>Control how large the picture appears. Pre-load images for specific words so they show instantly when typed.</p>
+            </div>
+            <div class="guide-section">
+                <h3>🚫 Image Filtering</h3>
+                <p>Block certain words from ever showing a picture, or restrict the app to an approved word list only.</p>
+            </div>
+            <div class="guide-section">
+                <h3>← → Image Navigation Arrows</h3>
+                <p>Show or hide the on-screen arrow buttons for flipping through multiple photos. The keyboard arrow keys always work too.</p>
+            </div>
+            <div class="guide-section">
+                <h3>🖱 Mouse Cursor</h3>
+                <p>Change the cursor style — useful if a student is using a mouse to click the navigation arrows.</p>
+            </div>
+            <div class="guide-section">
+                <h3>📋 Session Word History</h3>
+                <p>A running log of every word typed this session with timestamps — useful for teachers reviewing progress.</p>
+            </div>
+
+            <button id="guide-dismiss-btn" class="guide-dismiss-btn">Got it! Open Settings →</button>
+            <p class="guide-footer">This guide won't appear again.</p>
+        </div>
+    </div>
+
     <!-- Settings Panel -->
     <div id="settings-panel" class="settings-panel" role="dialog" aria-labelledby="settings-title" aria-modal="true">
         <div class="settings-content">

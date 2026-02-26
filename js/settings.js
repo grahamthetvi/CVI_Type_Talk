@@ -191,9 +191,41 @@ const CVISettings = {
     },
 
     /**
-     * Open the settings panel
+     * Open the settings panel.
+     * On the very first click, show a one-time guide modal first.
      */
     openPanel() {
+        var self = this;
+
+        // Show the guide the first time the settings button is clicked.
+        if (!localStorage.getItem('cvi-settings-guide-seen')) {
+            var modal = document.getElementById('settings-guide-modal');
+            if (modal) {
+                // Disable keyboard so typing doesn't bleed through the modal
+                if (CVIKeyboard) CVIKeyboard.disable();
+
+                modal.removeAttribute('hidden');
+
+                var dismissBtn = document.getElementById('guide-dismiss-btn');
+                if (dismissBtn) {
+                    dismissBtn.focus();
+                    dismissBtn.addEventListener('click', function() {
+                        localStorage.setItem('cvi-settings-guide-seen', '1');
+                        modal.setAttribute('hidden', '');
+                        self._doOpenPanel();
+                    }, { once: true });
+                }
+                return;
+            }
+        }
+
+        this._doOpenPanel();
+    },
+
+    /**
+     * Internal: actually show the settings panel (called directly or after guide dismiss).
+     */
+    _doOpenPanel() {
         var panel = document.getElementById('settings-panel');
         if (panel) {
             // Store the currently focused element
@@ -214,14 +246,12 @@ const CVISettings = {
 
             // Set up focus trap
             if (this.focusableElements.length > 0) {
-                // Focus the first element (the h2 with tabindex or first input)
                 var settingsTitle = document.getElementById('settings-title');
                 if (settingsTitle) {
                     settingsTitle.setAttribute('tabindex', '-1');
                     settingsTitle.focus();
                 }
 
-                // Add focus trap listeners
                 var firstFocusable = this.focusableElements[0];
                 var lastFocusable = this.focusableElements[this.focusableElements.length - 1];
 
