@@ -254,19 +254,19 @@ body {
     text-align: center;
     max-width: 700px;
     width: 100%;
-    padding: clamp(16px, 3vw, 40px);
+    padding: clamp(12px, 3vh, 40px) clamp(16px, 3vw, 40px);
     box-sizing: border-box;
 }
 
 .overlay-content h1 {
-    font-size: clamp(32px, 6vw, 64px);
-    margin-bottom: clamp(16px, 3vh, 40px);
+    font-size: clamp(28px, min(6vw, 7vh), 64px);
+    margin-bottom: clamp(12px, 3vh, 40px);
     color: #FFFF00;
 }
 
 .overlay-content p {
-    font-size: clamp(16px, 2.5vw, 28px);
-    margin-bottom: clamp(10px, 2vh, 20px);
+    font-size: clamp(14px, min(2.5vw, 3.2vh), 28px);
+    margin-bottom: clamp(6px, 1.5vh, 20px);
     line-height: 1.5;
 }
 
@@ -275,25 +275,25 @@ body {
 }
 
 .keyboard-notice {
-    font-size: clamp(14px, 2vw, 22px);
+    font-size: clamp(12px, min(2vw, 2.8vh), 22px);
     color: #FFAA00;
     border: 2px solid #FFAA00;
     border-radius: 8px;
-    padding: clamp(8px, 1.5vh, 12px) 20px;
-    margin-top: clamp(6px, 1vh, 10px);
-    margin-bottom: clamp(6px, 1vh, 10px);
+    padding: clamp(6px, 1.2vh, 12px) 20px;
+    margin-top: clamp(4px, 1vh, 10px);
+    margin-bottom: clamp(4px, 1vh, 10px);
 }
 
 .start-button {
-    font-size: clamp(22px, 3vw, 36px);
-    padding: clamp(12px, 2vh, 20px) clamp(30px, 5vw, 60px);
+    font-size: clamp(20px, min(3vw, 4vh), 36px);
+    padding: clamp(10px, 2vh, 20px) clamp(30px, 5vw, 60px);
     background-color: #FFFF00;
     color: #000000;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    margin-top: clamp(16px, 2.5vh, 30px);
+    margin-top: clamp(12px, 2vh, 30px);
 }
 
 .start-button:hover {
