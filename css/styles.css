@@ -307,11 +307,11 @@ body {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.97);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 300;
     overflow-y: auto;
+    z-index: 300;
+    /* Padding prevents content touching screen edges on any device */
+    padding: clamp(12px, 3vh, 40px) clamp(10px, 3vw, 20px);
+    box-sizing: border-box;
 }
 
 .settings-guide-overlay[hidden] {
@@ -322,42 +322,41 @@ body {
     background-color: #1a1a1a;
     border: 2px solid #FFFF00;
     border-radius: 12px;
-    padding: 40px;
+    padding: clamp(16px, 3.5vw, 40px);
     max-width: 680px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
+    width: 100%;
+    margin: 0 auto;  /* horizontal centering; overlay handles vertical scroll */
 }
 
 .settings-guide-content h2 {
-    font-size: 40px;
+    font-size: clamp(22px, 4.5vw, 40px);
     color: #FFFF00;
-    margin-bottom: 12px;
+    margin-bottom: clamp(6px, 1.5vh, 12px);
     text-align: center;
 }
 
 .guide-intro {
-    font-size: 20px;
+    font-size: clamp(14px, 2.2vw, 20px);
     color: #CCCCCC;
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: clamp(12px, 2.5vh, 24px);
 }
 
 .guide-section {
     background-color: #222222;
     border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 10px;
+    padding: clamp(8px, 1.5vw, 14px) clamp(10px, 2vw, 18px);
+    margin-bottom: clamp(6px, 1vh, 10px);
 }
 
 .guide-section h3 {
-    font-size: 20px;
+    font-size: clamp(14px, 2.2vw, 20px);
     color: #00FF00;
-    margin-bottom: 4px;
+    margin-bottom: clamp(2px, 0.5vh, 4px);
 }
 
 .guide-section p {
-    font-size: 16px;
+    font-size: clamp(12px, 1.6vw, 16px);
     color: #CCCCCC;
     line-height: 1.5;
 }
@@ -365,15 +364,15 @@ body {
 .guide-dismiss-btn {
     display: block;
     width: 100%;
-    font-size: 24px;
-    padding: 16px;
+    font-size: clamp(16px, 2.8vw, 24px);
+    padding: clamp(10px, 2vh, 16px);
     background-color: #FFFF00;
     color: #000000;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    margin-top: 24px;
+    margin-top: clamp(14px, 2.5vh, 24px);
     transition: background-color 0.2s;
 }
 
@@ -387,10 +386,10 @@ body {
 }
 
 .guide-footer {
-    font-size: 14px;
+    font-size: clamp(11px, 1.3vw, 14px);
     color: #666666;
     text-align: center;
-    margin-top: 10px;
+    margin-top: clamp(6px, 1vh, 10px);
 }
 
 /* === Settings Panel === */
