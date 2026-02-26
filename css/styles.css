@@ -307,10 +307,11 @@ body {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.97);
-    overflow-y: auto;
     z-index: 300;
-    /* Padding prevents content touching screen edges on any device */
-    padding: clamp(12px, 3vh, 40px) clamp(10px, 3vw, 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(10px, 2vh, 30px) clamp(8px, 2vw, 20px);
     box-sizing: border-box;
 }
 
@@ -318,61 +319,79 @@ body {
     display: none;
 }
 
+/* Box fits within the viewport — never taller than available height */
 .settings-guide-content {
     background-color: #1a1a1a;
     border: 2px solid #FFFF00;
     border-radius: 12px;
-    padding: clamp(16px, 3.5vw, 40px);
     max-width: 680px;
     width: 100%;
-    margin: 0 auto;  /* horizontal centering; overlay handles vertical scroll */
+    max-height: 100%;            /* fills overlay minus its padding */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Scrollable section list — takes up remaining space */
+.settings-guide-body {
+    padding: clamp(14px, 3vw, 36px);
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;               /* critical: lets flex child shrink & scroll */
 }
 
 .settings-guide-content h2 {
-    font-size: clamp(22px, 4.5vw, 40px);
+    font-size: clamp(20px, 4vw, 40px);
     color: #FFFF00;
-    margin-bottom: clamp(6px, 1.5vh, 12px);
+    margin-bottom: clamp(4px, 1vh, 10px);
     text-align: center;
 }
 
 .guide-intro {
-    font-size: clamp(14px, 2.2vw, 20px);
+    font-size: clamp(13px, 2vw, 20px);
     color: #CCCCCC;
     text-align: center;
-    margin-bottom: clamp(12px, 2.5vh, 24px);
+    margin-bottom: clamp(10px, 2vh, 20px);
 }
 
 .guide-section {
     background-color: #222222;
     border-radius: 8px;
-    padding: clamp(8px, 1.5vw, 14px) clamp(10px, 2vw, 18px);
-    margin-bottom: clamp(6px, 1vh, 10px);
+    padding: clamp(7px, 1.2vw, 14px) clamp(9px, 1.8vw, 18px);
+    margin-bottom: clamp(5px, 0.8vh, 10px);
 }
 
 .guide-section h3 {
-    font-size: clamp(14px, 2.2vw, 20px);
+    font-size: clamp(13px, 2vw, 20px);
     color: #00FF00;
-    margin-bottom: clamp(2px, 0.5vh, 4px);
+    margin-bottom: 2px;
 }
 
 .guide-section p {
-    font-size: clamp(12px, 1.6vw, 16px);
+    font-size: clamp(11px, 1.5vw, 16px);
     color: #CCCCCC;
-    line-height: 1.5;
+    line-height: 1.4;
+}
+
+/* Sticky footer — always visible at the bottom of the box */
+.settings-guide-sticky-footer {
+    flex-shrink: 0;
+    padding: clamp(10px, 1.5vw, 20px) clamp(14px, 3vw, 36px);
+    border-top: 1px solid #333333;
+    background-color: #1a1a1a;
+    border-radius: 0 0 10px 10px;
 }
 
 .guide-dismiss-btn {
     display: block;
     width: 100%;
-    font-size: clamp(16px, 2.8vw, 24px);
-    padding: clamp(10px, 2vh, 16px);
+    font-size: clamp(15px, 2.5vw, 24px);
+    padding: clamp(9px, 1.5vh, 16px);
     background-color: #FFFF00;
     color: #000000;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    margin-top: clamp(14px, 2.5vh, 24px);
     transition: background-color 0.2s;
 }
 
@@ -386,10 +405,11 @@ body {
 }
 
 .guide-footer {
-    font-size: clamp(11px, 1.3vw, 14px);
+    font-size: clamp(10px, 1.2vw, 14px);
     color: #666666;
     text-align: center;
-    margin-top: clamp(6px, 1vh, 10px);
+    margin-top: clamp(5px, 0.8vh, 8px);
+    margin-bottom: 0;
 }
 
 /* === Settings Panel === */
