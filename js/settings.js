@@ -536,11 +536,11 @@ const CVISettings = {
             imagePanel.style.backgroundColor = this.current.imageBgColor;
         }
 
-        // Apply image size — use height (not max-height) so the slider
-        // forces the image to actually fill the requested amount of space.
+        // Apply image size via max-height so both dimensions scale
+        // proportionally — height alone would distort wide images.
         var wordImage = document.getElementById('word-image');
         if (wordImage) {
-            wordImage.style.height = this.current.imageSize + 'vh';
+            wordImage.style.maxHeight = this.current.imageSize + 'vh';
         }
 
         // Apply cursor style
