@@ -21,6 +21,8 @@ const CVISettings = {
         blockedWordList: '',
         arrowsEnabled: true,
         arrowColor: '#FFFF00',
+        arrowSize: 56,
+        cursorStyle: 'default',
         preloadWords: '',
         imageSize: 55,
         imageLabelSize: 48
@@ -165,6 +167,14 @@ const CVISettings = {
             });
         }
 
+        var arrowSize = document.getElementById('arrow-size');
+        var arrowSizeValue = document.getElementById('arrow-size-value');
+        if (arrowSize && arrowSizeValue) {
+            arrowSize.addEventListener('input', function() {
+                arrowSizeValue.textContent = this.value + 'px';
+            });
+        }
+
         // Close on Escape key
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && panel && panel.classList.contains('visible')) {
@@ -178,9 +188,41 @@ const CVISettings = {
     },
 
     /**
-     * Open the settings panel
+     * Open the settings panel.
+     * On the very first click, show a one-time guide modal first.
      */
     openPanel() {
+        var self = this;
+
+        // Show the guide the first time the settings button is clicked.
+        if (!localStorage.getItem('cvi-settings-guide-seen')) {
+            var modal = document.getElementById('settings-guide-modal');
+            if (modal) {
+                // Disable keyboard so typing doesn't bleed through the modal
+                if (CVIKeyboard) CVIKeyboard.disable();
+
+                modal.removeAttribute('hidden');
+
+                var dismissBtn = document.getElementById('guide-dismiss-btn');
+                if (dismissBtn) {
+                    dismissBtn.focus();
+                    dismissBtn.addEventListener('click', function() {
+                        localStorage.setItem('cvi-settings-guide-seen', '1');
+                        modal.setAttribute('hidden', '');
+                        self._doOpenPanel();
+                    }, { once: true });
+                }
+                return;
+            }
+        }
+
+        this._doOpenPanel();
+    },
+
+    /**
+     * Internal: actually show the settings panel (called directly or after guide dismiss).
+     */
+    _doOpenPanel() {
         var panel = document.getElementById('settings-panel');
         if (panel) {
             // Store the currently focused element
@@ -201,14 +243,12 @@ const CVISettings = {
 
             // Set up focus trap
             if (this.focusableElements.length > 0) {
-                // Focus the first element (the h2 with tabindex or first input)
                 var settingsTitle = document.getElementById('settings-title');
                 if (settingsTitle) {
                     settingsTitle.setAttribute('tabindex', '-1');
                     settingsTitle.focus();
                 }
 
-                // Add focus trap listeners
                 var firstFocusable = this.focusableElements[0];
                 var lastFocusable = this.focusableElements[this.focusableElements.length - 1];
 
@@ -351,6 +391,14 @@ const CVISettings = {
         var arrowColor = document.getElementById('arrow-color');
         if (arrowColor) arrowColor.value = this.current.arrowColor;
 
+        var arrowSize = document.getElementById('arrow-size');
+        var arrowSizeValue = document.getElementById('arrow-size-value');
+        if (arrowSize) arrowSize.value = this.current.arrowSize || 56;
+        if (arrowSizeValue) arrowSizeValue.textContent = (this.current.arrowSize || 56) + 'px';
+
+        var cursorStyle = document.getElementById('cursor-style');
+        if (cursorStyle) cursorStyle.value = this.current.cursorStyle || 'default';
+
         var preloadWords = document.getElementById('preload-words');
         if (preloadWords) preloadWords.value = this.current.preloadWords;
 
@@ -423,6 +471,12 @@ const CVISettings = {
         var arrowColor = document.getElementById('arrow-color');
         if (arrowColor) this.current.arrowColor = arrowColor.value;
 
+        var arrowSize = document.getElementById('arrow-size');
+        if (arrowSize) this.current.arrowSize = parseInt(arrowSize.value);
+
+        var cursorStyle = document.getElementById('cursor-style');
+        if (cursorStyle) this.current.cursorStyle = cursorStyle.value;
+
         var preloadWords = document.getElementById('preload-words');
         if (preloadWords) this.current.preloadWords = preloadWords.value;
 
@@ -479,11 +533,15 @@ const CVISettings = {
             imagePanel.style.backgroundColor = this.current.imageBgColor;
         }
 
-        // Apply image size
+        // Apply image size via max-height so both dimensions scale
+        // proportionally — height alone would distort wide images.
         var wordImage = document.getElementById('word-image');
         if (wordImage) {
             wordImage.style.maxHeight = this.current.imageSize + 'vh';
         }
+
+        // Apply cursor style
+        document.body.style.cursor = this.current.cursorStyle;
 
         // Apply image label size
         var imageLabel = document.getElementById('image-label');

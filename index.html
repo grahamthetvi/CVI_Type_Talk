@@ -56,11 +56,67 @@
             <p>Type letters to hear them spoken aloud.</p>
             <p>Press <strong>Space</strong> or <strong>Enter</strong> to hear the whole word and see a picture.</p>
             <p>Press <strong>Backspace</strong> to delete a letter.</p>
-            <p>Press <strong>Ctrl+Shift+M</strong> to toggle words-per-minute display.</p>
-            <p>Press <strong>Ctrl+Shift+L</strong> to toggle letters-per-minute display.</p>
+            <p>Press <strong>← →</strong> arrow keys to flip through pictures of the same word.</p>
+            <p>Press <strong>Ctrl+Shift+M</strong> to show words-per-minute speed.</p>
+            <p>Press <strong>Ctrl+Shift+L</strong> to show letters-per-minute speed.</p>
+            <p>Press <strong>Ctrl+Shift+C</strong> to clear the screen.</p>
+            <p class="keyboard-notice">⌨️ This app requires a <strong>physical keyboard</strong>. It will not work on a touchscreen without one connected.</p>
             <button id="start-button" class="start-button" autofocus>
                 Start Typing
             </button>
+        </div>
+    </div>
+
+    <!-- Settings Guide (shown once, first time settings are opened) -->
+    <div id="settings-guide-modal" class="settings-guide-overlay" role="dialog"
+         aria-labelledby="guide-title" aria-modal="true" hidden>
+        <div class="settings-guide-content">
+
+            <!-- Scrollable section list -->
+            <div class="settings-guide-body">
+                <h2 id="guide-title">⚙️ Settings Guide</h2>
+                <p class="guide-intro">Here's a quick overview of everything you can customise:</p>
+
+                <div class="guide-section">
+                    <h3>🔤 Text Appearance</h3>
+                    <p>Change the font style, size, and colour of the typing display, plus the background colour.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>🔵 Bubble Letters</h3>
+                    <p>Add a coloured outline around every letter to make text pop against any background.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>⏱ Typing Control</h3>
+                    <p>Set a minimum delay between key presses — helpful for students who press keys accidentally or too quickly.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>🖼 Image Display</h3>
+                    <p>Control how large the picture appears. Pre-load images for specific words so they show instantly when typed.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>🚫 Image Filtering</h3>
+                    <p>Block certain words from ever showing a picture, or restrict the app to an approved word list only.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>← → Image Navigation Arrows</h3>
+                    <p>Show or hide the on-screen arrow buttons for flipping through multiple photos. The keyboard arrow keys always work too.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>🖱 Mouse Cursor</h3>
+                    <p>Change the cursor style — useful if a student is using a mouse to click the navigation arrows.</p>
+                </div>
+                <div class="guide-section">
+                    <h3>📋 Session Word History</h3>
+                    <p>A running log of every word typed this session with timestamps — useful for teachers reviewing progress.</p>
+                </div>
+            </div>
+
+            <!-- Sticky footer: always visible regardless of scroll position -->
+            <div class="settings-guide-sticky-footer">
+                <button id="guide-dismiss-btn" class="guide-dismiss-btn">Got it! Open Settings →</button>
+                <p class="guide-footer">This guide won't appear again.</p>
+            </div>
+
         </div>
     </div>
 
@@ -252,7 +308,7 @@
             <!-- Image Navigation Arrow Settings -->
             <section class="settings-section">
                 <h3>Image Navigation Arrows</h3>
-                <p class="setting-note">Arrows let you flip between multiple photos of the same word.</p>
+                <p class="setting-note">Arrows let you flip between multiple photos of the same word. You can also use the ← → arrow keys on the keyboard.</p>
                 <div class="setting-row">
                     <label for="arrows-enabled">Show Navigation Arrows:</label>
                     <input type="checkbox" id="arrows-enabled" checked>
@@ -275,6 +331,26 @@
                         <option value="#000000">Black</option>
                     </select>
                 </div>
+                <div class="setting-row">
+                    <label for="arrow-size">Arrow Button Size:</label>
+                    <input type="range" id="arrow-size" min="32" max="120" value="56" aria-describedby="arrow-size-value">
+                    <span id="arrow-size-value" aria-live="polite">56px</span>
+                </div>
+            </section>
+
+            <!-- Mouse Cursor Settings -->
+            <section class="settings-section">
+                <h3>Mouse Cursor</h3>
+                <p class="setting-note">Change the mouse cursor style. A large pointer can help children identify where to click to flip through pictures. Note: browsers limit cursor customization — for flipping pictures, the keyboard arrow keys (← →) always work regardless of cursor style.</p>
+                <div class="setting-row">
+                    <label for="cursor-style">Cursor Style:</label>
+                    <select id="cursor-style">
+                        <option value="default">Default arrow</option>
+                        <option value="pointer">Hand / Pointer</option>
+                        <option value="crosshair">Crosshair</option>
+                        <option value="none">Hidden (eye-gaze / switch access)</option>
+                    </select>
+                </div>
             </section>
 
             <!-- Session Word History -->
@@ -294,6 +370,18 @@
                 <button id="cancel-settings" class="settings-button">Cancel</button>
             </div>
         </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div id="image-lightbox" class="image-lightbox hidden" role="dialog"
+         aria-label="Expanded image view" aria-modal="true">
+        <button id="lightbox-close" class="lightbox-close" aria-label="Close expanded image">&#x2715;</button>
+        <div class="lightbox-inner">
+            <button id="lightbox-prev" class="lightbox-nav-btn" aria-label="Previous image" style="display:none">&#8592;</button>
+            <img id="lightbox-image" class="lightbox-image" src="" alt="" crossorigin="anonymous">
+            <button id="lightbox-next" class="lightbox-nav-btn" aria-label="Next image" style="display:none">&#8594;</button>
+        </div>
+        <p id="lightbox-label" class="lightbox-label"></p>
     </div>
 
     <!-- Settings Button -->

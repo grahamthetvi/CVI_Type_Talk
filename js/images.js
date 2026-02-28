@@ -71,17 +71,26 @@ const CVIImages = {
         var settings = CVISettings ? CVISettings.getSettings() : null;
         var arrowsEnabled = settings ? settings.arrowsEnabled : true;
         var arrowColor = settings ? settings.arrowColor : '#FFFF00';
+        var arrowSize = settings ? (settings.arrowSize || 56) : 56;
         var hasMultiple = this._currentPhotos.length > 1;
+        var displayVal = (arrowsEnabled && hasMultiple) ? 'flex' : 'none';
+        var fontSize = Math.round(arrowSize * 0.5) + 'px';
 
         if (this.prevBtn) {
-            this.prevBtn.style.display = (arrowsEnabled && hasMultiple) ? 'flex' : 'none';
+            this.prevBtn.style.display = displayVal;
             this.prevBtn.style.color = arrowColor;
             this.prevBtn.style.borderColor = arrowColor;
+            this.prevBtn.style.width = arrowSize + 'px';
+            this.prevBtn.style.height = arrowSize + 'px';
+            this.prevBtn.style.fontSize = fontSize;
         }
         if (this.nextBtn) {
-            this.nextBtn.style.display = (arrowsEnabled && hasMultiple) ? 'flex' : 'none';
+            this.nextBtn.style.display = displayVal;
             this.nextBtn.style.color = arrowColor;
             this.nextBtn.style.borderColor = arrowColor;
+            this.nextBtn.style.width = arrowSize + 'px';
+            this.nextBtn.style.height = arrowSize + 'px';
+            this.nextBtn.style.fontSize = fontSize;
         }
     },
 
@@ -218,7 +227,7 @@ const CVIImages = {
             + '&gsrlimit=10'
             + '&prop=imageinfo'
             + '&iiprop=url|mime|extmetadata'
-            + '&iiurlwidth=400'
+            + '&iiurlwidth=800'
             + '&format=json'
             + '&origin=*';
 

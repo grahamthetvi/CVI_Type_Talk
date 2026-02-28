@@ -154,10 +154,100 @@ body {
     height: auto;
     min-width: 0;
     max-width: 100%;
-    max-height: 55vh;
+    max-height: min(55vh, calc(100vh - 180px)); /* scale with slider; always leave room for label/attribution */
     object-fit: contain;
     border: 3px solid #FFFFFF;
     border-radius: 8px;
+    cursor: zoom-in;
+}
+
+/* === Image Lightbox === */
+.image-lightbox {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.93);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.image-lightbox.hidden {
+    display: none;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 28px;
+    color: #FFFFFF;
+    background: none;
+    border: 2px solid #FFFFFF;
+    border-radius: 8px;
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-close:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.lightbox-close:focus {
+    outline: 4px solid #FFFFFF;
+    outline-offset: 4px;
+}
+
+.lightbox-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    max-width: 95vw;
+}
+
+.lightbox-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 85vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border: 3px solid #FFFFFF;
+    border-radius: 8px;
+}
+
+.lightbox-nav-btn {
+    background: none;
+    border: 3px solid #FFFF00;
+    border-radius: 50%;
+    color: #FFFF00;
+    font-size: 28px;
+    width: 72px;
+    height: 72px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-nav-btn:hover {
+    background-color: rgba(255, 255, 0, 0.15);
+}
+
+.lightbox-label {
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #FFFFFF;
+    margin: 0;
 }
 
 /* Pre-load status indicator */
@@ -243,6 +333,7 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 100;
+    overflow-y: auto;
 }
 
 .overlay.hidden {
@@ -252,18 +343,20 @@ body {
 .overlay-content {
     text-align: center;
     max-width: 700px;
-    padding: 40px;
+    width: 100%;
+    padding: clamp(12px, 3vh, 40px) clamp(16px, 3vw, 40px);
+    box-sizing: border-box;
 }
 
 .overlay-content h1 {
-    font-size: 64px;
-    margin-bottom: 40px;
+    font-size: clamp(28px, min(6vw, 7vh), 64px);
+    margin-bottom: clamp(12px, 3vh, 40px);
     color: #FFFF00;
 }
 
 .overlay-content p {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: clamp(14px, min(2.5vw, 3.2vh), 28px);
+    margin-bottom: clamp(6px, 1.5vh, 20px);
     line-height: 1.5;
 }
 
@@ -271,16 +364,26 @@ body {
     color: #FFFF00;
 }
 
+.keyboard-notice {
+    font-size: clamp(12px, min(2vw, 2.8vh), 22px);
+    color: #FFAA00;
+    border: 2px solid #FFAA00;
+    border-radius: 8px;
+    padding: clamp(6px, 1.2vh, 12px) 20px;
+    margin-top: clamp(4px, 1vh, 10px);
+    margin-bottom: clamp(4px, 1vh, 10px);
+}
+
 .start-button {
-    font-size: 36px;
-    padding: 20px 60px;
+    font-size: clamp(20px, min(3vw, 4vh), 36px);
+    padding: clamp(10px, 2vh, 20px) clamp(30px, 5vw, 60px);
     background-color: #FFFF00;
     color: #000000;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    margin-top: 30px;
+    margin-top: clamp(12px, 2vh, 30px);
 }
 
 .start-button:hover {
@@ -290,6 +393,119 @@ body {
 .start-button:focus {
     outline: 4px solid #FFFFFF;
     outline-offset: 4px;
+}
+
+/* === Settings Guide (first-time popup) === */
+.settings-guide-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.97);
+    z-index: 300;
+}
+
+.settings-guide-overlay[hidden] {
+    display: none;
+}
+
+/*
+ * Absolute positioning gives the box an exact, guaranteed height:
+ * top/bottom values create the gap from the screen edge.
+ * This is more reliable than max-height percentages on flex children.
+ */
+.settings-guide-content {
+    position: absolute;
+    top: clamp(8px, 2vh, 30px);
+    bottom: clamp(8px, 2vh, 30px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(680px, calc(100vw - clamp(16px, 4vw, 40px)));
+    background-color: #1a1a1a;
+    border: 2px solid #FFFF00;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Scrollable section list — grows to fill the space above the footer */
+.settings-guide-body {
+    padding: clamp(14px, 3vw, 36px);
+    overflow-y: auto;
+    flex: 1 1 0;
+    min-height: 0;
+}
+
+.settings-guide-content h2 {
+    font-size: clamp(20px, 4vw, 40px);
+    color: #FFFF00;
+    margin-bottom: clamp(4px, 1vh, 10px);
+    text-align: center;
+}
+
+.guide-intro {
+    font-size: clamp(13px, 2vw, 20px);
+    color: #CCCCCC;
+    text-align: center;
+    margin-bottom: clamp(10px, 2vh, 20px);
+}
+
+.guide-section {
+    background-color: #222222;
+    border-radius: 8px;
+    padding: clamp(7px, 1.2vw, 14px) clamp(9px, 1.8vw, 18px);
+    margin-bottom: clamp(5px, 0.8vh, 10px);
+}
+
+.guide-section h3 {
+    font-size: clamp(13px, 2vw, 20px);
+    color: #00FF00;
+    margin-bottom: 2px;
+}
+
+.guide-section p {
+    font-size: clamp(11px, 1.5vw, 16px);
+    color: #CCCCCC;
+    line-height: 1.4;
+}
+
+/* Sticky footer — always visible at the bottom of the box */
+.settings-guide-sticky-footer {
+    flex-shrink: 0;
+    padding: clamp(10px, 1.5vw, 20px) clamp(14px, 3vw, 36px);
+    border-top: 1px solid #333333;
+    background-color: #1a1a1a;
+    border-radius: 0 0 10px 10px;
+}
+
+.guide-dismiss-btn {
+    display: block;
+    width: 100%;
+    font-size: clamp(15px, 2.5vw, 24px);
+    padding: clamp(9px, 1.5vh, 16px);
+    background-color: #FFFF00;
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.guide-dismiss-btn:hover {
+    background-color: #FFEE00;
+}
+
+.guide-dismiss-btn:focus {
+    outline: 4px solid #FFFFFF;
+    outline-offset: 3px;
+}
+
+.guide-footer {
+    font-size: clamp(10px, 1.2vw, 14px);
+    color: #666666;
+    text-align: center;
+    margin-top: clamp(5px, 0.8vh, 8px);
+    margin-bottom: 0;
 }
 
 /* === Settings Panel === */
@@ -521,7 +737,7 @@ body {
     }
 
     .word-image {
-        max-height: 30vh;
+        max-height: calc(45vh - 80px);
     }
 
     .overlay-content h1 {
