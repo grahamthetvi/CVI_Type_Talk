@@ -140,7 +140,7 @@ const CVIImages = {
 
         this.labelEl.textContent = word.toUpperCase();
         this.labelEl.className = 'image-label has-image';
-        this.attributionEl.textContent = 'Live Camera Feed';
+        this.attributionEl.textContent = '';
 
         if (this.cameraEl) {
             this.cameraEl.hidden = false;
