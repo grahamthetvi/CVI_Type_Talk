@@ -1079,6 +1079,7 @@ const CVIBadWords = (function () {
         "poof",
         "poon",
         "poontang",
+        "poop",
         "poopchute",
         "poot",
         "popel",

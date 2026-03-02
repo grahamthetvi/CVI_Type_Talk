@@ -1,11 +1,14 @@
 /* === Reset and Base === */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     overflow: hidden;
 }
@@ -83,7 +86,9 @@ body {
 }
 
 @keyframes blink {
-    50% { opacity: 0; }
+    50% {
+        opacity: 0;
+    }
 }
 
 /* === Image Panel === */
@@ -154,11 +159,16 @@ body {
     height: auto;
     min-width: 0;
     max-width: 100%;
-    max-height: min(55vh, calc(100vh - 180px)); /* scale with slider; always leave room for label/attribution */
+    max-height: min(55vh, calc(100vh - 180px));
+    /* scale with slider; always leave room for label/attribution */
     object-fit: contain;
     border: 3px solid #FFFFFF;
     border-radius: 8px;
     cursor: zoom-in;
+}
+
+.word-image[hidden] {
+    display: none !important;
 }
 
 /* === Image Lightbox === */
@@ -698,17 +708,24 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.3; }
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
 }
 
 /* === Bubble Letters Style === */
 .text-display.bubble-letters {
     text-shadow:
         -1px -1px 0 var(--bubble-color, #FFFF00),
-         1px -1px 0 var(--bubble-color, #FFFF00),
-        -1px  1px 0 var(--bubble-color, #FFFF00),
-         1px  1px 0 var(--bubble-color, #FFFF00);
+        1px -1px 0 var(--bubble-color, #FFFF00),
+        -1px 1px 0 var(--bubble-color, #FFFF00),
+        1px 1px 0 var(--bubble-color, #FFFF00);
 }
 
 /* === Responsive === */
