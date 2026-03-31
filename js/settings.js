@@ -88,6 +88,20 @@ const CVISettings = {
             });
         }
 
+        var guideBtn = document.getElementById('settings-guide-button');
+        if (guideBtn) {
+            guideBtn.addEventListener('click', function () {
+                self.openSettingsGuide('repeat');
+            });
+        }
+
+        var guideDismiss = document.getElementById('guide-dismiss-btn');
+        if (guideDismiss) {
+            guideDismiss.addEventListener('click', function () {
+                self.closeSettingsGuide();
+            });
+        }
+
         // Save settings
         if (saveBtn) {
             saveBtn.addEventListener('click', function () {
@@ -175,8 +189,16 @@ const CVISettings = {
             });
         }
 
-        // Close on Escape key
+        // Close on Escape key (settings guide takes priority over settings panel)
         document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                var guideModal = document.getElementById('settings-guide-modal');
+                if (guideModal && !guideModal.hasAttribute('hidden')) {
+                    self.closeSettingsGuide();
+                    e.preventDefault();
+                    return;
+                }
+            }
             if (e.key === 'Escape' && panel && panel.classList.contains('visible')) {
                 self.closePanel();
                 self.populateUI(); // Reset UI to saved values
@@ -192,26 +214,12 @@ const CVISettings = {
      * On the very first click, show a one-time guide modal first.
      */
     openPanel() {
-        var self = this;
+        this.previousFocus = document.activeElement;
 
-        // Show the guide the first time the settings button is clicked.
         if (!localStorage.getItem('cvi-settings-guide-seen')) {
             var modal = document.getElementById('settings-guide-modal');
             if (modal) {
-                // Disable keyboard so typing doesn't bleed through the modal
-                if (CVIKeyboard) CVIKeyboard.disable();
-
-                modal.removeAttribute('hidden');
-
-                var dismissBtn = document.getElementById('guide-dismiss-btn');
-                if (dismissBtn) {
-                    dismissBtn.focus();
-                    dismissBtn.addEventListener('click', function() {
-                        localStorage.setItem('cvi-settings-guide-seen', '1');
-                        modal.setAttribute('hidden', '');
-                        self._doOpenPanel();
-                    }, { once: true });
-                }
+                this.openSettingsGuide('first');
                 return;
             }
         }
@@ -220,14 +228,93 @@ const CVISettings = {
     },
 
     /**
+     * Show the settings guide (first visit from Settings, or anytime from the Guide button).
+     * @param {'first'|'repeat'} mode - first: then opens Settings on dismiss; repeat: closes only
+     */
+    openSettingsGuide(mode) {
+        var modal = document.getElementById('settings-guide-modal');
+        var dismissBtn = document.getElementById('guide-dismiss-btn');
+        var footerEl = document.getElementById('guide-footer-text');
+        if (!modal || !dismissBtn) return;
+
+        this._guideMode = mode;
+        this._guideReturnFocus = document.activeElement;
+
+        if (mode === 'first') {
+            dismissBtn.textContent = 'Got it! Open Settings →';
+            if (footerEl) {
+                footerEl.textContent = "This guide won't appear again.";
+                footerEl.hidden = false;
+            }
+        } else {
+            dismissBtn.textContent = 'Close';
+            if (footerEl) {
+                footerEl.textContent =
+                    'Open Settings from the gear button to change options. You can reopen this guide anytime.';
+                footerEl.hidden = false;
+            }
+        }
+
+        if (CVIKeyboard) CVIKeyboard.disable();
+        modal.removeAttribute('hidden');
+        dismissBtn.focus();
+        this._announceToScreenReader('Settings guide opened');
+
+        if (!this._guideKeydownBound) {
+            this._guideKeydownBound = true;
+            modal.addEventListener('keydown', function (e) {
+                if (e.key !== 'Tab') return;
+                var focusables = modal.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                if (focusables.length === 0) return;
+                var first = focusables[0];
+                var last = focusables[focusables.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            });
+        }
+    },
+
+    /**
+     * Dismiss the settings guide modal.
+     */
+    closeSettingsGuide() {
+        var modal = document.getElementById('settings-guide-modal');
+        if (!modal || modal.hasAttribute('hidden')) return;
+
+        var mode = this._guideMode;
+        modal.setAttribute('hidden', '');
+
+        if (mode === 'first') {
+            localStorage.setItem('cvi-settings-guide-seen', '1');
+            this._doOpenPanel();
+        } else {
+            if (CVIKeyboard && CVIKeyboard.enabled !== undefined) {
+                var overlay = document.getElementById('instructions-overlay');
+                if (!overlay || overlay.classList.contains('hidden')) {
+                    CVIKeyboard.enable();
+                }
+            }
+            if (this._guideReturnFocus && this._guideReturnFocus.focus) {
+                this._guideReturnFocus.focus();
+            }
+            this._announceToScreenReader('Settings guide closed');
+        }
+        this._guideMode = null;
+    },
+
+    /**
      * Internal: actually show the settings panel (called directly or after guide dismiss).
      */
     _doOpenPanel() {
         var panel = document.getElementById('settings-panel');
         if (panel) {
-            // Store the currently focused element
-            this.previousFocus = document.activeElement;
-
             panel.classList.add('visible');
             this.populateUI();
 

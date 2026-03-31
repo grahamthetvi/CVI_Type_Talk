@@ -518,11 +518,70 @@ body {
     margin-bottom: 0;
 }
 
-/* === Settings Panel === */
-.settings-toggle {
+/* === Floating toolbar (guide, settings, tip) === */
+.floating-toolbar {
     position: fixed;
     top: 20px;
     right: 20px;
+    z-index: 50;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.toolbar-guide-btn {
+    min-width: 56px;
+    min-height: 48px;
+    padding: 6px 10px;
+    background-color: #333333;
+    color: #FFFFFF;
+    border: 2px solid #666666;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.toolbar-guide-btn:hover {
+    background-color: #444444;
+}
+
+.toolbar-guide-btn:focus {
+    outline: 3px solid #FFFF00;
+    outline-offset: 2px;
+}
+
+/* Tip link: low visual weight — no accent colors (reduces distraction) */
+.tip-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #777777;
+    background-color: transparent;
+    border: 1px solid #444444;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.tip-link:hover {
+    color: #999999;
+    border-color: #555555;
+}
+
+.tip-link:focus {
+    outline: 3px solid #666666;
+    outline-offset: 2px;
+}
+
+/* === Settings Panel === */
+.settings-toggle {
     width: 60px;
     height: 60px;
     background-color: #333333;
@@ -531,7 +590,6 @@ body {
     border-radius: 50%;
     font-size: 28px;
     cursor: pointer;
-    z-index: 50;
     transition: background-color 0.2s;
 }
 

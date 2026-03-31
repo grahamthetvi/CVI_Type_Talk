@@ -139,7 +139,7 @@
             <!-- Sticky footer: always visible regardless of scroll position -->
             <div class="settings-guide-sticky-footer">
                 <button id="guide-dismiss-btn" class="guide-dismiss-btn">Got it! Open Settings →</button>
-                <p class="guide-footer">This guide won't appear again.</p>
+                <p id="guide-footer-text" class="guide-footer">This guide won't appear again.</p>
             </div>
 
         </div>
@@ -415,8 +415,16 @@
         <p id="lightbox-label" class="lightbox-label"></p>
     </div>
 
-    <!-- Settings Button -->
-    <button id="settings-button" class="settings-toggle" aria-label="Open Settings">⚙️</button>
+    <!-- Toolbar: guide, settings, optional tip link -->
+    <div class="floating-toolbar" role="toolbar" aria-label="Settings and help">
+        <button type="button" id="settings-guide-button" class="toolbar-guide-btn" aria-label="Open settings guide">
+            Guide
+        </button>
+        <button type="button" id="settings-button" class="settings-toggle" aria-label="Open Settings">⚙️</button>
+        <a id="tip-link" class="tip-link" href="https://buymeacoffee.com/grahamthetvi" target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Support the project on Buy Me a Coffee (opens in a new tab)">Tip</a>
+    </div>
 
     <script src="js/speech.js"></script>
     <script src="js/background-removal.js"></script>
