@@ -50,24 +50,24 @@
         <p id="status-text">Type a letter to begin</p>
     </footer>
 
-    <!-- Consent Modal -->
-    <div id="consent-overlay" class="overlay" role="dialog" aria-labelledby="consent-title" aria-modal="true">
+    <!-- Consent (shown after "Start Typing" for first-time visitors) -->
+    <div id="consent-overlay" class="overlay consent-panel hidden" role="dialog" aria-labelledby="consent-title"
+        aria-modal="true">
         <div class="overlay-content">
-            <h1 id="consent-title">Adult Content & Profanity Warning</h1>
-            <p>We, the creators of this website, have taken all reasonable steps to stop inappropriate images from being
-                displayed when inappropriate words are typed.</p>
-            <p>However, we cannot guarantee that every possible inappropriate image will be blocked and are <strong>not
-                    responsible</strong> if one is displayed.</p>
-            <p>If additional filtering is required, there is a Profanity Filtering option in the settings that you can
-                use.</p>
-            <button id="consent-accept-btn" class="start-button" autofocus>
-                I Understand
+            <h1 id="consent-title">About the pictures</h1>
+            <p>When you finish a word, this app shows an image that matches it. We filter what we can so the experience
+                stays appropriate for learning.</p>
+            <p>Automated filters are not perfect. If you need tighter control, open <strong>Settings</strong> any time
+                for options like <strong>Profanity filtering</strong> and approved word lists.</p>
+            <p class="consent-footnote">Continuing means you are comfortable using the app with that in mind.</p>
+            <button id="consent-accept-btn" type="button" class="start-button consent-continue-btn">
+                Continue
             </button>
         </div>
     </div>
 
     <!-- Instructions overlay -->
-    <div id="instructions-overlay" class="overlay hidden" role="dialog" aria-labelledby="instructions-title"
+    <div id="instructions-overlay" class="overlay" role="dialog" aria-labelledby="instructions-title"
         aria-modal="true">
         <div class="overlay-content">
             <h1 id="instructions-title">CVI Type Talker</h1>
@@ -80,7 +80,7 @@
             <p>Press <strong>Ctrl+Shift+C</strong> to clear the screen.</p>
             <p class="keyboard-notice">⌨️ This app requires a <strong>physical keyboard</strong>. It will not work on a
                 touchscreen without one connected.</p>
-            <button id="start-button" class="start-button">
+            <button id="start-button" type="button" class="start-button" autofocus>
                 Start Typing
             </button>
         </div>

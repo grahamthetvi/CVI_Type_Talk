@@ -26,51 +26,55 @@ const CVIApp = {
                 'Warning: Text-to-speech is not supported in this browser. Please use Chrome, Edge, Firefox, or Safari.';
         }
 
-        // Set up the consent, instructions, and start buttons
+        // Instructions first; first-time visitors see consent after "Start Typing"
         var consentOverlay = document.getElementById('consent-overlay');
         var consentAcceptBtn = document.getElementById('consent-accept-btn');
         var overlay = document.getElementById('instructions-overlay');
         var startBtn = document.getElementById('start-button');
-
-        // Check if consent has already been given
         var hasConsent = localStorage.getItem('cvi-consent-accepted') === 'true';
 
-        if (!hasConsent && consentOverlay && consentAcceptBtn) {
-            // Show consent overlay, setup listener
-            consentOverlay.classList.remove('hidden');
-            if (overlay) overlay.classList.add('hidden');
-
-            consentAcceptBtn.addEventListener('click', function () {
-                localStorage.setItem('cvi-consent-accepted', 'true');
-                consentOverlay.classList.add('hidden');
-                // Now show the actual instructions screen
-                if (overlay) overlay.classList.remove('hidden');
-                if (startBtn) startBtn.focus();
-            });
-        } else if (overlay) {
-            // Consent already given, skip right to instructions
-            if (consentOverlay) consentOverlay.classList.add('hidden');
+        if (consentOverlay) {
+            consentOverlay.classList.add('hidden');
+        }
+        if (overlay) {
             overlay.classList.remove('hidden');
-            if (startBtn) startBtn.focus();
+        }
+        if (startBtn) {
+            startBtn.focus();
+        }
+
+        function beginApp() {
+            if (overlay) overlay.classList.add('hidden');
+            if (consentOverlay) consentOverlay.classList.add('hidden');
+            CVIKeyboard.enable();
+
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(function () {
+                    // Fullscreen denied — continue without it
+                });
+            }
+
+            document.getElementById('text-display').focus();
+            CVISpeech.speakSystem('Ready. Start typing.');
         }
 
         if (overlay && startBtn) {
             startBtn.addEventListener('click', function () {
-                overlay.classList.add('hidden');
-                CVIKeyboard.enable();
-
-                // Request fullscreen (best effort, may be blocked)
-                if (document.documentElement.requestFullscreen) {
-                    document.documentElement.requestFullscreen().catch(function () {
-                        // Fullscreen denied — continue without it
-                    });
+                if (!hasConsent) {
+                    overlay.classList.add('hidden');
+                    if (consentOverlay) consentOverlay.classList.remove('hidden');
+                    if (consentAcceptBtn) consentAcceptBtn.focus();
+                } else {
+                    beginApp();
                 }
+            });
+        }
 
-                // Focus the text display so keyboard events are captured
-                document.getElementById('text-display').focus();
-
-                // Welcome message
-                CVISpeech.speakSystem('Ready. Start typing.');
+        if (consentAcceptBtn) {
+            consentAcceptBtn.addEventListener('click', function () {
+                localStorage.setItem('cvi-consent-accepted', 'true');
+                hasConsent = true;
+                beginApp();
             });
         }
 

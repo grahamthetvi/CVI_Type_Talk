@@ -374,6 +374,43 @@ body {
     color: #FFFF00;
 }
 
+/* Softer, calmer consent step (after instructions) */
+.overlay.consent-panel {
+    background: radial-gradient(ellipse 120% 80% at 50% 20%, #1e2a38 0%, #0d0d12 45%, #000000 100%);
+}
+
+.overlay.consent-panel .overlay-content h1 {
+    color: #b8e0ff;
+}
+
+.overlay.consent-panel .overlay-content p {
+    color: #e6e6e6;
+}
+
+.overlay.consent-panel .overlay-content strong {
+    color: #ffe066;
+}
+
+.consent-footnote {
+    font-size: clamp(13px, min(2.2vw, 2.9vh), 24px);
+    color: #b0b8c4;
+    font-style: italic;
+    margin-top: clamp(8px, 1.5vh, 16px);
+}
+
+.consent-continue-btn {
+    background-color: #4a9eff;
+    color: #ffffff;
+}
+
+.consent-continue-btn:hover {
+    background-color: #6bb0ff;
+}
+
+.consent-continue-btn:focus {
+    outline-color: #b8e0ff;
+}
+
 .keyboard-notice {
     font-size: clamp(12px, min(2vw, 2.8vh), 22px);
     color: #FFAA00;
