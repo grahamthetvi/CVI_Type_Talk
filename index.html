@@ -292,6 +292,10 @@
                     </select>
                 </div>
                 <div class="setting-row">
+                    <label for="student-name">Student Name (for Camera):</label>
+                    <input type="text" id="student-name" placeholder="e.g. Charlie" style="flex: 1; max-width: 300px; padding: 8px; border-radius: 4px; border: 1px solid #666; background-color: #333; color: #FFF; font-size: 16px;">
+                </div>
+                <div class="setting-row">
                     <label for="remove-background">Remove Image Background:</label>
                     <input type="checkbox" id="remove-background">
                 </div>
@@ -327,6 +331,26 @@
                     <textarea id="blocked-word-list" rows="3"
                         placeholder="Enter words that should never show images..."></textarea>
                     <p class="setting-note">These words will never show images, regardless of other settings.</p>
+                </div>
+            </section>
+
+            <!-- Custom Local Images -->
+            <section class="settings-section">
+                <h3>Custom Local Images</h3>
+                <p class="setting-note">Add your own pictures from this device for specific words. These are saved securely offline and take priority over Wikimedia pictures.</p>
+                <div class="setting-row">
+                    <label for="custom-image-word">Word:</label>
+                    <input type="text" id="custom-image-word" placeholder="e.g. dog" style="flex: 1; max-width: 300px; padding: 8px; border-radius: 4px; border: 1px solid #666; background-color: #333; color: #FFF; font-size: 16px;">
+                </div>
+                <div class="setting-row">
+                    <label for="custom-image-file">Picture:</label>
+                    <input type="file" id="custom-image-file" accept="image/*" style="flex: 1; max-width: 300px; padding: 8px; font-size: 16px; color: #FFF;">
+                </div>
+                <div class="setting-row">
+                    <button id="add-custom-image-btn" type="button" class="settings-button primary">Add Custom Picture</button>
+                </div>
+                <div id="custom-images-list" class="custom-images-list">
+                    <!-- dynamically populated -->
                 </div>
             </section>
 
@@ -428,6 +452,7 @@
 
     <script src="js/speech.js"></script>
     <script src="js/background-removal.js"></script>
+    <script src="js/local-images.js"></script>
     <script src="js/badwords.js"></script>
     <script src="js/images.js"></script>
     <script src="js/settings.js"></script>

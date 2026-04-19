@@ -5,6 +5,9 @@
 const CVIApp = {
     async init() {
         // Initialize modules
+        if (typeof CVILocalImages !== 'undefined') {
+            await CVILocalImages.init().catch(e => console.error("Failed to init CVILocalImages", e));
+        }
         CVISettings.init();
         CVIDisplay.init();
         CVIImages.init();

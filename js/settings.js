@@ -25,7 +25,8 @@ const CVISettings = {
         cursorStyle: 'default',
         preloadWords: '',
         imageSize: 55,
-        imageLabelSize: 48
+        imageLabelSize: 48,
+        studentName: ''
     },
 
     current: {},
@@ -186,6 +187,13 @@ const CVISettings = {
         if (arrowSize && arrowSizeValue) {
             arrowSize.addEventListener('input', function() {
                 arrowSizeValue.textContent = this.value + 'px';
+            });
+        }
+
+        var addCustomImgBtn = document.getElementById('add-custom-image-btn');
+        if (addCustomImgBtn) {
+            addCustomImgBtn.addEventListener('click', function() {
+                self.handleAddCustomImage();
             });
         }
 
@@ -499,8 +507,14 @@ const CVISettings = {
         if (imageLabelSize) imageLabelSize.value = this.current.imageLabelSize;
         if (imageLabelSizeValue) imageLabelSizeValue.textContent = this.current.imageLabelSize + 'px';
 
+        var studentName = document.getElementById('student-name');
+        if (studentName) studentName.value = this.current.studentName || '';
+
         // Populate session word history
         this._populateWordHistory();
+
+        // Populate custom local images list
+        this._populateCustomImagesList();
     },
 
     /**
@@ -572,6 +586,9 @@ const CVISettings = {
 
         var imageLabelSize = document.getElementById('image-label-size');
         if (imageLabelSize) this.current.imageLabelSize = parseInt(imageLabelSize.value);
+
+        var studentName = document.getElementById('student-name');
+        if (studentName) this.current.studentName = studentName.value;
     },
 
     /**
@@ -709,6 +726,89 @@ const CVISettings = {
         historyEl.textContent = history.map(function (entry) {
             return entry.timestamp + '  —  ' + entry.word.toUpperCase();
         }).join('\n');
+    },
+
+    /**
+     * Handle adding a custom image from the UI
+     */
+    handleAddCustomImage() {
+        var wordInput = document.getElementById('custom-image-word');
+        var fileInput = document.getElementById('custom-image-file');
+        if (!wordInput || !fileInput) return;
+
+        var word = wordInput.value.trim();
+        var file = fileInput.files[0];
+
+        if (!word) {
+            alert('Please enter a word.');
+            return;
+        }
+        if (!file) {
+            alert('Please select an image file.');
+            return;
+        }
+
+        var reader = new FileReader();
+        var self = this;
+        reader.onload = function(e) {
+            var dataUrl = e.target.result;
+            if (typeof CVILocalImages !== 'undefined') {
+                CVILocalImages.saveImage(word, dataUrl).then(function() {
+                    wordInput.value = '';
+                    fileInput.value = '';
+                    self._populateCustomImagesList();
+                }).catch(function(err) {
+                    alert('Error saving image: ' + err.message);
+                });
+            }
+        };
+        reader.readAsDataURL(file);
+    },
+
+    /**
+     * Populate the custom images list in settings
+     */
+    _populateCustomImagesList() {
+        var listContainer = document.getElementById('custom-images-list');
+        if (!listContainer || typeof CVILocalImages === 'undefined') return;
+
+        var self = this;
+        CVILocalImages.getAllImages().then(function(images) {
+            listContainer.innerHTML = '';
+            if (images.length === 0) {
+                listContainer.innerHTML = '<p class="setting-note">No custom images added yet.</p>';
+                return;
+            }
+
+            images.forEach(function(imgData) {
+                var item = document.createElement('div');
+                item.className = 'custom-image-item';
+
+                var img = document.createElement('img');
+                img.src = imgData.dataUrl;
+                img.className = 'custom-image-thumbnail';
+                
+                var span = document.createElement('span');
+                span.textContent = imgData.word.toUpperCase();
+                span.className = 'custom-image-word';
+
+                var btn = document.createElement('button');
+                btn.textContent = 'Remove';
+                btn.className = 'custom-image-remove-btn';
+                btn.onclick = function() {
+                    if (confirm('Remove custom image for "' + imgData.word + '"?')) {
+                        CVILocalImages.removeImage(imgData.word).then(function() {
+                            self._populateCustomImagesList();
+                        });
+                    }
+                };
+
+                item.appendChild(img);
+                item.appendChild(span);
+                item.appendChild(btn);
+                listContainer.appendChild(item);
+            });
+        });
     },
 
     /**

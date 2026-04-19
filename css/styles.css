@@ -796,6 +796,55 @@ body {
     line-height: 1.4;
 }
 
+/* === Custom Local Images === */
+.custom-images-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.custom-image-item {
+    display: flex;
+    align-items: center;
+    background-color: #333333;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #555555;
+    gap: 15px;
+}
+
+.custom-image-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #777777;
+}
+
+.custom-image-word {
+    flex: 1;
+    font-size: 20px;
+    color: #00FF00;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.custom-image-remove-btn {
+    background-color: #FF4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.custom-image-remove-btn:hover {
+    background-color: #FF2222;
+}
+
 /* === Image Processing State === */
 .word-image.processing {
     opacity: 0.5;

@@ -161,8 +161,11 @@ const CVIImages = {
         }
 
         var normalized = word.toLowerCase().trim();
+        
+        var settings = CVISettings ? CVISettings.getSettings() : null;
+        var studentName = settings && settings.studentName ? settings.studentName.toLowerCase().trim() : '';
 
-        if (normalized === "me" || normalized === "you") {
+        if (normalized === "me" || normalized === "you" || (studentName && normalized === studentName)) {
             this._showCamera(normalized);
             return;
         }
@@ -179,6 +182,28 @@ const CVIImages = {
         if (CVISettings && !CVISettings.shouldShowImage(normalized)) {
             this._showTextOnly(normalized);
             return;
+        }
+
+        // ── Custom Local Images ──────────────────────────────────────────────
+        if (typeof CVILocalImages !== 'undefined') {
+            var customImgDataUrl = await CVILocalImages.getImage(normalized);
+            if (customImgDataUrl) {
+                this._currentPhotos = [{ url: customImgDataUrl, title: normalized }];
+                this._currentPhotoIndex = 0;
+                this._currentWord = normalized;
+                
+                // Set attribution explicitly for custom image
+                this.imageEl.src = customImgDataUrl;
+                this.imageEl.alt = 'Custom photo of ' + normalized;
+                this.imageEl.hidden = false;
+                this.labelEl.textContent = normalized.toUpperCase();
+                this.labelEl.className = 'image-label has-image';
+                this.attributionEl.textContent = 'Custom Local Picture';
+                
+                this.imageEl.onerror = () => { this._showTextOnly(normalized); };
+                this._updateArrows();
+                return;
+            }
         }
 
         // ── Cache check FIRST ────────────────────────────────────────────────
