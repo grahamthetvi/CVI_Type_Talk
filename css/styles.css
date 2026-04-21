@@ -78,6 +78,11 @@ body {
     opacity: 0.6;
 }
 
+/* Teacher Mode ghost text placeholder */
+.ghost-text {
+    opacity: 0.3;
+}
+
 /* Blinking cursor */
 .cursor {
     color: #FFFF00;

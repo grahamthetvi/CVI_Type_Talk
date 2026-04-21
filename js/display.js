@@ -8,6 +8,7 @@ const CVIDisplay = {
     lines: [],
     currentText: '',
     maxVisibleLines: 5,
+    targetWord: '', // For Teacher Mode
 
     // Session word history — persists for the lifetime of the page session
     sessionWordHistory: [],
@@ -17,8 +18,21 @@ const CVIDisplay = {
         this.statusTextEl = document.getElementById('status-text');
         this.lines = [];
         this.currentText = '';
+        this.targetWord = '';
         this.sessionWordHistory = [];
         this._render();
+    },
+
+    /**
+     * Start Teacher Mode with a specific target word.
+     */
+    startTeacherMode(word) {
+        if (this.currentText.trim().length > 0) {
+            this.commitLine();
+        }
+        this.targetWord = word.toLowerCase();
+        this._render();
+        this._updateStatus('Teacher Mode: Type the word "' + word.toUpperCase() + '"');
     },
 
     /**
@@ -122,15 +136,27 @@ const CVIDisplay = {
         var lineSpan = document.createElement('span');
         lineSpan.id = 'current-line';
         lineSpan.className = 'current-line';
-        lineSpan.textContent = this.currentText;
+        
+        var typedTextNode = document.createTextNode(this.currentText);
+        lineSpan.appendChild(typedTextNode);
 
         var cursor = document.createElement('span');
         cursor.className = 'cursor';
         cursor.setAttribute('aria-hidden', 'true');
         cursor.textContent = '|';
+        lineSpan.appendChild(cursor);
+
+        if (this.targetWord) {
+            var remaining = this.targetWord.substring(this.currentText.length);
+            if (remaining) {
+                var ghostSpan = document.createElement('span');
+                ghostSpan.className = 'ghost-text';
+                ghostSpan.textContent = remaining;
+                lineSpan.appendChild(ghostSpan);
+            }
+        }
 
         this.displayEl.appendChild(lineSpan);
-        this.displayEl.appendChild(cursor);
 
         this.displayEl.scrollTop = this.displayEl.scrollHeight;
     },
@@ -153,6 +179,7 @@ const CVIDisplay = {
     clear() {
         this.lines = [];
         this.currentText = '';
+        this.targetWord = '';
         this._render();
         this._updateStatus('Type a letter to begin');
     }

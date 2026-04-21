@@ -111,6 +111,22 @@ const CVIKeyboard = {
             return;
         }
 
+        // Ctrl+Shift+T: toggle Teacher Mode
+        if (event.ctrlKey && event.shiftKey && (key === 'T' || key === 't')) {
+            event.preventDefault();
+            var word = prompt("Enter target word for Teacher Mode (or leave blank to exit):");
+            if (word !== null) {
+                if (word.trim() === '') {
+                    CVIDisplay.targetWord = '';
+                    CVIDisplay._updateStatus('Exited Teacher Mode');
+                    CVIDisplay._render();
+                } else {
+                    CVIDisplay.startTeacherMode(word.trim());
+                }
+            }
+            return;
+        }
+
         // Ctrl+Shift+L: toggle LPM display
         if (event.ctrlKey && event.shiftKey && (key === 'L' || key === 'l')) {
             event.preventDefault();
@@ -137,6 +153,18 @@ const CVIKeyboard = {
             event.preventDefault();
             CVIImages.showNextPhoto();
             return;
+        }
+
+        // Audio prompt key for Teacher Mode (Tab or ?)
+        if (CVIDisplay.targetWord) {
+            if (key === 'Tab' || key === '?' || key === '/') {
+                event.preventDefault();
+                var expectedChar = CVIDisplay.targetWord[CVIDisplay.currentText.length];
+                if (expectedChar) {
+                    CVISpeech.speakSystem('Press ' + expectedChar.toUpperCase());
+                }
+                return;
+            }
         }
 
         // Get current settings
@@ -206,10 +234,36 @@ const CVIKeyboard = {
         // Letters only (no digits)
         if (this._isAllowedChar(key)) {
             event.preventDefault();
+            
+            // Teacher Mode Enforcement
+            if (CVIDisplay.targetWord) {
+                var expectedChar = CVIDisplay.targetWord[CVIDisplay.currentText.length];
+                if (expectedChar && key.toLowerCase() !== expectedChar.toLowerCase()) {
+                    // Incorrect letter in Teacher Mode
+                    CVISpeech.speakSystem('Try again. Press ' + expectedChar.toUpperCase());
+                    return;
+                }
+            }
+
             this.letterCount++;
             CVIDisplay.addCharacter(key);
             CVISpeech.speakLetter(key);
             if (this.speedDisplayMode) this._showSpeed();
+
+            // Check if word is complete in Teacher Mode
+            if (CVIDisplay.targetWord && CVIDisplay.currentText.length === CVIDisplay.targetWord.length) {
+                // Short delay so they can hear the last letter before the word is spoken
+                setTimeout(() => {
+                    var word = CVIDisplay.commitLine();
+                    CVIDisplay.targetWord = ''; // Exit teacher mode after successful word
+                    if (word) {
+                        CVISpeech.speakWord(word);
+                        CVIImages.showImage(word);
+                        this.recordWord();
+                        if (this.speedDisplayMode) this._showSpeed();
+                    }
+                }, 400);
+            }
             return;
         }
 
