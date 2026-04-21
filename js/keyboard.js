@@ -19,6 +19,53 @@ const CVIKeyboard = {
         return (key.length === 1 && /[a-zA-Z]/.test(key));
     },
 
+    /** Helper for finger mapping (assuming home row) */
+    _getFingerForChar: function(char) {
+        var c = char.toLowerCase();
+        if (['q', 'a', 'z', '1'].includes(c)) return "left pinky";
+        if (['w', 's', 'x', '2'].includes(c)) return "left ring finger";
+        if (['e', 'd', 'c', '3'].includes(c)) return "left middle finger";
+        if (['r', 'f', 'v', 't', 'g', 'b', '4', '5'].includes(c)) return "left index finger";
+        if (['y', 'h', 'n', 'u', 'j', 'm', '6', '7'].includes(c)) return "right index finger";
+        if (['i', 'k', ',', '8'].includes(c)) return "right middle finger";
+        if (['o', 'l', '.', '9'].includes(c)) return "right ring finger";
+        if (['p', ';', '/', "'", '[', ']', '-', '=', '0'].includes(c)) return "right pinky";
+        if (c === ' ') return "thumb";
+        return "";
+    },
+
+    /** True if the base letter is typed with the left hand on the home row. */
+    _isLeftHandLetter: function(char) {
+        var low = char.toLowerCase();
+        return ['q', 'w', 'e', 'r', 't', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b'].indexOf(low) !== -1;
+    },
+
+    /**
+     * Spoken instruction for the next key in Teacher Mode (Tab/?) or after a wrong key.
+     * Lowercase: "Press X with your … finger"; uppercase: capital + opposite-hand shift + base key finger.
+     */
+    _teacherKeyPromptMessage: function(expectedChar, tryAgain) {
+        var prefix = tryAgain ? 'Try again. ' : '';
+        var finger = this._getFingerForChar(expectedChar);
+        if (!/[a-zA-Z]/.test(expectedChar)) {
+            var msg = prefix + 'Press ' + expectedChar;
+            if (finger) msg += ' with your ' + finger;
+            return msg;
+        }
+        var letterName = expectedChar.toUpperCase();
+        if (expectedChar === expectedChar.toLowerCase()) {
+            var out = prefix + 'Press ' + letterName;
+            if (finger) out += ' with your ' + finger;
+            return out;
+        }
+        var shiftFinger = this._isLeftHandLetter(expectedChar) ? 'right pinky' : 'left pinky';
+        var cap = prefix + 'Press capital ' + letterName + '. Hold shift with your ' + shiftFinger;
+        if (finger) {
+            cap += ', then press ' + letterName + ' with your ' + finger;
+        }
+        return cap;
+    },
+
     init() {
         document.addEventListener('keydown', this._handleKeyDown.bind(this));
     },
@@ -117,6 +164,10 @@ const CVIKeyboard = {
             var word = prompt("Enter target word for Teacher Mode (or leave blank to exit):");
             if (word !== null) {
                 if (word.trim() === '') {
+                    if (CVIDisplay.targetWord && CVIDisplay.currentText.length > 0) {
+                        var partialWord = CVIDisplay.commitLine();
+                        if (partialWord) this.recordWord();
+                    }
                     CVIDisplay.targetWord = '';
                     CVIDisplay._updateStatus('Exited Teacher Mode');
                     CVIDisplay._render();
@@ -161,7 +212,7 @@ const CVIKeyboard = {
                 event.preventDefault();
                 var expectedChar = CVIDisplay.targetWord[CVIDisplay.currentText.length];
                 if (expectedChar) {
-                    CVISpeech.speakSystem('Press ' + expectedChar.toUpperCase());
+                    CVISpeech.speakSystem(this._teacherKeyPromptMessage(expectedChar, false));
                 }
                 return;
             }
@@ -239,15 +290,19 @@ const CVIKeyboard = {
             if (CVIDisplay.targetWord) {
                 var expectedChar = CVIDisplay.targetWord[CVIDisplay.currentText.length];
                 if (expectedChar && key.toLowerCase() !== expectedChar.toLowerCase()) {
-                    // Incorrect letter in Teacher Mode
-                    CVISpeech.speakSystem('Try again. Press ' + expectedChar.toUpperCase());
+                    CVISpeech.speakSystem(this._teacherKeyPromptMessage(expectedChar, true));
                     return;
                 }
             }
 
             this.letterCount++;
-            CVIDisplay.addCharacter(key);
-            CVISpeech.speakLetter(key);
+            var charToAdd = key;
+            if (CVIDisplay.targetWord) {
+                // Force the typed character to match the teacher's capitalization
+                charToAdd = CVIDisplay.targetWord[CVIDisplay.currentText.length];
+            }
+            CVIDisplay.addCharacter(charToAdd);
+            CVISpeech.speakLetter(charToAdd);
             if (this.speedDisplayMode) this._showSpeed();
 
             // Check if word is complete in Teacher Mode

@@ -722,10 +722,20 @@ const CVISettings = {
             return;
         }
 
-        // Build a chronological list: "time — word"
+        // Build a chronological list: "time — word" (preserve typed capitalization)
         historyEl.textContent = history.map(function (entry) {
-            return entry.timestamp + '  —  ' + entry.word.toUpperCase();
+            return entry.timestamp + '  —  ' + entry.word;
         }).join('\n');
+    },
+
+    /**
+     * Refresh the session word history list if the settings panel is open.
+     */
+    refreshWordHistoryIfOpen() {
+        var panel = document.getElementById('settings-panel');
+        if (panel && panel.classList.contains('visible')) {
+            this._populateWordHistory();
+        }
     },
 
     /**

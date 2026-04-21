@@ -30,9 +30,9 @@ const CVIDisplay = {
         if (this.currentText.trim().length > 0) {
             this.commitLine();
         }
-        this.targetWord = word.toLowerCase();
+        this.targetWord = word;
         this._render();
-        this._updateStatus('Teacher Mode: Type the word "' + word.toUpperCase() + '"');
+        this._updateStatus('Teacher Mode: Type the word "' + word + '"');
     },
 
     /**
@@ -77,7 +77,7 @@ const CVIDisplay = {
         this.currentText += ' ';
         this._render();
         if (word) {
-            this._updateStatus('You typed: ' + word.toUpperCase());
+            this._updateStatus('You typed: ' + word);
             this._recordWord(word);
         }
         return word;
@@ -92,7 +92,7 @@ const CVIDisplay = {
         this.currentText = '';
         this._render();
         if (lastWord) {
-            this._updateStatus('You typed: ' + lastWord.toUpperCase());
+            this._updateStatus('You typed: ' + lastWord);
             this._recordWord(lastWord);
         } else {
             this._updateStatus('New line');
@@ -105,12 +105,15 @@ const CVIDisplay = {
      */
     _recordWord(word) {
         if (!word || !word.trim()) return;
-        var normalized = word.toLowerCase().trim();
-        if (normalized.length === 0) return;
+        var display = word.trim();
+        if (display.length === 0) return;
         this.sessionWordHistory.push({
-            word: normalized,
+            word: display,
             timestamp: new Date().toLocaleTimeString()
         });
+        if (typeof CVISettings !== 'undefined' && CVISettings.refreshWordHistoryIfOpen) {
+            CVISettings.refreshWordHistoryIfOpen();
+        }
     },
 
     /**
