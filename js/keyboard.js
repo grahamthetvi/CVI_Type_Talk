@@ -158,8 +158,8 @@ const CVIKeyboard = {
             return;
         }
 
-        // Ctrl+Shift+T: toggle Teacher Mode
-        if (event.ctrlKey && event.shiftKey && (key === 'T' || key === 't')) {
+        // Ctrl+Shift+Y: Teacher Mode (avoid Ctrl+Shift+T — browsers use that for "reopen closed tab")
+        if (event.ctrlKey && event.shiftKey && (key === 'Y' || key === 'y')) {
             event.preventDefault();
             var word = prompt("Enter target word for Teacher Mode (or leave blank to exit):");
             if (word !== null) {
