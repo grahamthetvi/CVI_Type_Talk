@@ -352,6 +352,9 @@ body {
     overflow-y: auto;
     padding-top: clamp(12px, 3vh, 36px);
     padding-bottom: clamp(20px, 5vh, 56px);
+    /* dvh tracks visible viewport on mobile (dynamic URL bar) */
+    padding-top: clamp(12px, 3dvh, 36px);
+    padding-bottom: clamp(20px, 5dvh, 56px);
     box-sizing: border-box;
 }
 
@@ -364,17 +367,32 @@ body {
     max-width: 700px;
     width: 100%;
     padding: clamp(12px, 3vh, 40px) clamp(16px, 3vw, 40px);
+    padding: clamp(12px, 3dvh, 40px) clamp(16px, 3vw, 40px);
     box-sizing: border-box;
 }
 
 .overlay-content h1 {
-    font-size: clamp(22px, min(4.5vw, 5vh), 44px);
+    /* vmin keeps type readable when either axis is small (e.g. landscape phone) */
+    font-size: clamp(1.75rem, 0.5rem + 5.5vmin + 1.5vw, 3.75rem);
     line-height: 1.15;
     margin-bottom: clamp(10px, 2.5vh, 28px);
+    margin-bottom: clamp(10px, 2.5dvh, 28px);
     margin-top: 0;
     color: #FFFF00;
     max-width: 100%;
     overflow-wrap: anywhere;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+/* Welcome / instructions: high-contrast halo so yellow title stays legible on black */
+.overlay:not(.consent-panel) .overlay-content h1 {
+    text-shadow:
+        0 0 0.08em #000000,
+        0 0.05em 0 #000000,
+        0 -0.05em 0 #000000,
+        0.05em 0 0 #000000,
+        -0.05em 0 0 #000000;
 }
 
 .overlay-content p {
