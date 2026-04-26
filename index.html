@@ -82,6 +82,13 @@
             <p>Press <strong>Tab</strong> or <strong>?</strong> in Teacher Mode to hear the next letter.</p>
             <p class="keyboard-notice">⌨️ This app requires a <strong>physical keyboard</strong>. It will not work on a
                 touchscreen without one connected.</p>
+            <div class="keyboard-notice screenreader-notice" role="region" aria-label="Note for screen reader users">
+                <h2 class="a11y-callout-heading">Using a screen reader?</h2>
+                <p>The typing area is <strong>not</strong> a standard text field in the browser, so your screen reader
+                    may not read what you type the way it would in a normal text box. The app speaks each letter and
+                    word with built-in speech, and the status line at the bottom of the page announces many updates
+                    (including words you finish).</p>
+            </div>
             <button id="start-button" type="button" class="start-button" autofocus>
                 Start Typing
             </button>
@@ -155,6 +162,14 @@
     <div id="settings-panel" class="settings-panel" role="dialog" aria-labelledby="settings-title" aria-modal="true">
         <div class="settings-content">
             <h2 id="settings-title">Settings</h2>
+
+            <section class="settings-section" id="settings-screen-reader" aria-label="Screen reader information">
+                <h3>Screen reader users</h3>
+                <p class="setting-note">The main typing area is not a standard text field, so your screen reader may not
+                    treat it like a normal text box. The app uses built-in speech for letters and words, and the status
+                    line at the bottom of the page announces many updates. The same information appears on the first
+                    screen when you open the app.</p>
+            </section>
 
             <!-- Font Settings -->
             <section class="settings-section">
@@ -418,6 +433,7 @@
                 <p class="setting-note">All words typed this session, in order. This list is preserved here even if the
                     student clears the screen.</p>
                 <div class="setting-row full-width">
+                    <label for="session-word-history" class="sr-only">Words typed this session, with timestamps</label>
                     <textarea id="session-word-history" rows="8" readonly placeholder="No words typed yet this session."
                         style="font-family: monospace; font-size: 14px;"></textarea>
                 </div>
