@@ -499,6 +499,12 @@ body {
     outline-offset: 4px;
 }
 
+.license-info {
+    font-size: clamp(10px, min(1.5vw, 2vh), 14px);
+    color: #888888;
+    margin-top: clamp(10px, 1.5vh, 20px);
+}
+
 /* === Settings Guide (first-time popup) === */
 .settings-guide-overlay {
     position: fixed;
