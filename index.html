@@ -14,14 +14,16 @@
 </head>
 
 <body>
-    <a href="#typing-area" class="skip-link">Skip to typing area</a>
+    <a href="#typing-area" class="skip-link" data-i18n="mainShellNavigation.skipLink">Skip to typing area</a>
 
     <main id="app" class="app-container" role="application"
+        data-i18n-attr="aria-label:mainShellNavigation.mainAriaLabel"
         aria-label="CVI Type Talker - Type words to hear them spoken and see images">
 
         <!-- Left panel: typing display -->
         <section id="typing-area" class="typing-panel">
             <div id="text-display" class="text-display" role="textbox" aria-multiline="true"
+                data-i18n-attr="aria-label:mainShellNavigation.typedTextDisplayAriaLabel"
                 aria-label="Typed text display" tabindex="0">
                 <span id="current-line" class="current-line"></span>
                 <span class="cursor" aria-hidden="true">|</span>
@@ -32,14 +34,16 @@
         <aside id="image-panel" class="image-panel" aria-live="polite">
             <div id="image-container" class="image-container">
                 <div class="image-nav-row">
-                    <button id="image-prev-btn" class="image-nav-btn" aria-label="Previous image"
-                        style="display:none">&#8592;</button>
+                    <button id="image-prev-btn" class="image-nav-btn"
+                        data-i18n-attr="aria-label:mainShellNavigation.imagePanelPrevButtonAriaLabel"
+                        aria-label="Previous image" style="display:none">&#8592;</button>
                     <img id="word-image" src="" alt="" class="word-image" crossorigin="anonymous" hidden>
                     <video id="camera-feed" class="word-image" autoplay playsinline hidden></video>
-                    <button id="image-next-btn" class="image-nav-btn" aria-label="Next image"
-                        style="display:none">&#8594;</button>
+                    <button id="image-next-btn" class="image-nav-btn"
+                        data-i18n-attr="aria-label:mainShellNavigation.imagePanelNextButtonAriaLabel"
+                        aria-label="Next image" style="display:none">&#8594;</button>
                 </div>
-                <p id="image-label" class="image-label">Type a word!</p>
+                <p id="image-label" class="image-label" data-i18n="mainShellNavigation.defaultImageLabel">Type a word!</p>
                 <p id="image-attribution" class="image-attribution" aria-hidden="true"></p>
             </div>
         </aside>
@@ -47,20 +51,20 @@
 
     <!-- Status bar -->
     <footer id="status-bar" class="status-bar" role="status" aria-live="polite">
-        <p id="status-text">Type a letter to begin</p>
+        <p id="status-text" data-i18n="mainShellNavigation.statusBarInitial">Type a letter to begin</p>
     </footer>
 
     <!-- Consent (shown after "Start Typing" for first-time visitors) -->
     <div id="consent-overlay" class="overlay consent-panel hidden" role="dialog" aria-labelledby="consent-title"
         aria-modal="true">
         <div class="overlay-content">
-            <h1 id="consent-title">About the pictures</h1>
-            <p>When you finish a word, this app shows an image that matches it. We filter what we can so the experience
+            <h1 id="consent-title" data-i18n="consentOverlay.title">About the pictures</h1>
+            <p data-i18n="consentOverlay.body1">When you finish a word, this app shows an image that matches it. We filter what we can so the experience
                 stays appropriate for learning.</p>
-            <p>Automated filters are not perfect. If you need tighter control, open <strong>Settings</strong> any time
-                for options like <strong>Profanity filtering</strong> and approved word lists.</p>
-            <p class="consent-footnote">Continuing means you are comfortable using the app with that in mind.</p>
-            <button id="consent-accept-btn" type="button" class="start-button consent-continue-btn">
+            <p data-i18n="consentOverlay.body2" data-i18n-html></p>
+            <p class="consent-footnote" data-i18n="consentOverlay.body3">Continuing means you are comfortable using the app with that in mind.</p>
+            <button id="consent-accept-btn" type="button" class="start-button consent-continue-btn"
+                data-i18n="consentOverlay.button">
                 Continue
             </button>
         </div>
@@ -70,29 +74,28 @@
     <div id="instructions-overlay" class="overlay" role="dialog" aria-labelledby="instructions-title"
         aria-modal="true">
         <div class="overlay-content">
-            <h1 id="instructions-title">CVI Type Talker</h1>
-            <p>Type letters to hear them spoken aloud.</p>
-            <p>Press <strong>Space</strong> or <strong>Enter</strong> to hear the whole word and see a picture.</p>
-            <p>Press <strong>Backspace</strong> to delete a letter.</p>
-            <p>Press <strong>← →</strong> arrow keys to flip through pictures of the same word.</p>
-            <p>Press <strong>Ctrl+Shift+M</strong> to show words-per-minute speed.</p>
-            <p>Press <strong>Ctrl+Shift+L</strong> to show letters-per-minute speed.</p>
-            <p>Press <strong>Ctrl+Shift+C</strong> to clear the screen.</p>
-            <p>Press <strong>Ctrl+Shift+Y</strong> to start Teacher Mode (student fills in a target word).</p>
-            <p>Press <strong>Tab</strong> or <strong>?</strong> in Teacher Mode to hear the next letter.</p>
-            <p class="keyboard-notice">⌨️ This app requires a <strong>physical keyboard</strong>. It will not work on a
-                touchscreen without one connected.</p>
-            <div class="keyboard-notice screenreader-notice" role="region" aria-label="Note for screen reader users">
-                <h2 class="a11y-callout-heading">Using a screen reader?</h2>
-                <p>The typing area is <strong>not</strong> a standard text field in the browser, so your screen reader
-                    may not read what you type the way it would in a normal text box. The app speaks each letter and
-                    word with built-in speech, and the status line at the bottom of the page announces many updates
-                    (including words you finish).</p>
+            <h1 id="instructions-title" data-i18n="instructionsOverlay.title">CVI Type Talker</h1>
+            <p data-i18n="instructionsOverlay.lines.typeLetters">Type letters to hear them spoken aloud.</p>
+            <p data-i18n="instructionsOverlay.lines.pressSpaceEnter" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressBackspace" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressArrows" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressWpm" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressLpm" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressClear" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressTeacherMode" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressTeacherPrompt" data-i18n-html></p>
+            <p class="keyboard-notice" data-i18n="instructionsOverlay.keyboardNotice" data-i18n-html></p>
+            <div class="keyboard-notice screenreader-notice" role="region"
+                data-i18n-attr="aria-label:instructionsOverlay.screenReaderRegionAriaLabel"
+                aria-label="Note for screen reader users">
+                <h2 class="a11y-callout-heading" data-i18n="instructionsOverlay.headingScreenReader">Using a screen reader?</h2>
+                <p data-i18n="instructionsOverlay.screenReaderParagraph" data-i18n-html></p>
             </div>
-            <button id="start-button" type="button" class="start-button" autofocus>
+            <button id="start-button" type="button" class="start-button" autofocus
+                data-i18n="instructionsOverlay.buttonStartTyping">
                 Start Typing
             </button>
-            <p class="license-info">MIT License - Addison Graham Creator</p>
+            <p class="license-info" data-i18n="instructionsOverlay.footer">MIT License - Addison Graham Creator</p>
         </div>
     </div>
 
@@ -103,57 +106,57 @@
 
             <!-- Scrollable section list -->
             <div class="settings-guide-body">
-                <h2 id="guide-title">⚙️ Settings Guide</h2>
-                <p class="guide-intro">Here's a quick overview of everything you can customise:</p>
+                <h2 id="guide-title" data-i18n="settingsGuideModal.title">⚙️ Settings Guide</h2>
+                <p class="guide-intro" data-i18n="settingsGuideModal.intro">Here's a quick overview of everything you can customise:</p>
 
                 <div class="guide-section">
-                    <h3>🔤 Text Appearance</h3>
-                    <p>Change the font style, size, and colour of the typing display, plus the background colour.</p>
+                    <h3 data-i18n="settingsGuideModal.sectionTextAppearanceTitle">🔤 Text Appearance</h3>
+                    <p data-i18n="settingsGuideModal.sectionTextAppearanceBody">Change the font style, size, and colour of the typing display, plus the background colour.</p>
                 </div>
                 <div class="guide-section">
-                    <h3>🔵 Bubble Letters</h3>
-                    <p>Add a coloured outline around every letter to make text pop against any background.</p>
+                    <h3 data-i18n="settingsGuideModal.sectionBubbleLettersTitle">🔵 Bubble Letters</h3>
+                    <p data-i18n="settingsGuideModal.sectionBubbleLettersBody">Add a coloured outline around every letter to make text pop against any background.</p>
                 </div>
                 <div class="guide-section">
-                    <h3>⏱ Typing Control</h3>
-                    <p>Set a minimum delay between key presses — helpful for students who press keys accidentally or too
+                    <h3 data-i18n="settingsGuideModal.sectionTypingControlTitle">⏱ Typing Control</h3>
+                    <p data-i18n="settingsGuideModal.sectionTypingControlBody">Set a minimum delay between key presses — helpful for students who press keys accidentally or too
                         quickly.</p>
                 </div>
                 <div class="guide-section">
-                    <h3>🖼 Image Display</h3>
-                    <p>Control how large the picture appears. Pre-load images for specific words so they show instantly
+                    <h3 data-i18n="settingsGuideModal.sectionImageDisplayTitle">🖼 Image Display</h3>
+                    <p data-i18n="settingsGuideModal.sectionImageDisplayBody">Control how large the picture appears. Pre-load images for specific words so they show instantly
                         when typed.</p>
                 </div>
                 <div class="guide-section">
-                    <h3>🚫 Image Filtering</h3>
-                    <p>Block certain words from ever showing a picture, or restrict the app to an approved word list
+                    <h3 data-i18n="settingsGuideModal.sectionImageFilteringTitle">🚫 Image Filtering</h3>
+                    <p data-i18n="settingsGuideModal.sectionImageFilteringBody">Block certain words from ever showing a picture, or restrict the app to an approved word list
                         only.</p>
                 </div>
                 <div class="guide-section">
-                    <h3>← → Image Navigation Arrows</h3>
-                    <p>Show or hide the on-screen arrow buttons for flipping through multiple photos. The keyboard arrow
+                    <h3 data-i18n="settingsGuideModal.sectionImageNavArrowsTitle">← → Image Navigation Arrows</h3>
+                    <p data-i18n="settingsGuideModal.sectionImageNavArrowsBody">Show or hide the on-screen arrow buttons for flipping through multiple photos. The keyboard arrow
                         keys always work too.</p>
                 </div>
                 <div class="guide-section">
-                    <h3>👩‍🏫 Teacher Mode</h3>
-                    <p>Press <strong>Ctrl+Shift+Y</strong> to enter a target word for the student to fill in. Press <strong>Tab</strong> or <strong>?</strong> to hear an audio prompt for the next letter.</p>
+                    <h3 data-i18n="settingsGuideModal.sectionTeacherModeTitle">👩‍🏫 Teacher Mode</h3>
+                    <p data-i18n="settingsGuideModal.sectionTeacherModeBody" data-i18n-html></p>
                 </div>
                 <div class="guide-section">
-                    <h3>🖱 Mouse Cursor</h3>
-                    <p>Change the cursor style — useful if a student is using a mouse to click the navigation arrows.
+                    <h3 data-i18n="settingsGuideModal.sectionMouseCursorTitle">🖱 Mouse Cursor</h3>
+                    <p data-i18n="settingsGuideModal.sectionMouseCursorBody">Change the cursor style — useful if a student is using a mouse to click the navigation arrows.
                     </p>
                 </div>
                 <div class="guide-section">
-                    <h3>📋 Session Word History</h3>
-                    <p>A running log of every word typed this session with timestamps — useful for teachers reviewing
+                    <h3 data-i18n="settingsGuideModal.sectionSessionHistoryTitle">📋 Session Word History</h3>
+                    <p data-i18n="settingsGuideModal.sectionSessionHistoryBody">A running log of every word typed this session with timestamps — useful for teachers reviewing
                         progress.</p>
                 </div>
             </div>
 
             <!-- Sticky footer: always visible regardless of scroll position -->
             <div class="settings-guide-sticky-footer">
-                <button id="guide-dismiss-btn" class="guide-dismiss-btn">Got it! Open Settings →</button>
-                <p id="guide-footer-text" class="guide-footer">This guide won't appear again.</p>
+                <button id="guide-dismiss-btn" class="guide-dismiss-btn" data-i18n="settingsGuideModal.firstTimeDismiss">Got it! Open Settings →</button>
+                <p id="guide-footer-text" class="guide-footer" data-i18n="settingsGuideModal.firstTimeFooter">This guide won't appear again.</p>
             </div>
 
         </div>
@@ -162,11 +165,13 @@
     <!-- Settings Panel -->
     <div id="settings-panel" class="settings-panel" role="dialog" aria-labelledby="settings-title" aria-modal="true">
         <div class="settings-content">
-            <h2 id="settings-title">Settings</h2>
+            <h2 id="settings-title" data-i18n="settingsPanel.panelTitle">Settings</h2>
 
-            <section class="settings-section" id="settings-screen-reader" aria-label="Screen reader information">
-                <h3>Screen reader users</h3>
-                <p class="setting-note">The main typing area is not a standard text field, so your screen reader may not
+            <section class="settings-section" id="settings-screen-reader"
+                data-i18n-attr="aria-label:settingsPanel.sectionAriaLabel"
+                aria-label="Screen reader information">
+                <h3 data-i18n="settingsPanel.screenReaderUsers">Screen reader users</h3>
+                <p class="setting-note" data-i18n="settingsPanel.screenReaderNote">The main typing area is not a standard text field, so your screen reader may not
                     treat it like a normal text box. The app uses built-in speech for letters and words, and the status
                     line at the bottom of the page announces many updates. The same information appears on the first
                     screen when you open the app.</p>
@@ -174,9 +179,9 @@
 
             <!-- Font Settings -->
             <section class="settings-section">
-                <h3>Text Appearance</h3>
+                <h3 data-i18n="settingsPanel.sectionHeadings.textAppearance">Text Appearance</h3>
                 <div class="setting-row">
-                    <label for="font-family">Font Type:</label>
+                    <label for="font-family" data-i18n="settingsPanel.labelsAndControls.fontType">Font Type:</label>
                     <select id="font-family">
                         <option value="Arial, sans-serif">Arial</option>
                         <option value="'Comic Sans MS', cursive">Comic Sans</option>
@@ -188,12 +193,12 @@
                     </select>
                 </div>
                 <div class="setting-row">
-                    <label for="font-size">Font Size:</label>
+                    <label for="font-size" data-i18n="settingsPanel.labelsAndControls.fontSize">Font Size:</label>
                     <input type="range" id="font-size" min="20" max="200" value="60" aria-describedby="font-size-value">
                     <span id="font-size-value" aria-live="polite">60px</span>
                 </div>
                 <div class="setting-row">
-                    <label for="font-color">Font Color:</label>
+                    <label for="font-color" data-i18n="settingsPanel.labelsAndControls.fontColor">Font Color:</label>
                     <select id="font-color">
                         <option value="#FFFFFF">White</option>
                         <option value="#000000">Black</option>
@@ -211,7 +216,7 @@
                     </select>
                 </div>
                 <div class="setting-row">
-                    <label for="background-color">Background Color:</label>
+                    <label for="background-color" data-i18n="settingsPanel.labelsAndControls.backgroundColor">Background Color:</label>
                     <select id="background-color">
                         <option value="#000000">Black</option>
                         <option value="#FFFFFF">White</option>
@@ -232,13 +237,13 @@
 
             <!-- Bubble Letters Settings -->
             <section class="settings-section">
-                <h3>Bubble Letters</h3>
+                <h3 data-i18n="settingsPanel.sectionHeadings.bubbleLetters">Bubble Letters</h3>
                 <div class="setting-row">
-                    <label for="bubble-letters-enabled">Enable Bubble Letters:</label>
+                    <label for="bubble-letters-enabled" data-i18n="settingsPanel.labelsAndControls.enableBubbleLetters">Enable Bubble Letters:</label>
                     <input type="checkbox" id="bubble-letters-enabled">
                 </div>
                 <div class="setting-row">
-                    <label for="bubble-color">Bubble Color:</label>
+                    <label for="bubble-color" data-i18n="settingsPanel.labelsAndControls.bubbleColor">Bubble Color:</label>
                     <select id="bubble-color">
                         <option value="#FFFF00">Yellow</option>
                         <option value="#FFFFFF">White</option>
@@ -256,7 +261,7 @@
                     </select>
                 </div>
                 <div class="setting-row">
-                    <label for="bubble-size">Bubble Size:</label>
+                    <label for="bubble-size" data-i18n="settingsPanel.labelsAndControls.bubbleSize">Bubble Size:</label>
                     <input type="range" id="bubble-size" min="2" max="10" value="4"
                         aria-describedby="bubble-size-value">
                     <span id="bubble-size-value" aria-live="polite">4px</span>
@@ -265,15 +270,15 @@
 
             <!-- Typing Intensity Settings -->
             <section class="settings-section">
-                <h3>Typing Control</h3>
+                <h3 data-i18n="settingsPanel.sectionHeadings.typingControl">Typing Control</h3>
                 <div class="setting-row">
-                    <label for="typing-interval">Minimum Time Between Keys:</label>
+                    <label for="typing-interval" data-i18n="settingsPanel.labelsAndControls.minimumTimeBetweenKeys">Minimum Time Between Keys:</label>
                     <input type="range" id="typing-interval" min="0" max="1000" step="50" value="150"
                         aria-describedby="typing-interval-value">
                     <span id="typing-interval-value" aria-live="polite">150ms</span>
                 </div>
                 <div class="setting-row">
-                    <label for="max-keys-per-second">Max Keys Per Second:</label>
+                    <label for="max-keys-per-second" data-i18n="settingsPanel.labelsAndControls.maxKeysPerSecond">Max Keys Per Second:</label>
                     <input type="range" id="max-keys-per-second" min="1" max="20" value="10"
                         aria-describedby="max-keys-value">
                     <span id="max-keys-value" aria-live="polite">10</span>
@@ -282,21 +287,21 @@
 
             <!-- Image Display Settings -->
             <section class="settings-section">
-                <h3>Image Display</h3>
+                <h3 data-i18n="settingsPanel.sectionHeadings.imageDisplay">Image Display</h3>
                 <div class="setting-row">
-                    <label for="image-size">Image Size:</label>
+                    <label for="image-size" data-i18n="settingsPanel.labelsAndControls.imageSize">Image Size:</label>
                     <input type="range" id="image-size" min="20" max="90" value="55"
                         aria-describedby="image-size-value">
                     <span id="image-size-value" aria-live="polite">55vh</span>
                 </div>
                 <div class="setting-row">
-                    <label for="image-label-size">Image Word Size:</label>
+                    <label for="image-label-size" data-i18n="settingsPanel.labelsAndControls.imageWordSize">Image Word Size:</label>
                     <input type="range" id="image-label-size" min="20" max="120" value="48"
                         aria-describedby="image-label-size-value">
                     <span id="image-label-size-value" aria-live="polite">48px</span>
                 </div>
                 <div class="setting-row">
-                    <label for="image-bg-color">Image Panel Background Color:</label>
+                    <label for="image-bg-color" data-i18n="settingsPanel.labelsAndControls.imagePanelBackgroundColor">Image Panel Background Color:</label>
                     <select id="image-bg-color">
                         <option value="#000000">Black</option>
                         <option value="#FFFFFF">White</option>
@@ -314,19 +319,19 @@
                     </select>
                 </div>
                 <div class="setting-row">
-                    <label for="student-name">Student Name (for Camera):</label>
+                    <label for="student-name" data-i18n="settingsPanel.labelsAndControls.studentNameForCamera">Student Name (for Camera):</label>
                     <input type="text" id="student-name" placeholder="e.g. Charlie" style="flex: 1; max-width: 300px; padding: 8px; border-radius: 4px; border: 1px solid #666; background-color: #333; color: #FFF; font-size: 16px;">
                 </div>
                 <div class="setting-row">
-                    <label for="remove-background">Remove Image Background:</label>
+                    <label for="remove-background" data-i18n="settingsPanel.labelsAndControls.removeImageBackground">Remove Image Background:</label>
                     <input type="checkbox" id="remove-background">
                 </div>
-                <p class="setting-note" id="bg-removal-note">Uses AI to isolate the subject on a transparent background.
+                <p class="setting-note" id="bg-removal-note" data-i18n="settingsPanel.labelsAndControls.removeImageBackgroundNote">Uses AI to isolate the subject on a transparent background.
                     Downloads a ~30MB model on first use (cached after).</p>
                 <div class="setting-row full-width" style="margin-top: 16px;">
-                    <label for="preload-words">Pre-load Images for These Words:</label>
+                    <label for="preload-words" data-i18n="settingsPanel.labelsAndControls.preloadImages">Pre-load Images for These Words:</label>
                     <textarea id="preload-words" rows="4" placeholder="cat, dog, tree, house, ball, bus..."></textarea>
-                    <p class="setting-note">Images for these words will be fetched (and background-removed, if enabled)
+                    <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.preloadImagesNote">Images for these words will be fetched (and background-removed, if enabled)
                         as soon as the session starts — so they appear instantly when the child types them. Separate
                         words with commas.</p>
                 </div>
@@ -335,41 +340,41 @@
 
             <!-- Image Filter Settings -->
             <section class="settings-section">
-                <h3>Image Filtering</h3>
+                <h3 data-i18n="settingsPanel.sectionHeadings.imageFiltering">Image Filtering</h3>
                 <div class="setting-row">
-                    <label for="filter-profanity">Filter Profanity:</label>
+                    <label for="filter-profanity" data-i18n="settingsPanel.labelsAndControls.filterProfanity">Filter Profanity:</label>
                     <input type="checkbox" id="filter-profanity" checked>
                 </div>
                 <div class="setting-row">
-                    <label for="custom-word-list-enabled">Use Custom Word List Only:</label>
+                    <label for="custom-word-list-enabled" data-i18n="settingsPanel.labelsAndControls.useCustomWordListOnly">Use Custom Word List Only:</label>
                     <input type="checkbox" id="custom-word-list-enabled">
                 </div>
                 <div class="setting-row full-width">
-                    <label for="custom-word-list">Allowed Words (comma-separated):</label>
+                    <label for="custom-word-list" data-i18n="settingsPanel.labelsAndControls.allowedWords">Allowed Words (comma-separated):</label>
                     <textarea id="custom-word-list" rows="4" placeholder="cat, dog, tree, house, car..."></textarea>
                 </div>
                 <div class="setting-row full-width">
-                    <label for="blocked-word-list">Blocked Words (comma-separated):</label>
+                    <label for="blocked-word-list" data-i18n="settingsPanel.labelsAndControls.blockedWords">Blocked Words (comma-separated):</label>
                     <textarea id="blocked-word-list" rows="3"
                         placeholder="Enter words that should never show images..."></textarea>
-                    <p class="setting-note">These words will never show images, regardless of other settings.</p>
+                    <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.blockedWordsNote">These words will never show images, regardless of other settings.</p>
                 </div>
             </section>
 
             <!-- Custom Local Images -->
             <section class="settings-section">
-                <h3>Custom Local Images</h3>
-                <p class="setting-note">Add your own pictures from this device for specific words. These are saved securely offline and take priority over Wikimedia pictures.</p>
+                <h3 data-i18n="settingsPanel.sectionHeadings.customLocalImages">Custom Local Images</h3>
+                <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.customImagesIntroNote">Add your own pictures from this device for specific words. These are saved securely offline and take priority over Wikimedia pictures.</p>
                 <div class="setting-row">
-                    <label for="custom-image-word">Word:</label>
+                    <label for="custom-image-word" data-i18n="settingsPanel.labelsAndControls.word">Word:</label>
                     <input type="text" id="custom-image-word" placeholder="e.g. dog" style="flex: 1; max-width: 300px; padding: 8px; border-radius: 4px; border: 1px solid #666; background-color: #333; color: #FFF; font-size: 16px;">
                 </div>
                 <div class="setting-row">
-                    <label for="custom-image-file">Picture:</label>
+                    <label for="custom-image-file" data-i18n="settingsPanel.labelsAndControls.picture">Picture:</label>
                     <input type="file" id="custom-image-file" accept="image/*" style="flex: 1; max-width: 300px; padding: 8px; font-size: 16px; color: #FFF;">
                 </div>
                 <div class="setting-row">
-                    <button id="add-custom-image-btn" type="button" class="settings-button primary">Add Custom Picture</button>
+                    <button id="add-custom-image-btn" type="button" class="settings-button primary" data-i18n="settingsPanel.labelsAndControls.addCustomPictureButton">Add Custom Picture</button>
                 </div>
                 <div id="custom-images-list" class="custom-images-list">
                     <!-- dynamically populated -->
@@ -378,15 +383,15 @@
 
             <!-- Image Navigation Arrow Settings -->
             <section class="settings-section">
-                <h3>Image Navigation Arrows</h3>
-                <p class="setting-note">Arrows let you flip between multiple photos of the same word. You can also use
+                <h3 data-i18n="settingsPanel.sectionHeadings.imageNavArrows">Image Navigation Arrows</h3>
+                <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.arrowsSectionNote">Arrows let you flip between multiple photos of the same word. You can also use
                     the ← → arrow keys on the keyboard.</p>
                 <div class="setting-row">
-                    <label for="arrows-enabled">Show Navigation Arrows:</label>
+                    <label for="arrows-enabled" data-i18n="settingsPanel.labelsAndControls.showNavigationArrows">Show Navigation Arrows:</label>
                     <input type="checkbox" id="arrows-enabled" checked>
                 </div>
                 <div class="setting-row">
-                    <label for="arrow-color">Arrow Color:</label>
+                    <label for="arrow-color" data-i18n="settingsPanel.labelsAndControls.arrowColor">Arrow Color:</label>
                     <select id="arrow-color">
                         <option value="#FFFF00">Yellow</option>
                         <option value="#FFFFFF">White</option>
@@ -404,7 +409,7 @@
                     </select>
                 </div>
                 <div class="setting-row">
-                    <label for="arrow-size">Arrow Button Size:</label>
+                    <label for="arrow-size" data-i18n="settingsPanel.labelsAndControls.arrowButtonSize">Arrow Button Size:</label>
                     <input type="range" id="arrow-size" min="32" max="120" value="56"
                         aria-describedby="arrow-size-value">
                     <span id="arrow-size-value" aria-live="polite">56px</span>
@@ -413,12 +418,12 @@
 
             <!-- Mouse Cursor Settings -->
             <section class="settings-section">
-                <h3>Mouse Cursor</h3>
-                <p class="setting-note">Change the mouse cursor style. A large pointer can help children identify where
+                <h3 data-i18n="settingsPanel.sectionHeadings.mouseCursor">Mouse Cursor</h3>
+                <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.cursorSectionNote">Change the mouse cursor style. A large pointer can help children identify where
                     to click to flip through pictures. Note: browsers limit cursor customization — for flipping
                     pictures, the keyboard arrow keys (← →) always work regardless of cursor style.</p>
                 <div class="setting-row">
-                    <label for="cursor-style">Cursor Style:</label>
+                    <label for="cursor-style" data-i18n="settingsPanel.labelsAndControls.cursorStyle">Cursor Style:</label>
                     <select id="cursor-style">
                         <option value="default">Default arrow</option>
                         <option value="pointer">Hand / Pointer</option>
@@ -430,49 +435,71 @@
 
             <!-- Session Word History -->
             <section class="settings-section">
-                <h3>Session Word History</h3>
-                <p class="setting-note">All words typed this session, in order. This list is preserved here even if the
+                <h3 data-i18n="settingsPanel.sectionHeadings.sessionWordHistory">Session Word History</h3>
+                <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.sessionHistoryNote">All words typed this session, in order. This list is preserved here even if the
                     student clears the screen.</p>
                 <div class="setting-row full-width">
-                    <label for="session-word-history" class="sr-only">Words typed this session, with timestamps</label>
+                    <label for="session-word-history" class="sr-only" data-i18n="settingsPanel.labelsAndControls.historyLabel">Words typed this session, with timestamps</label>
                     <textarea id="session-word-history" rows="8" readonly placeholder="No words typed yet this session."
                         style="font-family: monospace; font-size: 14px;"></textarea>
                 </div>
             </section>
 
             <div class="settings-buttons">
-                <button id="save-settings" class="settings-button primary">Save & Close</button>
-                <button id="reset-settings" class="settings-button">Reset to Defaults</button>
-                <button id="cancel-settings" class="settings-button">Cancel</button>
+                <button id="save-settings" class="settings-button primary" data-i18n="settingsPanel.labelsAndControls.buttons.saveAndClose">Save & Close</button>
+                <button id="reset-settings" class="settings-button" data-i18n="settingsPanel.labelsAndControls.buttons.resetToDefaults">Reset to Defaults</button>
+                <button id="cancel-settings" class="settings-button" data-i18n="settingsPanel.labelsAndControls.buttons.cancel">Cancel</button>
             </div>
         </div>
     </div>
 
     <!-- Image Lightbox -->
-    <div id="image-lightbox" class="image-lightbox hidden" role="dialog" aria-label="Expanded image view"
+    <div id="image-lightbox" class="image-lightbox hidden" role="dialog"
+        data-i18n-attr="aria-label:lightbox.ariaLabel"
+        aria-label="Expanded image view"
         aria-modal="true">
-        <button id="lightbox-close" class="lightbox-close" aria-label="Close expanded image">&#x2715;</button>
+        <button id="lightbox-close" class="lightbox-close"
+            data-i18n-attr="aria-label:lightbox.closeButtonAriaLabel"
+            aria-label="Close expanded image">&#x2715;</button>
         <div class="lightbox-inner">
-            <button id="lightbox-prev" class="lightbox-nav-btn" aria-label="Previous image"
+            <button id="lightbox-prev" class="lightbox-nav-btn"
+                data-i18n-attr="aria-label:lightbox.prevAriaLabel"
+                aria-label="Previous image"
                 style="display:none">&#8592;</button>
             <img id="lightbox-image" class="lightbox-image" src="" alt="" crossorigin="anonymous">
-            <button id="lightbox-next" class="lightbox-nav-btn" aria-label="Next image"
+            <button id="lightbox-next" class="lightbox-nav-btn"
+                data-i18n-attr="aria-label:lightbox.nextAriaLabel"
+                aria-label="Next image"
                 style="display:none">&#8594;</button>
         </div>
         <p id="lightbox-label" class="lightbox-label"></p>
     </div>
 
     <!-- Toolbar: guide, settings, optional tip link -->
-    <div class="floating-toolbar" role="toolbar" aria-label="Settings and help">
-        <button type="button" id="settings-guide-button" class="toolbar-guide-btn" aria-label="Open settings guide">
-            Guide
+    <div class="floating-toolbar" role="toolbar"
+        data-i18n-attr="aria-label:mainShellNavigation.toolbarAriaLabel"
+        aria-label="Settings and help">
+        <select id="language-select" class="language-select"
+            data-i18n-attr="aria-label:mainShellNavigation.languageSelectAriaLabel"
+            aria-label="Language">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+        </select>
+        <button type="button" id="settings-guide-button" class="toolbar-guide-btn"
+            data-i18n-attr="aria-label:mainShellNavigation.guideButtonAriaLabel"
+            aria-label="Open settings guide">
+            <span data-i18n="mainShellNavigation.guideButtonVisibleText">Guide</span>
         </button>
-        <button type="button" id="settings-button" class="settings-toggle" aria-label="Open Settings">⚙️</button>
+        <button type="button" id="settings-button" class="settings-toggle"
+            data-i18n-attr="aria-label:mainShellNavigation.settingsGearAriaLabel"
+            aria-label="Open Settings">⚙️</button>
         <a id="tip-link" class="tip-link" href="https://buymeacoffee.com/grahamthetvi" target="_blank"
             rel="noopener noreferrer"
-            aria-label="Support the project on Buy Me a Coffee (opens in a new tab)">Tip</a>
+            data-i18n-attr="aria-label:mainShellNavigation.tipLinkAriaLabel"
+            aria-label="Support the project on Buy Me a Coffee (opens in a new tab)"><span data-i18n="mainShellNavigation.tipLinkVisibleText">Tip</span></a>
     </div>
 
+    <script src="js/i18n.js"></script>
     <script src="js/speech.js"></script>
     <script src="js/background-removal.js"></script>
     <script src="js/local-images.js"></script>

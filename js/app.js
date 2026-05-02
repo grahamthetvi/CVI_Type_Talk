@@ -4,6 +4,23 @@
  */
 const CVIApp = {
     async init() {
+        await CVII18n.init();
+
+        var langSelect = document.getElementById('language-select');
+        if (langSelect) {
+            langSelect.value = CVII18n.current;
+            langSelect.addEventListener('change', async function () {
+                var code = langSelect.value;
+                await CVII18n.setLocale(code, true);
+                if (typeof CVISpeech !== 'undefined' && CVISpeech.refreshVoice) {
+                    await CVISpeech.refreshVoice();
+                }
+                if (typeof CVIImages !== 'undefined' && CVIImages._showDefault) {
+                    CVIImages._showDefault();
+                }
+            });
+        }
+
         // Initialize modules
         if (typeof CVILocalImages !== 'undefined') {
             await CVILocalImages.init().catch(e => console.error("Failed to init CVILocalImages", e));
@@ -26,7 +43,7 @@ const CVIApp = {
         // Warn if TTS is not supported
         if (!CVISpeech.isSupported()) {
             document.getElementById('status-text').textContent =
-                'Warning: Text-to-speech is not supported in this browser. Please use Chrome, Edge, Firefox, or Safari.';
+                CVII18n.t('ttsNotSupported.warning');
         }
 
         // Instructions first; first-time visitors see consent after "Start Typing"
@@ -58,7 +75,7 @@ const CVIApp = {
             }
 
             document.getElementById('text-display').focus();
-            CVISpeech.speakSystem('Ready. Start typing.');
+            CVISpeech.speakSystem(CVII18n.t('systemSpeech.ready'));
         }
 
         if (overlay && startBtn) {

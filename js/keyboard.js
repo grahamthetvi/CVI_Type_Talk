@@ -19,19 +19,24 @@ const CVIKeyboard = {
         return (key.length === 1 && /[a-zA-Z]/.test(key));
     },
 
-    /** Helper for finger mapping (assuming home row) */
-    _getFingerForChar: function(char) {
+    /** Finger id for i18n (systemSpeech.fingerNames.*) */
+    _getFingerIdForChar: function(char) {
         var c = char.toLowerCase();
-        if (['q', 'a', 'z', '1'].includes(c)) return "left pinky";
-        if (['w', 's', 'x', '2'].includes(c)) return "left ring finger";
-        if (['e', 'd', 'c', '3'].includes(c)) return "left middle finger";
-        if (['r', 'f', 'v', 't', 'g', 'b', '4', '5'].includes(c)) return "left index finger";
-        if (['y', 'h', 'n', 'u', 'j', 'm', '6', '7'].includes(c)) return "right index finger";
-        if (['i', 'k', ',', '8'].includes(c)) return "right middle finger";
-        if (['o', 'l', '.', '9'].includes(c)) return "right ring finger";
-        if (['p', ';', '/', "'", '[', ']', '-', '=', '0'].includes(c)) return "right pinky";
-        if (c === ' ') return "thumb";
-        return "";
+        if (['q', 'a', 'z', '1'].includes(c)) return 'leftPinky';
+        if (['w', 's', 'x', '2'].includes(c)) return 'leftRing';
+        if (['e', 'd', 'c', '3'].includes(c)) return 'leftMiddle';
+        if (['r', 'f', 'v', 't', 'g', 'b', '4', '5'].includes(c)) return 'leftIndex';
+        if (['y', 'h', 'n', 'u', 'j', 'm', '6', '7'].includes(c)) return 'rightIndex';
+        if (['i', 'k', ',', '8'].includes(c)) return 'rightMiddle';
+        if (['o', 'l', '.', '9'].includes(c)) return 'rightRing';
+        if (['p', ';', '/', "'", '[', ']', '-', '=', '0'].includes(c)) return 'rightPinky';
+        if (c === ' ') return 'thumb';
+        return '';
+    },
+
+    _fingerLabel: function(fingerId) {
+        if (!fingerId || typeof CVII18n === 'undefined' || !CVII18n.t) return '';
+        return CVII18n.t('systemSpeech.fingerNames.' + fingerId);
     },
 
     /** True if the base letter is typed with the left hand on the home row. */
@@ -45,25 +50,35 @@ const CVIKeyboard = {
      * Lowercase: "Press X with your … finger"; uppercase: capital + opposite-hand shift + base key finger.
      */
     _teacherKeyPromptMessage: function(expectedChar, tryAgain) {
-        var prefix = tryAgain ? 'Try again. ' : '';
-        var finger = this._getFingerForChar(expectedChar);
+        var t = (typeof CVII18n !== 'undefined' && CVII18n.t) ? CVII18n.t.bind(CVII18n) : function (k) { return k; };
+        var prefix = tryAgain ? t('systemSpeech.teacherModePrompts.tryAgain') : '';
+        var fingerId = this._getFingerIdForChar(expectedChar);
+        var finger = this._fingerLabel(fingerId);
         if (!/[a-zA-Z]/.test(expectedChar)) {
-            var msg = prefix + 'Press ' + expectedChar;
-            if (finger) msg += ' with your ' + finger;
+            var msg = prefix + (finger
+                ? t('systemSpeech.teacherModePrompts.pressCharWithFinger', { char: expectedChar, finger: finger })
+                : t('systemSpeech.teacherModePrompts.pressCharOnly', { char: expectedChar }));
             return msg;
         }
         var letterName = expectedChar.toUpperCase();
         if (expectedChar === expectedChar.toLowerCase()) {
-            var out = prefix + 'Press ' + letterName;
-            if (finger) out += ' with your ' + finger;
-            return out;
+            return prefix + (finger
+                ? t('systemSpeech.teacherModePrompts.pressLowercaseWithFinger', { LETTER: letterName, finger: finger })
+                : t('systemSpeech.teacherModePrompts.pressLowercaseOnly', { LETTER: letterName }));
         }
-        var shiftFinger = this._isLeftHandLetter(expectedChar) ? 'right pinky' : 'left pinky';
-        var cap = prefix + 'Press capital ' + letterName + '. Hold shift with your ' + shiftFinger;
+        var modId = this._isLeftHandLetter(expectedChar) ? 'rightPinky' : 'leftPinky';
+        var modifierFinger = this._fingerLabel(modId);
         if (finger) {
-            cap += ', then press ' + letterName + ' with your ' + finger;
+            return prefix + t('systemSpeech.teacherModePrompts.pressUppercaseWithBothFingers', {
+                LETTER: letterName,
+                modifier_finger: modifierFinger,
+                finger: finger
+            });
         }
-        return cap;
+        return prefix + t('systemSpeech.teacherModePrompts.pressUppercaseShiftOnly', {
+            LETTER: letterName,
+            modifier_finger: modifierFinger
+        });
     },
 
     init() {
@@ -115,10 +130,10 @@ const CVIKeyboard = {
     _showSpeed() {
         if (this.speedDisplayMode === 'wpm') {
             var wpm = this.getWPM();
-            CVIDisplay._updateStatus('Words per minute: ' + wpm + ' WPM  |  Press Ctrl+Shift+M to hide');
+            CVIDisplay._updateStatus(CVII18n.t('statusBar.wpm', { n: String(wpm) }));
         } else if (this.speedDisplayMode === 'lpm') {
             var lpm = this.getLPM();
-            CVIDisplay._updateStatus('Letters per minute: ' + lpm + ' LPM  |  Press Ctrl+Shift+L to hide');
+            CVIDisplay._updateStatus(CVII18n.t('statusBar.lpm', { n: String(lpm) }));
         }
     },
 
@@ -141,7 +156,7 @@ const CVIKeyboard = {
             event.preventDefault();
             CVIDisplay.clear();
             CVIImages.hideImage();
-            CVISpeech.speakSystem('screen cleared');
+            CVISpeech.speakSystem(CVII18n.t('systemSpeech.screenCleared'));
             return;
         }
 
@@ -150,7 +165,7 @@ const CVIKeyboard = {
             event.preventDefault();
             if (this.speedDisplayMode === 'wpm') {
                 this.speedDisplayMode = null;
-                CVIDisplay._updateStatus('Type a letter to begin');
+                CVIDisplay._updateStatus(CVII18n.t('mainShellNavigation.statusBarInitial'));
             } else {
                 this.speedDisplayMode = 'wpm';
                 this._showSpeed();
@@ -161,7 +176,7 @@ const CVIKeyboard = {
         // Ctrl+Shift+Y: Teacher Mode (avoid Ctrl+Shift+T — browsers use that for "reopen closed tab")
         if (event.ctrlKey && event.shiftKey && (key === 'Y' || key === 'y')) {
             event.preventDefault();
-            var word = prompt("Enter target word for Teacher Mode (or leave blank to exit):");
+            var word = prompt(CVII18n.t('browserDialogs.teacherModePrompt'));
             if (word !== null) {
                 if (word.trim() === '') {
                     if (CVIDisplay.targetWord && CVIDisplay.currentText.length > 0) {
@@ -169,7 +184,7 @@ const CVIKeyboard = {
                         if (partialWord) this.recordWord();
                     }
                     CVIDisplay.targetWord = '';
-                    CVIDisplay._updateStatus('Exited Teacher Mode');
+                    CVIDisplay._updateStatus(CVII18n.t('statusBar.exitedTeacherMode'));
                     CVIDisplay._render();
                 } else {
                     CVIDisplay.startTeacherMode(word.trim());
@@ -183,7 +198,7 @@ const CVIKeyboard = {
             event.preventDefault();
             if (this.speedDisplayMode === 'lpm') {
                 this.speedDisplayMode = null;
-                CVIDisplay._updateStatus('Type a letter to begin');
+                CVIDisplay._updateStatus(CVII18n.t('mainShellNavigation.statusBarInitial'));
             } else {
                 this.speedDisplayMode = 'lpm';
                 this._showSpeed();
@@ -249,7 +264,7 @@ const CVIKeyboard = {
             event.preventDefault();
             var removed = CVIDisplay.removeCharacter();
             if (removed) {
-                CVISpeech.speakSystem('backspace');
+                CVISpeech.speakSystem(CVII18n.t('systemSpeech.backspace'));
             }
             return;
         }
@@ -264,7 +279,7 @@ const CVIKeyboard = {
                 this.recordWord();
                 if (this.speedDisplayMode) this._showSpeed();
             } else {
-                CVISpeech.speakSystem('new line');
+                CVISpeech.speakSystem(CVII18n.t('systemSpeech.newLine'));
             }
             return;
         }
