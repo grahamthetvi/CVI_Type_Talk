@@ -1,0 +1,271 @@
+{
+  "documentSeo": {
+    "metaDescription": "CVI Type Talker - An accessible typing application for students with Cortical Visual Impairment. Type words to hear them spoken and see real images.",
+    "title": "CVI Type Talker"
+  },
+  "mainShellNavigation": {
+    "skipLink": "Skip to typing area",
+    "mainAriaLabel": "CVI Type Talker - Type words to hear them spoken and see images",
+    "typedTextDisplayAriaLabel": "Typed text display",
+    "imagePanelPrevButtonAriaLabel": "Previous image",
+    "imagePanelNextButtonAriaLabel": "Next image",
+    "defaultImageLabel": "Type a word!",
+    "statusBarInitial": "Type a letter to begin",
+    "toolbarAriaLabel": "Settings and help",
+    "guideButtonVisibleText": "Guide",
+    "guideButtonAriaLabel": "Open settings guide",
+    "settingsGearAriaLabel": "Open Settings",
+    "tipLinkVisibleText": "Tip",
+    "tipLinkAriaLabel": "Support the project on Buy Me a Coffee (opens in a new tab)",
+    "languageSelectAriaLabel": "Language"
+  },
+  "consentOverlay": {
+    "title": "About the pictures",
+    "body1": "When you finish a word, this app shows an image that matches it. We filter what we can so the experience stays appropriate for learning.",
+    "body2": "Automated filters are not perfect. If you need tighter control, open **Settings** any time for options like **Profanity filtering** and approved word lists.",
+    "body3": "Continuing means you are comfortable using the app with that in mind.",
+    "button": "Continue"
+  },
+  "instructionsOverlay": {
+    "title": "CVI Type Talker",
+    "lines": {
+      "typeLetters": "Type letters to hear them spoken aloud.",
+      "pressSpaceEnter": "Press **Space** or **Enter** to hear the whole word and see a picture.",
+      "pressBackspace": "Press **Backspace** to delete a letter.",
+      "pressArrows": "Press **← →** arrow keys to flip through pictures of the same word.",
+      "pressWpm": "Press **Ctrl+Shift+M** to show words-per-minute speed.",
+      "pressLpm": "Press **Ctrl+Shift+L** to show letters-per-minute speed.",
+      "pressClear": "Press **Ctrl+Shift+C** to clear the screen.",
+      "pressTeacherMode": "Press **Ctrl+Shift+Y** to start Teacher Mode (student fills in a target word).",
+      "pressTeacherPrompt": "Press **Tab** or **?** in Teacher Mode to hear the next letter."
+    },
+    "keyboardNotice": "⌨️ This app requires a **physical keyboard**. It will not work on a touchscreen without one connected.",
+    "screenReaderRegionAriaLabel": "Note for screen reader users",
+    "headingScreenReader": "Using a screen reader?",
+    "screenReaderParagraph": "The typing area is **not** a standard text field in the browser, so your screen reader may not read what you type the way it would in a normal text box. The app speaks each letter and word with built-in speech, and the status line at the bottom of the page announces many updates (including words you finish).",
+    "buttonStartTyping": "Start Typing",
+    "footer": "MIT License - Addison Graham Creator"
+  },
+  "settingsGuideModal": {
+    "title": "⚙️ Settings Guide",
+    "intro": "Here's a quick overview of everything you can customise:",
+    "sectionTextAppearanceTitle": "🔤 Text Appearance",
+    "sectionTextAppearanceBody": "Change the font style, size, and colour of the typing display, plus the background colour.",
+    "sectionBubbleLettersTitle": "🔵 Bubble Letters",
+    "sectionBubbleLettersBody": "Add a coloured outline around every letter to make text pop against any background.",
+    "sectionTypingControlTitle": "⏱ Typing Control",
+    "sectionTypingControlBody": "Set a minimum delay between key presses — helpful for students who press keys accidentally or too quickly.",
+    "sectionImageDisplayTitle": "🖼 Image Display",
+    "sectionImageDisplayBody": "Control how large the picture appears. Pre-load images for specific words so they show instantly when typed.",
+    "sectionImageFilteringTitle": "🚫 Image Filtering",
+    "sectionImageFilteringBody": "Block certain words from ever showing a picture, or restrict the app to an approved word list only.",
+    "sectionImageNavArrowsTitle": "← → Image Navigation Arrows",
+    "sectionImageNavArrowsBody": "Show or hide the on-screen arrow buttons for flipping through multiple photos. The keyboard arrow keys always work too.",
+    "sectionTeacherModeTitle": "👩‍🏫 Teacher Mode",
+    "sectionTeacherModeBody": "Press **Ctrl+Shift+Y** to enter a target word for the student to fill in. Press **Tab** or **?** to hear an audio prompt for the next letter.",
+    "sectionMouseCursorTitle": "🖱 Mouse Cursor",
+    "sectionMouseCursorBody": "Change the cursor style — useful if a student is using a mouse to click the navigation arrows.",
+    "sectionSessionHistoryTitle": "📋 Session Word History",
+    "sectionSessionHistoryBody": "A running log of every word typed this session with timestamps — useful for teachers reviewing progress.",
+    "firstTimeDismiss": "Got it! Open Settings →",
+    "repeatDismiss": "Close",
+    "firstTimeFooter": "This guide won't appear again.",
+    "repeatFooter": "Open Settings from the gear button to change options. You can reopen this guide anytime."
+  },
+  "settingsPanel": {
+    "panelTitle": "Settings",
+    "sectionAriaLabel": "Screen reader information",
+    "screenReaderUsers": "Screen reader users",
+    "screenReaderNote": "The main typing area is not a standard text field, so your screen reader may not treat it like a normal text box. The app uses built-in speech for letters and words, and the status line at the bottom of the page announces many updates. The same information appears on the first screen when you open the app.",
+    "sectionHeadings": {
+      "textAppearance": "Text Appearance",
+      "bubbleLetters": "Bubble Letters",
+      "typingControl": "Typing Control",
+      "imageDisplay": "Image Display",
+      "imageFiltering": "Image Filtering",
+      "customLocalImages": "Custom Local Images",
+      "imageNavArrows": "Image Navigation Arrows",
+      "mouseCursor": "Mouse Cursor",
+      "sessionWordHistory": "Session Word History"
+    },
+    "labelsAndControls": {
+      "fontType": "Font Type:",
+      "fontSize": "Font Size:",
+      "fontColor": "Font Color:",
+      "backgroundColor": "Background Color:",
+      "fontOptions": [
+        "Arial",
+        "Comic Sans",
+        "Courier New",
+        "Georgia",
+        "Times New Roman",
+        "Verdana",
+        "Trebuchet MS"
+      ],
+      "colorOptions": {
+        "white": "White",
+        "black": "Black",
+        "red": "Red",
+        "green": "Green",
+        "blue": "Blue",
+        "yellow": "Yellow",
+        "magenta": "Magenta",
+        "cyan": "Cyan",
+        "orange": "Orange",
+        "purple": "Purple",
+        "pink": "Pink",
+        "brown": "Brown",
+        "gray": "Gray"
+      },
+      "enableBubbleLetters": "Enable Bubble Letters:",
+      "bubbleColor": "Bubble Color:",
+      "bubbleSize": "Bubble Size:",
+      "minimumTimeBetweenKeys": "Minimum Time Between Keys:",
+      "maxKeysPerSecond": "Max Keys Per Second:",
+      "imageSize": "Image Size:",
+      "imageWordSize": "Image Word Size:",
+      "imagePanelBackgroundColor": "Image Panel Background Color:",
+      "studentNameForCamera": "Student Name (for Camera):",
+      "removeImageBackground": "Remove Image Background:",
+      "removeImageBackgroundNote": "Uses AI to isolate the subject on a transparent background. Downloads a ~30MB model on first use (cached after).",
+      "preloadImages": "Pre-load Images for These Words:",
+      "preloadImagesNote": "Images for these words will be fetched (and background-removed, if enabled) as soon as the session starts — so they appear instantly when the child types them. Separate words with commas.",
+      "filterProfanity": "Filter Profanity:",
+      "useCustomWordListOnly": "Use Custom Word List Only:",
+      "allowedWords": "Allowed Words (comma-separated):",
+      "blockedWords": "Blocked Words (comma-separated):",
+      "blockedWordsNote": "These words will never show images, regardless of other settings.",
+      "customImagesIntroNote": "Add your own pictures from this device for specific words. These are saved securely offline and take priority over Wikimedia pictures.",
+      "word": "Word:",
+      "picture": "Picture:",
+      "addCustomPictureButton": "Add Custom Picture",
+      "arrowsSectionNote": "Arrows let you flip between multiple photos of the same word. You can also use the ← → arrow keys on the keyboard.",
+      "showNavigationArrows": "Show Navigation Arrows:",
+      "arrowColor": "Arrow Color:",
+      "arrowButtonSize": "Arrow Button Size:",
+      "cursorSectionNote": "Change the mouse cursor style. A large pointer can help children identify where to click to flip through pictures. Note: browsers limit cursor customization — for flipping pictures, the keyboard arrow keys (← →) always work regardless of cursor style.",
+      "cursorStyle": "Cursor Style:",
+      "cursorOptions": {
+        "default": "Default arrow",
+        "hand": "Hand / Pointer",
+        "crosshair": "Crosshair",
+        "hidden": "Hidden (eye-gaze / switch access)"
+      },
+      "sessionHistoryNote": "All words typed this session, in order. This list is preserved here even if the student clears the screen.",
+      "historyLabel": "Words typed this session, with timestamps",
+      "historyTextareaPlaceholder": "No words typed yet this session.",
+      "placeholders": {
+        "studentName": "e.g. Charlie",
+        "preloadWords": "cat, dog, tree, house, ball, bus...",
+        "allowedWords": "cat, dog, tree, house, car...",
+        "blockedWords": "Enter words that should never show images...",
+        "customImageWord": "e.g. dog"
+      },
+      "buttons": {
+        "saveAndClose": "Save & Close",
+        "resetToDefaults": "Reset to Defaults",
+        "cancel": "Cancel"
+      }
+    }
+  },
+  "lightbox": {
+    "ariaLabel": "Expanded image view",
+    "closeButtonAriaLabel": "Close expanded image",
+    "prevAriaLabel": "Previous image",
+    "nextAriaLabel": "Next image"
+  },
+  "browserDialogs": {
+    "resetConfirm": "Reset all settings to defaults?",
+    "enterWordAlert": "Please enter a word.",
+    "selectImageAlert": "Please select an image file.",
+    "errorSavingImage": "Error saving image: {message}",
+    "removeCustomImageConfirm": "Remove custom image for \"{word}\"?",
+    "teacherModePrompt": "Enter target word for Teacher Mode (or leave blank to exit):"
+  },
+  "screenReaderAnnouncements": {
+    "settingsGuideOpened": "Settings guide opened",
+    "settingsGuideClosed": "Settings guide closed",
+    "settingsPanelOpened": "Settings panel opened",
+    "settingsPanelClosed": "Settings panel closed"
+  },
+  "statusBar": {
+    "teacherMode": "Teacher Mode: Type the word \"{word}\"",
+    "youTyped": "You typed: {word}",
+    "newLine": "New line",
+    "exitedTeacherMode": "Exited Teacher Mode",
+    "wpm": "Words per minute: {n} WPM  |  Press Ctrl+Shift+M to hide",
+    "lpm": "Letters per minute: {n} LPM  |  Press Ctrl+Shift+L to hide"
+  },
+  "imageArea": {
+    "customPhotoAlt": "Custom photo of {word}",
+    "photoAlt": "Photo of {word}",
+    "labels": {
+      "customLocal": "Custom Local Picture",
+      "wikimedia": "Image from Wikimedia Commons",
+      "imageXofY": "Image {i} of {n} — Wikimedia Commons",
+      "preparingBgRemoval": "Preparing background removal...",
+      "searching": "Searching for image...",
+      "notRealWord": "Not a real word — no image shown",
+      "loadingPattern": "{WORD}..."
+    },
+    "preloadStatus": {
+      "preloading": "Pre-loading {n} words…",
+      "preloadingOne": "Pre-loading 1 word…",
+      "preloadedXY": "Pre-loaded {loaded} / {total}",
+      "allPreloaded": "✓ All {n} words pre-loaded",
+      "allPreloadedOne": "✓ 1 word pre-loaded"
+    }
+  },
+  "backgroundRemoval": {
+    "loadingModel": "Loading background removal model...",
+    "removing": "Removing background...",
+    "removingPct": "Removing background... {pct}%",
+    "success": "Background removed - Wikimedia Commons",
+    "failed": "Background removal failed - Wikimedia Commons"
+  },
+  "customImagesList": {
+    "emptyState": "No custom images added yet.",
+    "buttonRemove": "Remove"
+  },
+  "ttsNotSupported": {
+    "warning": "Warning: Text-to-speech is not supported in this browser. Please use Chrome, Edge, Firefox, or Safari."
+  },
+  "systemSpeech": {
+    "ready": "Ready. Start typing.",
+    "screenCleared": "screen cleared",
+    "backspace": "backspace",
+    "newLine": "new line",
+    "digits": {
+      "0": "zero",
+      "1": "one",
+      "2": "two",
+      "3": "three",
+      "4": "four",
+      "5": "five",
+      "6": "six",
+      "7": "seven",
+      "8": "eight",
+      "9": "nine"
+    },
+    "teacherModePrompts": {
+      "tryAgain": "Try again. ",
+      "pressCharWithFinger": "Press {char} with your {finger}",
+      "pressCharOnly": "Press {char}",
+      "pressLowercaseWithFinger": "Press {LETTER} with your {finger}",
+      "pressLowercaseOnly": "Press {LETTER}",
+      "pressUppercaseWithBothFingers": "Press capital {LETTER}. Hold shift with your {modifier_finger}, then press {LETTER} with your {finger}",
+      "pressUppercaseShiftOnly": "Press capital {LETTER}. Hold shift with your {modifier_finger}"
+    },
+    "fingerNames": {
+      "leftPinky": "left pinky",
+      "leftRing": "left ring finger",
+      "leftMiddle": "left middle finger",
+      "leftIndex": "left index finger",
+      "rightIndex": "right index finger",
+      "rightMiddle": "right middle finger",
+      "rightRing": "right ring finger",
+      "rightPinky": "right pinky",
+      "thumb": "thumb"
+    }
+  }
+}

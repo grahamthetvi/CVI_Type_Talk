@@ -630,6 +630,29 @@ body {
     gap: 10px;
 }
 
+.language-select {
+    min-height: 48px;
+    padding: 6px 10px;
+    background-color: #333333;
+    color: #ffffff;
+    border: 2px solid #666666;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.language-select:focus {
+    outline: 3px solid #ffff00;
+    outline-offset: 2px;
+}
+
+html[dir="rtl"] .floating-toolbar {
+    right: auto;
+    left: 20px;
+    flex-direction: row-reverse;
+}
+
 .toolbar-guide-btn {
     min-width: 56px;
     min-height: 48px;

@@ -10,25 +10,43 @@ const CVISpeech = {
     pitch: 1.0,
     volume: 1.0,
 
-    /** Number-to-word mapping for speaking digits */
-    _numberWords: {
-        '0': 'zero', '1': 'one', '2': 'two', '3': 'three',
-        '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
-        '8': 'eight', '9': 'nine'
+    _langPrefix() {
+        if (typeof CVII18n !== 'undefined' && CVII18n.current === 'ar') return 'ar';
+        return 'en';
+    },
+
+    _digitWord(d) {
+        if (typeof CVII18n !== 'undefined' && CVII18n.t) {
+            var w = CVII18n.t('systemSpeech.digits.' + d);
+            if (w && w.indexOf('systemSpeech') === -1) return w;
+        }
+        var fallback = {
+            '0': 'zero', '1': 'one', '2': 'two', '3': 'three',
+            '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
+            '8': 'eight', '9': 'nine'
+        };
+        return fallback[d] || d;
     },
 
     /**
-     * Initialize: select an appropriate English voice.
+     * Initialize: select a voice matching the current UI locale.
      * Chrome loads voices asynchronously so we wait for the event.
      */
     init() {
         return new Promise((resolve) => {
-            const setVoice = () => {
-                const voices = this.synth.getVoices();
+            var prefix = this._langPrefix();
+            var setVoice = () => {
+                var voices = this.synth.getVoices();
+                var pick = function (p) {
+                    return voices.find(function (v) {
+                        return v.lang && v.lang.toLowerCase().indexOf(p) === 0;
+                    });
+                };
                 this.voice =
-                    voices.find(v => v.name.includes('Google US English')) ||
-                    voices.find(v => v.lang.startsWith('en') && v.localService) ||
-                    voices.find(v => v.lang.startsWith('en')) ||
+                    pick(prefix + '-') ||
+                    pick(prefix) ||
+                    (prefix === 'en' ? voices.find(function (v) { return v.name.indexOf('Google US English') !== -1; }) : null) ||
+                    pick('en') ||
                     voices[0] || null;
                 resolve(this.voice);
             };
@@ -37,9 +55,9 @@ const CVISpeech = {
                 setVoice();
             } else {
                 this.synth.addEventListener('voiceschanged', setVoice, { once: true });
-                setTimeout(() => {
+                setTimeout(function () {
                     if (!this.voice) setVoice();
-                }, 1000);
+                }.bind(this), 1000);
             }
         });
     },
@@ -54,6 +72,7 @@ const CVISpeech = {
         const spokenText = this._charToSpoken(letter);
         const utterance = new SpeechSynthesisUtterance(spokenText);
         if (this.voice) utterance.voice = this.voice;
+        utterance.lang = this.voice ? this.voice.lang : (this._langPrefix() === 'ar' ? 'ar' : 'en-US');
         utterance.rate = 0.9;
         utterance.pitch = this.pitch;
         utterance.volume = this.volume;
@@ -70,6 +89,7 @@ const CVISpeech = {
 
         const utterance = new SpeechSynthesisUtterance(word);
         if (this.voice) utterance.voice = this.voice;
+        utterance.lang = this.voice ? this.voice.lang : (this._langPrefix() === 'ar' ? 'ar' : 'en-US');
         utterance.rate = this.rate;
         utterance.pitch = this.pitch;
         utterance.volume = this.volume;
@@ -86,6 +106,7 @@ const CVISpeech = {
 
         const utterance = new SpeechSynthesisUtterance(message);
         if (this.voice) utterance.voice = this.voice;
+        utterance.lang = this.voice ? this.voice.lang : (this._langPrefix() === 'ar' ? 'ar' : 'en-US');
         utterance.rate = 1.1;
         utterance.pitch = 0.9;
         utterance.volume = this.volume;
@@ -100,8 +121,8 @@ const CVISpeech = {
         if (/[a-zA-Z]/.test(char)) {
             return char.toUpperCase();
         }
-        if (this._numberWords[char]) {
-            return this._numberWords[char];
+        if (/[0-9]/.test(char)) {
+            return this._digitWord(char);
         }
         return char;
     },
@@ -114,5 +135,10 @@ const CVISpeech = {
     /** Check if Web Speech API is supported. */
     isSupported() {
         return 'speechSynthesis' in window;
+    },
+
+    /** Re-select TTS voice after UI language change (e.g. Arabic vs English). */
+    refreshVoice() {
+        return this.init();
     }
 };

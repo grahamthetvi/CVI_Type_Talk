@@ -115,13 +115,13 @@ var CVIBackgroundRemoval = {
 
         try {
             if (attributionEl) {
-                attributionEl.textContent = 'Loading background removal model...';
+                attributionEl.textContent = CVII18n.t('backgroundRemoval.loadingModel');
             }
 
             var module = await this._loadLibrary();
 
             if (attributionEl) {
-                attributionEl.textContent = 'Removing background...';
+                attributionEl.textContent = CVII18n.t('backgroundRemoval.removing');
             }
 
             // Fetch the image as a blob
@@ -133,7 +133,7 @@ var CVIBackgroundRemoval = {
                 progress: function(key, current, total) {
                     if (attributionEl && key === 'compute:inference') {
                         var pct = Math.round((current / total) * 100);
-                        attributionEl.textContent = 'Removing background... ' + pct + '%';
+                        attributionEl.textContent = CVII18n.t('backgroundRemoval.removingPct', { pct: String(pct) });
                     }
                 }
             });
@@ -143,14 +143,14 @@ var CVIBackgroundRemoval = {
             this._processedCache.set(imageUrl, processedUrl);
 
             if (attributionEl) {
-                attributionEl.textContent = 'Background removed - Wikimedia Commons';
+                attributionEl.textContent = CVII18n.t('backgroundRemoval.success');
             }
 
             return processedUrl;
         } catch (err) {
             console.error('Background removal error:', err);
             if (attributionEl) {
-                attributionEl.textContent = 'Background removal failed - Wikimedia Commons';
+                attributionEl.textContent = CVII18n.t('backgroundRemoval.failed');
             }
             return imageUrl;
         }

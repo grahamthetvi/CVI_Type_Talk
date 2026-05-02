@@ -124,7 +124,7 @@ const CVISettings = {
         // Reset to defaults
         if (resetBtn) {
             resetBtn.addEventListener('click', function () {
-                if (confirm('Reset all settings to defaults?')) {
+                if (confirm(CVII18n.t('browserDialogs.resetConfirm'))) {
                     self.current = Object.assign({}, self.defaults);
                     self.saveSettings();
                     self.populateUI();
@@ -215,6 +215,16 @@ const CVISettings = {
 
         // Populate UI with current values
         this.populateUI();
+
+        document.addEventListener('cvi-locale-changed', function () {
+            self._applySettingsPlaceholders();
+            self.refreshWordHistoryIfOpen();
+            self._populateCustomImagesList();
+            var guideModal = document.getElementById('settings-guide-modal');
+            if (guideModal && !guideModal.hasAttribute('hidden') && self._guideMode) {
+                self._refreshSettingsGuideFooterForMode(self._guideMode);
+            }
+        });
     },
 
     /**
@@ -236,6 +246,28 @@ const CVISettings = {
     },
 
     /**
+     * Update settings guide dismiss/footer when locale changes while modal is open.
+     */
+    _refreshSettingsGuideFooterForMode(mode) {
+        var dismissBtn = document.getElementById('guide-dismiss-btn');
+        var footerEl = document.getElementById('guide-footer-text');
+        if (!dismissBtn) return;
+        if (mode === 'first') {
+            dismissBtn.textContent = CVII18n.t('settingsGuideModal.firstTimeDismiss');
+            if (footerEl) {
+                footerEl.textContent = CVII18n.t('settingsGuideModal.firstTimeFooter');
+                footerEl.hidden = false;
+            }
+        } else {
+            dismissBtn.textContent = CVII18n.t('settingsGuideModal.repeatDismiss');
+            if (footerEl) {
+                footerEl.textContent = CVII18n.t('settingsGuideModal.repeatFooter');
+                footerEl.hidden = false;
+            }
+        }
+    },
+
+    /**
      * Show the settings guide (first visit from Settings, or anytime from the Guide button).
      * @param {'first'|'repeat'} mode - first: then opens Settings on dismiss; repeat: closes only
      */
@@ -249,16 +281,15 @@ const CVISettings = {
         this._guideReturnFocus = document.activeElement;
 
         if (mode === 'first') {
-            dismissBtn.textContent = 'Got it! Open Settings →';
+            dismissBtn.textContent = CVII18n.t('settingsGuideModal.firstTimeDismiss');
             if (footerEl) {
-                footerEl.textContent = "This guide won't appear again.";
+                footerEl.textContent = CVII18n.t('settingsGuideModal.firstTimeFooter');
                 footerEl.hidden = false;
             }
         } else {
-            dismissBtn.textContent = 'Close';
+            dismissBtn.textContent = CVII18n.t('settingsGuideModal.repeatDismiss');
             if (footerEl) {
-                footerEl.textContent =
-                    'Open Settings from the gear button to change options. You can reopen this guide anytime.';
+                footerEl.textContent = CVII18n.t('settingsGuideModal.repeatFooter');
                 footerEl.hidden = false;
             }
         }
@@ -266,7 +297,7 @@ const CVISettings = {
         if (CVIKeyboard) CVIKeyboard.disable();
         modal.removeAttribute('hidden');
         dismissBtn.focus();
-        this._announceToScreenReader('Settings guide opened');
+        this._announceToScreenReader(CVII18n.t('screenReaderAnnouncements.settingsGuideOpened'));
 
         if (!this._guideKeydownBound) {
             this._guideKeydownBound = true;
@@ -312,7 +343,7 @@ const CVISettings = {
             if (this._guideReturnFocus && this._guideReturnFocus.focus) {
                 this._guideReturnFocus.focus();
             }
-            this._announceToScreenReader('Settings guide closed');
+            this._announceToScreenReader(CVII18n.t('screenReaderAnnouncements.settingsGuideClosed'));
         }
         this._guideMode = null;
     },
@@ -351,7 +382,7 @@ const CVISettings = {
             }
 
             // Announce to screen readers
-            this._announceToScreenReader('Settings panel opened');
+            this._announceToScreenReader(CVII18n.t('screenReaderAnnouncements.settingsPanelOpened'));
         }
     },
 
@@ -377,7 +408,7 @@ const CVISettings = {
             }
 
             // Announce to screen readers
-            this._announceToScreenReader('Settings panel closed');
+            this._announceToScreenReader(CVII18n.t('screenReaderAnnouncements.settingsPanelClosed'));
         }
     },
 
@@ -515,6 +546,26 @@ const CVISettings = {
 
         // Populate custom local images list
         this._populateCustomImagesList();
+
+        this._applySettingsPlaceholders();
+    },
+
+    /**
+     * Set translated placeholders on settings inputs (locale-dependent).
+     */
+    _applySettingsPlaceholders() {
+        if (typeof CVII18n === 'undefined' || !CVII18n.t) return;
+        var base = 'settingsPanel.labelsAndControls.placeholders.';
+        var sn = document.getElementById('student-name');
+        if (sn) sn.placeholder = CVII18n.t(base + 'studentName');
+        var pw = document.getElementById('preload-words');
+        if (pw) pw.placeholder = CVII18n.t(base + 'preloadWords');
+        var cw = document.getElementById('custom-word-list');
+        if (cw) cw.placeholder = CVII18n.t(base + 'allowedWords');
+        var bw = document.getElementById('blocked-word-list');
+        if (bw) bw.placeholder = CVII18n.t(base + 'blockedWords');
+        var ciw = document.getElementById('custom-image-word');
+        if (ciw) ciw.placeholder = CVII18n.t(base + 'customImageWord');
     },
 
     /**
@@ -718,7 +769,7 @@ const CVISettings = {
 
         var history = CVIDisplay ? CVIDisplay.getWordHistory() : [];
         if (!history || history.length === 0) {
-            historyEl.textContent = 'No words typed yet this session.';
+            historyEl.textContent = CVII18n.t('settingsPanel.labelsAndControls.historyTextareaPlaceholder');
             return;
         }
 
@@ -750,11 +801,11 @@ const CVISettings = {
         var file = fileInput.files[0];
 
         if (!word) {
-            alert('Please enter a word.');
+            alert(CVII18n.t('browserDialogs.enterWordAlert'));
             return;
         }
         if (!file) {
-            alert('Please select an image file.');
+            alert(CVII18n.t('browserDialogs.selectImageAlert'));
             return;
         }
 
@@ -768,7 +819,7 @@ const CVISettings = {
                     fileInput.value = '';
                     self._populateCustomImagesList();
                 }).catch(function(err) {
-                    alert('Error saving image: ' + err.message);
+                    alert(CVII18n.t('browserDialogs.errorSavingImage', { message: err.message }));
                 });
             }
         };
@@ -786,7 +837,7 @@ const CVISettings = {
         CVILocalImages.getAllImages().then(function(images) {
             listContainer.innerHTML = '';
             if (images.length === 0) {
-                listContainer.innerHTML = '<p class="setting-note">No custom images added yet.</p>';
+                listContainer.innerHTML = '<p class="setting-note">' + CVII18n.t('customImagesList.emptyState') + '</p>';
                 return;
             }
 
@@ -803,10 +854,10 @@ const CVISettings = {
                 span.className = 'custom-image-word';
 
                 var btn = document.createElement('button');
-                btn.textContent = 'Remove';
+                btn.textContent = CVII18n.t('customImagesList.buttonRemove');
                 btn.className = 'custom-image-remove-btn';
                 btn.onclick = function() {
-                    if (confirm('Remove custom image for "' + imgData.word + '"?')) {
+                    if (confirm(CVII18n.t('browserDialogs.removeCustomImageConfirm', { word: imgData.word }))) {
                         CVILocalImages.removeImage(imgData.word).then(function() {
                             self._populateCustomImagesList();
                         });

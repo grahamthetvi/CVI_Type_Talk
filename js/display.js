@@ -32,7 +32,7 @@ const CVIDisplay = {
         }
         this.targetWord = word;
         this._render();
-        this._updateStatus('Teacher Mode: Type the word "' + word + '"');
+        this._updateStatus(CVII18n.t('statusBar.teacherMode', { word: word }));
     },
 
     /**
@@ -77,7 +77,7 @@ const CVIDisplay = {
         this.currentText += ' ';
         this._render();
         if (word) {
-            this._updateStatus('You typed: ' + word);
+            this._updateStatus(CVII18n.t('statusBar.youTyped', { word: word }));
             this._recordWord(word);
         }
         return word;
@@ -95,7 +95,7 @@ const CVIDisplay = {
             this._updateStatus('You typed: ' + lastWord);
             this._recordWord(lastWord);
         } else {
-            this._updateStatus('New line');
+            this._updateStatus(CVII18n.t('statusBar.newLine'));
         }
         return lastWord;
     },
@@ -184,6 +184,6 @@ const CVIDisplay = {
         this.currentText = '';
         this.targetWord = '';
         this._render();
-        this._updateStatus('Type a letter to begin');
+        this._updateStatus(CVII18n.t('mainShellNavigation.statusBarInitial'));
     }
 };

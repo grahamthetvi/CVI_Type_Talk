@@ -194,11 +194,11 @@ const CVIImages = {
                 
                 // Set attribution explicitly for custom image
                 this.imageEl.src = customImgDataUrl;
-                this.imageEl.alt = 'Custom photo of ' + normalized;
+                this.imageEl.alt = CVII18n.t('imageArea.customPhotoAlt', { word: normalized });
                 this.imageEl.hidden = false;
                 this.labelEl.textContent = normalized.toUpperCase();
                 this.labelEl.className = 'image-label has-image';
-                this.attributionEl.textContent = 'Custom Local Picture';
+                this.attributionEl.textContent = CVII18n.t('imageArea.labels.customLocal');
                 
                 this.imageEl.onerror = () => { this._showTextOnly(normalized); };
                 this._updateArrows();
@@ -343,18 +343,19 @@ const CVIImages = {
     _displayImage(src, word, title) {
         var self = this;
         this.imageEl.src = src;
-        this.imageEl.alt = 'Photo of ' + word;
+        this.imageEl.alt = CVII18n.t('imageArea.photoAlt', { word: word });
         this.imageEl.hidden = false;
         this.labelEl.textContent = word.toUpperCase();
         this.labelEl.className = 'image-label has-image';
 
         // Show photo index if multiple available
         if (this._currentPhotos.length > 1) {
-            this.attributionEl.textContent =
-                'Image ' + (this._currentPhotoIndex + 1) + ' of ' + this._currentPhotos.length +
-                ' — Wikimedia Commons';
+            this.attributionEl.textContent = CVII18n.t('imageArea.labels.imageXofY', {
+                i: String(this._currentPhotoIndex + 1),
+                n: String(this._currentPhotos.length)
+            });
         } else {
-            this.attributionEl.textContent = 'Image from Wikimedia Commons';
+            this.attributionEl.textContent = CVII18n.t('imageArea.labels.wikimedia');
         }
 
         this.imageEl.onerror = function () {
@@ -363,7 +364,7 @@ const CVIImages = {
 
         // Apply background removal if enabled
         if (typeof CVIBackgroundRemoval !== 'undefined' && CVIBackgroundRemoval.isEnabled()) {
-            this.attributionEl.textContent = 'Preparing background removal...';
+            this.attributionEl.textContent = CVII18n.t('imageArea.labels.preparingBgRemoval');
             this.imageEl.classList.add('processing');
 
             CVIBackgroundRemoval.processImage(src, word).then(function (processedUrl) {
@@ -375,11 +376,12 @@ const CVIImages = {
             }).catch(function () {
                 self.imageEl.classList.remove('processing');
                 if (self._currentPhotos.length > 1) {
-                    self.attributionEl.textContent =
-                        'Image ' + (self._currentPhotoIndex + 1) + ' of ' + self._currentPhotos.length +
-                        ' — Wikimedia Commons';
+                    self.attributionEl.textContent = CVII18n.t('imageArea.labels.imageXofY', {
+                        i: String(self._currentPhotoIndex + 1),
+                        n: String(self._currentPhotos.length)
+                    });
                 } else {
-                    self.attributionEl.textContent = 'Image from Wikimedia Commons';
+                    self.attributionEl.textContent = CVII18n.t('imageArea.labels.wikimedia');
                 }
             });
         }
@@ -391,9 +393,9 @@ const CVIImages = {
     _showLoading(word) {
         this.imageEl.hidden = true;
         this.imageEl.src = '';
-        this.labelEl.textContent = word.toUpperCase() + '...';
+        this.labelEl.textContent = CVII18n.t('imageArea.labels.loadingPattern', { WORD: word.toUpperCase() });
         this.labelEl.className = 'image-label loading';
-        this.attributionEl.textContent = 'Searching for image...';
+        this.attributionEl.textContent = CVII18n.t('imageArea.labels.searching');
         this._currentPhotos = [];
         this._currentWord = '';
     },
@@ -420,7 +422,7 @@ const CVIImages = {
         this.imageEl.src = '';
         this.labelEl.textContent = word.toUpperCase();
         this.labelEl.className = 'image-label';
-        this.attributionEl.textContent = 'Not a real word — no image shown';
+        this.attributionEl.textContent = CVII18n.t('imageArea.labels.notRealWord');
         this._currentPhotos = [];
         this._currentWord = '';
         this._hideArrows();
@@ -432,7 +434,7 @@ const CVIImages = {
     _showDefault() {
         this.imageEl.hidden = true;
         this.imageEl.src = '';
-        this.labelEl.textContent = 'Type a word!';
+        this.labelEl.textContent = CVII18n.t('mainShellNavigation.defaultImageLabel');
         this.labelEl.className = 'image-label';
         this.attributionEl.textContent = '';
         this._currentPhotos = [];
@@ -476,7 +478,9 @@ const CVIImages = {
             if (statusEl) statusEl.textContent = msg;
         }
 
-        updateStatus('Pre-loading ' + total + ' word' + (total !== 1 ? 's' : '') + '…');
+        updateStatus(total === 1
+            ? CVII18n.t('imageArea.preloadStatus.preloadingOne')
+            : CVII18n.t('imageArea.preloadStatus.preloading', { n: String(total) }));
 
         for (var i = 0; i < words.length; i++) {
             var word = words[i];
@@ -484,7 +488,7 @@ const CVIImages = {
             // Skip if already cached
             if (self.cache.has(word)) {
                 loaded++;
-                updateStatus('Pre-loaded ' + loaded + ' / ' + total);
+                updateStatus(CVII18n.t('imageArea.preloadStatus.preloadedXY', { loaded: String(loaded), total: String(total) }));
                 continue;
             }
 
@@ -517,10 +521,12 @@ const CVIImages = {
             }
 
             loaded++;
-            updateStatus('Pre-loaded ' + loaded + ' / ' + total);
+            updateStatus(CVII18n.t('imageArea.preloadStatus.preloadedXY', { loaded: String(loaded), total: String(total) }));
         }
 
-        updateStatus('✓ All ' + total + ' word' + (total !== 1 ? 's' : '') + ' pre-loaded');
+        updateStatus(total === 1
+            ? CVII18n.t('imageArea.preloadStatus.allPreloadedOne')
+            : CVII18n.t('imageArea.preloadStatus.allPreloaded', { n: String(total) }));
 
         // Clear the message after a few seconds
         setTimeout(function () {

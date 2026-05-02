@@ -1,0 +1,271 @@
+{
+  "documentSeo": {
+    "metaDescription": "CVI Type Talker - تطبيق كتابة يسهل الوصول إليه للطلاب الذين يعانون من ضعف البصر القشري. اكتب الكلمات لسماعها نطقًا ورؤية صور حقيقية.",
+    "title": "CVI Type Talker"
+  },
+  "mainShellNavigation": {
+    "skipLink": "تخطي إلى منطقة الكتابة",
+    "mainAriaLabel": "CVI Type Talker - اكتب الكلمات لسماعها نطقًا ورؤية الصور",
+    "typedTextDisplayAriaLabel": "عرض النص المكتوب",
+    "imagePanelPrevButtonAriaLabel": "الصورة السابقة",
+    "imagePanelNextButtonAriaLabel": "الصورة التالية",
+    "defaultImageLabel": "اكتب كلمة!",
+    "statusBarInitial": "اكتب حرفًا للبدء",
+    "toolbarAriaLabel": "الإعدادات والمساعدة",
+    "guideButtonVisibleText": "الدليل",
+    "guideButtonAriaLabel": "فتح دليل الإعدادات",
+    "settingsGearAriaLabel": "فتح الإعدادات",
+    "tipLinkVisibleText": "دعم",
+    "tipLinkAriaLabel": "ادعم المشروع على Buy Me a Coffee (يفتح في علامة تبويب جديدة)",
+    "languageSelectAriaLabel": "اللغة"
+  },
+  "consentOverlay": {
+    "title": "حول الصور",
+    "body1": "عندما تنتهي من كتابة كلمة، يعرض هذا التطبيق صورة تطابقها. نحن نصفي المحتوى قدر الإمكان لتبقى التجربة مناسبة للتعلم.",
+    "body2": "الفلاتر الآلية ليست مثالية. إذا كنت بحاجة إلى تحكم أدق، افتح **الإعدادات** في أي وقت للحصول على خيارات مثل **تصفية الألفاظ النابية** وقوائم الكلمات المعتمدة.",
+    "body3": "الاستمرار يعني أنك مرتاح لاستخدام التطبيق مع أخذ ذلك في الاعتبار.",
+    "button": "متابعة"
+  },
+  "instructionsOverlay": {
+    "title": "CVI Type Talker",
+    "lines": {
+      "typeLetters": "اكتب الحروف لسماعها بصوت عالٍ.",
+      "pressSpaceEnter": "اضغط على **مسافة** (Space) أو **إدخال** (Enter) لسماع الكلمة كاملة ورؤية صورة.",
+      "pressBackspace": "اضغط على **مسافة للخلف** (Backspace) لحذف حرف.",
+      "pressArrows": "اضغط على مفاتيح الأسهم **← →** للتنقل بين صور لنفس الكلمة.",
+      "pressWpm": "اضغط على **Ctrl+Shift+M** لإظهار سرعة الكلمات في الدقيقة.",
+      "pressLpm": "اضغط على **Ctrl+Shift+L** لإظهار سرعة الحروف في الدقيقة.",
+      "pressClear": "اضغط على **Ctrl+Shift+C** لمسح الشاشة.",
+      "pressTeacherMode": "اضغط على **Ctrl+Shift+Y** لبدء وضع المعلم (يقوم الطالب بملء كلمة الهدف).",
+      "pressTeacherPrompt": "اضغط على **Tab** أو **?** في وضع المعلم لسماع الحرف التالي."
+    },
+    "keyboardNotice": "⌨️ يتطلب هذا التطبيق **لوحة مفاتيح فعلية**. لن يعمل على شاشة تعمل باللمس دون توصيل واحدة.",
+    "screenReaderRegionAriaLabel": "ملاحظة لمستخدمي قارئ الشاشة",
+    "headingScreenReader": "هل تستخدم قارئ شاشة؟",
+    "screenReaderParagraph": "منطقة الكتابة **ليست** حقل نص قياسي في المتصفح، لذا قد لا يقرأ قارئ الشاشة ما تكتبه بالطريقة التي يقرأ بها مربع النص العادي. ينطق التطبيق كل حرف وكلمة باستخدام النطق المدمج، ويعلن شريط الحالة أسفل الصفحة عن العديد من التحديثات (بما في ذلك الكلمات التي تنهيها).",
+    "buttonStartTyping": "ابدأ الكتابة",
+    "footer": "ترخيص MIT - من إنشاء Addison Graham"
+  },
+  "settingsGuideModal": {
+    "title": "⚙️ دليل الإعدادات",
+    "intro": "إليك نظرة سريعة على كل ما يمكنك تخصيصه:",
+    "sectionTextAppearanceTitle": "🔤 مظهر النص",
+    "sectionTextAppearanceBody": "تغيير نمط الخط وحجمه ولونه في شاشة الكتابة، بالإضافة إلى لون الخلفية.",
+    "sectionBubbleLettersTitle": "🔵 الحروف الفقاعية",
+    "sectionBubbleLettersBody": "إضافة إطار ملون حول كل حرف لجعل النص يبرز على أي خلفية.",
+    "sectionTypingControlTitle": "⏱ التحكم في الكتابة",
+    "sectionTypingControlBody": "تعيين حد أدنى من التأخير بين ضغطات المفاتيح — مفيد للطلاب الذين يضغطون على المفاتيح عن طريق الخطأ أو بسرعة كبيرة.",
+    "sectionImageDisplayTitle": "🖼 عرض الصورة",
+    "sectionImageDisplayBody": "التحكم في حجم الصورة. التحميل المسبق للصور لكلمات معينة بحيث تظهر فور كتابتها.",
+    "sectionImageFilteringTitle": "🚫 تصفية الصور",
+    "sectionImageFilteringBody": "منع كلمات معينة من عرض أي صورة، أو حصر التطبيق في قائمة الكلمات المعتمدة فقط.",
+    "sectionImageNavArrowsTitle": "← → أسهم التنقل بين الصور",
+    "sectionImageNavArrowsBody": "إظهار أو إخفاء أزرار الأسهم على الشاشة للتنقل عبر صور متعددة. مفاتيح الأسهم بلوحة المفاتيح تعمل دائمًا أيضًا.",
+    "sectionTeacherModeTitle": "👩‍🏫 وضع المعلم",
+    "sectionTeacherModeBody": "اضغط على **Ctrl+Shift+Y** لإدخال كلمة هدف ليقوم الطالب بملئها. اضغط على **Tab** أو **?** لسماع مطالبة صوتية للحرف التالي.",
+    "sectionMouseCursorTitle": "🖱 مؤشر الفأرة",
+    "sectionMouseCursorBody": "تغيير نمط المؤشر — مفيد إذا كان الطالب يستخدم الفأرة للنقر على أسهم التنقل.",
+    "sectionSessionHistoryTitle": "📋 سجل كلمات الجلسة",
+    "sectionSessionHistoryBody": "سجل مستمر لكل كلمة تمت كتابتها في هذه الجلسة مع الطوابع الزمنية — مفيد للمعلمين لمراجعة التقدم.",
+    "firstTimeDismiss": "فهمت! فتح الإعدادات ←",
+    "repeatDismiss": "إغلاق",
+    "firstTimeFooter": "لن يظهر هذا الدليل مرة أخرى.",
+    "repeatFooter": "افتح الإعدادات من زر الترس لتغيير الخيارات. يمكنك إعادة فتح هذا الدليل في أي وقت."
+  },
+  "settingsPanel": {
+    "panelTitle": "الإعدادات",
+    "sectionAriaLabel": "معلومات قارئ الشاشة",
+    "screenReaderUsers": "مستخدمو قارئ الشاشة",
+    "screenReaderNote": "منطقة الكتابة الرئيسية ليست حقل نص قياسي، لذا قد لا يتعامل قارئ الشاشة معها كمربع نص عادي. يستخدم التطبيق نطقًا مدمجًا للحروف والكلمات، ويعلن شريط الحالة أسفل الصفحة عن العديد من التحديثات. تظهر نفس المعلومات في الشاشة الأولى عند فتح التطبيق.",
+    "sectionHeadings": {
+      "textAppearance": "مظهر النص",
+      "bubbleLetters": "الحروف الفقاعية",
+      "typingControl": "التحكم في الكتابة",
+      "imageDisplay": "عرض الصورة",
+      "imageFiltering": "تصفية الصور",
+      "customLocalImages": "الصور المحلية المخصصة",
+      "imageNavArrows": "أسهم التنقل بين الصور",
+      "mouseCursor": "مؤشر الفأرة",
+      "sessionWordHistory": "سجل كلمات الجلسة"
+    },
+    "labelsAndControls": {
+      "fontType": "نوع الخط:",
+      "fontSize": "حجم الخط:",
+      "fontColor": "لون الخط:",
+      "backgroundColor": "لون الخلفية:",
+      "fontOptions": [
+        "Arial",
+        "Comic Sans",
+        "Courier New",
+        "Georgia",
+        "Times New Roman",
+        "Verdana",
+        "Trebuchet MS"
+      ],
+      "colorOptions": {
+        "white": "أبيض",
+        "black": "أسود",
+        "red": "أحمر",
+        "green": "أخضر",
+        "blue": "أزرق",
+        "yellow": "أصفر",
+        "magenta": "أرجواني",
+        "cyan": "سماوي",
+        "orange": "برتقالي",
+        "purple": "بنفسجي",
+        "pink": "وردي",
+        "brown": "بني",
+        "gray": "رمادي"
+      },
+      "enableBubbleLetters": "تمكين الحروف الفقاعية:",
+      "bubbleColor": "لون الفقاعة:",
+      "bubbleSize": "حجم الفقاعة:",
+      "minimumTimeBetweenKeys": "الحد الأدنى للوقت بين المفاتيح:",
+      "maxKeysPerSecond": "الحد الأقصى للمفاتيح في الثانية:",
+      "imageSize": "حجم الصورة:",
+      "imageWordSize": "حجم كلمة الصورة:",
+      "imagePanelBackgroundColor": "لون خلفية لوحة الصورة:",
+      "studentNameForCamera": "اسم الطالب (للكاميرا):",
+      "removeImageBackground": "إزالة خلفية الصورة:",
+      "removeImageBackgroundNote": "يستخدم الذكاء الاصطناعي لعزل الموضوع على خلفية شفافة. ينزل نموذج بحجم ~30 ميغابايت عند الاستخدام الأول (يتم تخزينه مؤقتًا بعد ذلك).",
+      "preloadImages": "التحميل المسبق لصور هذه الكلمات:",
+      "preloadImagesNote": "سيتم جلب الصور الخاصة بهذه الكلمات (وإزالة خلفيتها، إذا تم تمكين ذلك) بمجرد بدء الجلسة — بحيث تظهر فورًا عندما يكتبها الطفل. افصل بين الكلمات بفواصل.",
+      "filterProfanity": "تصفية الألفاظ النابية:",
+      "useCustomWordListOnly": "استخدام قائمة كلمات مخصصة فقط:",
+      "allowedWords": "الكلمات المسموح بها (مفصول بينها بفواصل):",
+      "blockedWords": "الكلمات المحظورة (مفصول بينها بفواصل):",
+      "blockedWordsNote": "لن تعرض هذه الكلمات أي صور أبدًا، بغض النظر عن الإعدادات الأخرى.",
+      "customImagesIntroNote": "أضف صورك الخاصة من هذا الجهاز لكلمات معينة. تُحفظ هذه الصور بشكل آمن دون اتصال بالإنترنت ولها الأولوية على صور ويكيميديا.",
+      "word": "الكلمة:",
+      "picture": "الصورة:",
+      "addCustomPictureButton": "إضافة صورة مخصصة",
+      "arrowsSectionNote": "تتيح لك الأسهم التنقل بين صور متعددة لنفس الكلمة. يمكنك أيضًا استخدام مفاتيح الأسهم ← → الموجودة على لوحة المفاتيح.",
+      "showNavigationArrows": "إظهار أسهم التنقل:",
+      "arrowColor": "لون السهم:",
+      "arrowButtonSize": "حجم زر السهم:",
+      "cursorSectionNote": "تغيير نمط مؤشر الفأرة. يمكن أن يساعد المؤشر الكبير الأطفال في تحديد مكان النقر للتنقل عبر الصور. ملاحظة: تقيد المتصفحات تخصيص المؤشر — للتنقل عبر الصور، تعمل مفاتيح الأسهم في لوحة المفاتيح (← →) دائمًا بغض النظر عن نمط المؤشر.",
+      "cursorStyle": "نمط المؤشر:",
+      "cursorOptions": {
+        "default": "السهم الافتراضي",
+        "hand": "يد / مؤشر",
+        "crosshair": "علامة تصويب",
+        "hidden": "مخفي (تتبع العين / الوصول عبر المفتاح)"
+      },
+      "sessionHistoryNote": "جميع الكلمات المكتوبة في هذه الجلسة، بالترتيب. يتم الاحتفاظ بهذه القائمة هنا حتى إذا قام الطالب بمسح الشاشة.",
+      "historyLabel": "الكلمات المكتوبة في هذه الجلسة، مع الطوابع الزمنية",
+      "historyTextareaPlaceholder": "لم تُكتب أي كلمات بعد في هذه الجلسة.",
+      "placeholders": {
+        "studentName": "مثال: Charlie",
+        "preloadWords": "قطة، كلب، شجرة، منزل، كرة، حافلة...",
+        "allowedWords": "قطة، كلب، شجرة، منزل، سيارة...",
+        "blockedWords": "أدخل كلمات لا يجب أن تعرض صورًا أبدًا...",
+        "customImageWord": "مثال: dog"
+      },
+      "buttons": {
+        "saveAndClose": "حفظ وإغلاق",
+        "resetToDefaults": "إعادة تعيين إلى الافتراضي",
+        "cancel": "إلغاء"
+      }
+    }
+  },
+  "lightbox": {
+    "ariaLabel": "عرض الصورة الموسعة",
+    "closeButtonAriaLabel": "إغلاق الصورة الموسعة",
+    "prevAriaLabel": "الصورة السابقة",
+    "nextAriaLabel": "الصورة التالية"
+  },
+  "browserDialogs": {
+    "resetConfirm": "هل تريد إعادة تعيين جميع الإعدادات إلى الافتراضي؟",
+    "enterWordAlert": "الرجاء إدخال كلمة.",
+    "selectImageAlert": "الرجاء تحديد ملف صورة.",
+    "errorSavingImage": "خطأ في حفظ الصورة: {message}",
+    "removeCustomImageConfirm": "هل تريد إزالة الصورة المخصصة للكلمة \"{word}\"؟",
+    "teacherModePrompt": "أدخل كلمة الهدف لوضع المعلم (أو اتركه فارغًا للخروج):"
+  },
+  "screenReaderAnnouncements": {
+    "settingsGuideOpened": "تم فتح دليل الإعدادات",
+    "settingsGuideClosed": "تم إغلاق دليل الإعدادات",
+    "settingsPanelOpened": "تم فتح لوحة الإعدادات",
+    "settingsPanelClosed": "تم إغلاق لوحة الإعدادات"
+  },
+  "statusBar": {
+    "teacherMode": "وضع المعلم: اكتب كلمة \"{word}\"",
+    "youTyped": "لقد كتبت: {word}",
+    "newLine": "سطر جديد",
+    "exitedTeacherMode": "تم الخروج من وضع المعلم",
+    "wpm": "كلمات في الدقيقة: {n} كلمة/دقيقة | اضغط على Ctrl+Shift+M للإخفاء",
+    "lpm": "حروف في الدقيقة: {n} حرف/دقيقة | اضغط على Ctrl+Shift+L للإخفاء"
+  },
+  "imageArea": {
+    "customPhotoAlt": "صورة مخصصة لـ {word}",
+    "photoAlt": "صورة لـ {word}",
+    "labels": {
+      "customLocal": "صورة محلية مخصصة",
+      "wikimedia": "صورة من ويكيميديا كومنز",
+      "imageXofY": "صورة {i} من {n} — ويكيميديا كومنز",
+      "preparingBgRemoval": "جاري التجهيز لإزالة الخلفية...",
+      "searching": "جاري البحث عن صورة...",
+      "notRealWord": "ليست كلمة حقيقية — لا توجد صورة معروضة",
+      "loadingPattern": "{WORD}..."
+    },
+    "preloadStatus": {
+      "preloading": "جاري التحميل المسبق لـ {n} كلمة…",
+      "preloadingOne": "جاري التحميل المسبق لكلمة واحدة…",
+      "preloadedXY": "تم التحميل المسبق لـ {loaded} / {total}",
+      "allPreloaded": "✓ تم التحميل المسبق لجميع الكلمات البالغ عددها {n}",
+      "allPreloadedOne": "✓ تم التحميل المسبق لكلمة واحدة"
+    }
+  },
+  "backgroundRemoval": {
+    "loadingModel": "جاري تحميل نموذج إزالة الخلفية...",
+    "removing": "جاري إزالة الخلفية...",
+    "removingPct": "جاري إزالة الخلفية... {pct}%",
+    "success": "تمت إزالة الخلفية - ويكيميديا كومنز",
+    "failed": "فشلت إزالة الخلفية - ويكيميديا كومنز"
+  },
+  "customImagesList": {
+    "emptyState": "لم تتم إضافة أي صور مخصصة بعد.",
+    "buttonRemove": "إزالة"
+  },
+  "ttsNotSupported": {
+    "warning": "تحذير: تحويل النص إلى كلام غير مدعوم في هذا المتصفح. يرجى استخدام Chrome أو Edge أو Firefox أو Safari."
+  },
+  "systemSpeech": {
+    "ready": "جاهز. ابدأ الكتابة.",
+    "screenCleared": "تم مسح الشاشة",
+    "backspace": "مسافة للخلف",
+    "newLine": "سطر جديد",
+    "digits": {
+      "0": "صفر",
+      "1": "واحد",
+      "2": "اثنان",
+      "3": "ثلاثة",
+      "4": "أربعة",
+      "5": "خمسة",
+      "6": "ستة",
+      "7": "سبعة",
+      "8": "ثمانية",
+      "9": "تسعة"
+    },
+    "teacherModePrompts": {
+      "tryAgain": "حاول مرة أخرى. ",
+      "pressCharWithFinger": "اضغط على {char} بإصبع {finger}",
+      "pressCharOnly": "اضغط على {char}",
+      "pressLowercaseWithFinger": "اضغط على {LETTER} بإصبع {finger}",
+      "pressLowercaseOnly": "اضغط على {LETTER}",
+      "pressUppercaseWithBothFingers": "اضغط على {LETTER} الكبير. استمر في الضغط على مفتاح Shift باستخدام {modifier_finger}، ثم اضغط على {LETTER} باستخدام {finger}",
+      "pressUppercaseShiftOnly": "اضغط على {LETTER} الكبير. استمر في الضغط على مفتاح Shift باستخدام {modifier_finger}"
+    },
+    "fingerNames": {
+      "leftPinky": "الخنصر الأيسر",
+      "leftRing": "البنصر الأيسر",
+      "leftMiddle": "الوسطى اليسرى",
+      "leftIndex": "السبابة اليسرى",
+      "rightIndex": "السبابة اليمنى",
+      "rightMiddle": "الوسطى اليمنى",
+      "rightRing": "البنصر الأيمن",
+      "rightPinky": "الخنصر الأيمن",
+      "thumb": "الإبهام"
+    }
+  }
+}
