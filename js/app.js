@@ -6,18 +6,37 @@ const CVIApp = {
     async init() {
         await CVII18n.init();
 
+        async function applyLanguageChange(code) {
+            await CVII18n.setLocale(code, true);
+            var toolbarSel = document.getElementById('language-select');
+            var welcomeSel = document.getElementById('welcome-language-select');
+            if (toolbarSel) toolbarSel.value = code;
+            if (welcomeSel) welcomeSel.value = code;
+            if (typeof CVISpeech !== 'undefined' && CVISpeech.refreshVoice) {
+                await CVISpeech.refreshVoice();
+            }
+            if (typeof CVIImages !== 'undefined' && CVIImages._showDefault) {
+                CVIImages._showDefault();
+            }
+        }
+
         var langSelect = document.getElementById('language-select');
         if (langSelect) {
             langSelect.value = CVII18n.current;
-            langSelect.addEventListener('change', async function () {
-                var code = langSelect.value;
-                await CVII18n.setLocale(code, true);
-                if (typeof CVISpeech !== 'undefined' && CVISpeech.refreshVoice) {
-                    await CVISpeech.refreshVoice();
-                }
-                if (typeof CVIImages !== 'undefined' && CVIImages._showDefault) {
-                    CVIImages._showDefault();
-                }
+            langSelect.addEventListener('change', function () {
+                applyLanguageChange(langSelect.value).catch(function (e) {
+                    console.error(e);
+                });
+            });
+        }
+
+        var welcomeLangSelect = document.getElementById('welcome-language-select');
+        if (welcomeLangSelect) {
+            welcomeLangSelect.value = CVII18n.current;
+            welcomeLangSelect.addEventListener('change', function () {
+                applyLanguageChange(welcomeLangSelect.value).catch(function (e) {
+                    console.error(e);
+                });
             });
         }
 
