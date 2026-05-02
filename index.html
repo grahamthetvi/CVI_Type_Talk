@@ -74,7 +74,18 @@
     <div id="instructions-overlay" class="overlay" role="dialog" aria-labelledby="instructions-title"
         aria-modal="true">
         <div class="overlay-content">
-            <h1 id="instructions-title" data-i18n="instructionsOverlay.title">CVI Type Talker</h1>
+            <div class="welcome-header-block">
+                <h1 id="instructions-title" data-i18n="instructionsOverlay.title">CVI Type Talker</h1>
+                <div class="welcome-language-row">
+                    <label for="welcome-language-select" data-i18n="instructionsOverlay.languageLabel">Language</label>
+                    <select id="welcome-language-select" class="language-select"
+                        data-i18n-attr="aria-label:mainShellNavigation.languageSelectAriaLabel"
+                        aria-label="Language">
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+            </div>
             <p data-i18n="instructionsOverlay.lines.typeLetters">Type letters to hear them spoken aloud.</p>
             <p data-i18n="instructionsOverlay.lines.pressSpaceEnter" data-i18n-html></p>
             <p data-i18n="instructionsOverlay.lines.pressBackspace" data-i18n-html></p>

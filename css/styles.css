@@ -385,6 +385,17 @@ body {
     letter-spacing: 0.02em;
 }
 
+/* Welcome title + language switcher: language sits directly under the logo/title */
+.welcome-header-block {
+    margin-bottom: clamp(10px, 2.5vh, 28px);
+    margin-bottom: clamp(10px, 2.5dvh, 28px);
+}
+
+.welcome-header-block h1 {
+    margin-bottom: clamp(6px, 1.2vh, 14px);
+    margin-bottom: clamp(6px, 1.2dvh, 14px);
+}
+
 /* Welcome / instructions: high-contrast halo so yellow title stays legible on black */
 .overlay:not(.consent-panel) .overlay-content h1 {
     text-shadow:
@@ -411,7 +422,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin: clamp(12px, 2.5vh, 24px) 0 clamp(8px, 1.5vh, 16px);
+    margin: 0;
 }
 
 .welcome-language-row label {
