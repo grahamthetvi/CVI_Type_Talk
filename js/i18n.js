@@ -141,8 +141,6 @@ var CVII18n = {
 
         var langSel = document.getElementById('language-select');
         if (langSel) langSel.value = this.current;
-        var welcomeLang = document.getElementById('welcome-language-select');
-        if (welcomeLang) welcomeLang.value = this.current;
     },
 
     _applyColorSelectOptions(selectId) {
