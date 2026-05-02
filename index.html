@@ -91,6 +91,15 @@
                 <h2 class="a11y-callout-heading" data-i18n="instructionsOverlay.headingScreenReader">Using a screen reader?</h2>
                 <p data-i18n="instructionsOverlay.screenReaderParagraph" data-i18n-html></p>
             </div>
+            <div class="welcome-language-row">
+                <label for="welcome-language-select" data-i18n="instructionsOverlay.languageLabel">Language</label>
+                <select id="welcome-language-select" class="language-select"
+                    data-i18n-attr="aria-label:mainShellNavigation.languageSelectAriaLabel"
+                    aria-label="Language">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
             <button id="start-button" type="button" class="start-button" autofocus
                 data-i18n="instructionsOverlay.buttonStartTyping">
                 Start Typing

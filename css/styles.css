@@ -405,6 +405,24 @@ body {
     color: #FFFF00;
 }
 
+.welcome-language-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: clamp(12px, 2.5vh, 24px) 0 clamp(8px, 1.5vh, 16px);
+}
+
+.welcome-language-row label {
+    font-size: clamp(14px, min(2.2vw, 2.8vh), 22px);
+    font-weight: bold;
+}
+
+html[dir="rtl"] .welcome-language-row {
+    flex-direction: row-reverse;
+}
+
 /* Softer, calmer consent step (after instructions) */
 .overlay.consent-panel {
     background: radial-gradient(ellipse 120% 80% at 50% 20%, #1e2a38 0%, #0d0d12 45%, #000000 100%);

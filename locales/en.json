@@ -28,6 +28,7 @@
   },
   "instructionsOverlay": {
     "title": "CVI Type Talker",
+    "languageLabel": "Language",
     "lines": {
       "typeLetters": "Type letters to hear them spoken aloud.",
       "pressSpaceEnter": "Press **Space** or **Enter** to hear the whole word and see a picture.",
