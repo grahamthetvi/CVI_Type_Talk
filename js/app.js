@@ -45,6 +45,9 @@ const CVIApp = {
             await CVILocalImages.init().catch(e => console.error("Failed to init CVILocalImages", e));
         }
         CVISettings.init();
+        if (typeof CVITypingHistory !== 'undefined') {
+            CVITypingHistory.init();
+        }
         CVIDisplay.init();
         CVIImages.init();
         await CVISpeech.init();
@@ -85,6 +88,9 @@ const CVIApp = {
         function beginApp() {
             if (overlay) overlay.classList.add('hidden');
             if (consentOverlay) consentOverlay.classList.add('hidden');
+            if (typeof CVITypingHistory !== 'undefined') {
+                CVITypingHistory.startSession();
+            }
             CVIKeyboard.enable();
 
             if (document.documentElement.requestFullscreen) {
@@ -117,12 +123,24 @@ const CVIApp = {
             });
         }
 
-        // Pause speech when tab is hidden
+        // Pause speech when tab is hidden; finalize session when leaving
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {
                 CVISpeech.stop();
             }
         });
+
+        function finalizeTypingSession() {
+            if (typeof CVITypingHistory === 'undefined' || !CVITypingHistory.activeSession) return;
+            CVITypingHistory.endSession({
+                wpm: CVIKeyboard.getWPM(),
+                lpm: CVIKeyboard.getLPM(),
+                letterCount: CVIKeyboard.letterCount
+            });
+        }
+
+        window.addEventListener('pagehide', finalizeTypingSession);
+        window.addEventListener('beforeunload', finalizeTypingSession);
 
         // ── Image Lightbox ────────────────────────────────────────────────
         // Clicking the image opens a near-fullscreen expanded view.

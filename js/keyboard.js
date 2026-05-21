@@ -97,11 +97,17 @@ const CVIKeyboard = {
     },
 
     /**
-     * Record a completed word for WPM tracking.
-     * Called by display.js when a word is committed.
+     * Record a completed word for WPM tracking and persisted history.
      */
-    recordWord() {
+    recordWord(word) {
         this.wordCount++;
+        if (typeof CVITypingHistory !== 'undefined' && word) {
+            CVITypingHistory.recordWord(word, {
+                wpm: this.getWPM(),
+                lpm: this.getLPM(),
+                letterCount: this.letterCount
+            });
+        }
     },
 
     /**
@@ -181,7 +187,7 @@ const CVIKeyboard = {
                 if (word.trim() === '') {
                     if (CVIDisplay.targetWord && CVIDisplay.currentText.length > 0) {
                         var partialWord = CVIDisplay.commitLine();
-                        if (partialWord) this.recordWord();
+                        if (partialWord) this.recordWord(partialWord);
                     }
                     CVIDisplay.targetWord = '';
                     CVIDisplay._updateStatus(CVII18n.t('statusBar.exitedTeacherMode'));
@@ -276,7 +282,7 @@ const CVIKeyboard = {
             if (word) {
                 CVISpeech.speakWord(word);
                 CVIImages.showImage(word);
-                this.recordWord();
+                this.recordWord(word);
                 if (this.speedDisplayMode) this._showSpeed();
             } else {
                 CVISpeech.speakSystem(CVII18n.t('systemSpeech.newLine'));
@@ -291,7 +297,7 @@ const CVIKeyboard = {
             if (completedWord) {
                 CVISpeech.speakWord(completedWord);
                 CVIImages.showImage(completedWord);
-                this.recordWord();
+                this.recordWord(completedWord);
                 if (this.speedDisplayMode) this._showSpeed();
             }
             return;
@@ -329,7 +335,7 @@ const CVIKeyboard = {
                     if (word) {
                         CVISpeech.speakWord(word);
                         CVIImages.showImage(word);
-                        this.recordWord();
+                        this.recordWord(word);
                         if (this.speedDisplayMode) this._showSpeed();
                     }
                 }, 400);

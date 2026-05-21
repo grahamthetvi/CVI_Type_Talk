@@ -456,6 +456,24 @@
                 </div>
             </section>
 
+            <!-- Past Sessions -->
+            <section class="settings-section">
+                <h3 data-i18n="settingsPanel.sectionHeadings.pastSessions">Past Sessions</h3>
+                <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.pastSessionsNote">Previous typing sessions saved in this browser, with WPM and LPM for each word.</p>
+                <div class="setting-row full-width">
+                    <label for="past-session-select" data-i18n="settingsPanel.labelsAndControls.pastSessionsLabel">Select a session:</label>
+                    <select id="past-session-select" style="flex: 1; max-width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #666; background-color: #333; color: #FFF; font-size: 16px;"></select>
+                </div>
+                <div class="setting-row full-width">
+                    <label for="past-session-detail" class="sr-only" data-i18n="settingsPanel.labelsAndControls.pastSessionDetailLabel">Words from selected session</label>
+                    <textarea id="past-session-detail" rows="8" readonly
+                        style="font-family: monospace; font-size: 14px;"></textarea>
+                </div>
+                <div class="setting-row">
+                    <button id="clear-typing-history" type="button" class="settings-button" data-i18n="settingsPanel.labelsAndControls.clearTypingHistoryButton">Clear All Session History</button>
+                </div>
+            </section>
+
             <div class="settings-buttons">
                 <button id="save-settings" class="settings-button primary" data-i18n="settingsPanel.labelsAndControls.buttons.saveAndClose">Save & Close</button>
                 <button id="reset-settings" class="settings-button" data-i18n="settingsPanel.labelsAndControls.buttons.resetToDefaults">Reset to Defaults</button>
@@ -517,6 +535,7 @@
     <script src="js/badwords.js"></script>
     <script src="js/images.js"></script>
     <script src="js/settings.js"></script>
+    <script src="js/typing-history.js"></script>
     <script src="js/display.js"></script>
     <script src="js/keyboard.js"></script>
     <script src="js/app.js"></script>

@@ -10,16 +10,12 @@ const CVIDisplay = {
     maxVisibleLines: 5,
     targetWord: '', // For Teacher Mode
 
-    // Session word history — persists for the lifetime of the page session
-    sessionWordHistory: [],
-
     init() {
         this.displayEl = document.getElementById('text-display');
         this.statusTextEl = document.getElementById('status-text');
         this.lines = [];
         this.currentText = '';
         this.targetWord = '';
-        this.sessionWordHistory = [];
         this._render();
     },
 
@@ -101,26 +97,27 @@ const CVIDisplay = {
     },
 
     /**
-     * Record a word into the session history.
+     * Record a word into the session history (persisted via CVITypingHistory).
      */
     _recordWord(word) {
         if (!word || !word.trim()) return;
-        var display = word.trim();
-        if (display.length === 0) return;
-        this.sessionWordHistory.push({
-            word: display,
-            timestamp: new Date().toLocaleTimeString()
-        });
-        if (typeof CVISettings !== 'undefined' && CVISettings.refreshWordHistoryIfOpen) {
-            CVISettings.refreshWordHistoryIfOpen();
-        }
     },
 
     /**
      * Get the full session word history array.
      */
     getWordHistory() {
-        return this.sessionWordHistory;
+        if (typeof CVITypingHistory !== 'undefined') {
+            return CVITypingHistory.getActiveWords().map(function (entry) {
+                return {
+                    word: entry.word,
+                    timestamp: new Date(entry.at).toLocaleTimeString(),
+                    wpm: entry.wpm,
+                    lpm: entry.lpm
+                };
+            });
+        }
+        return [];
     },
 
     /**

@@ -215,10 +215,12 @@ const CVISettings = {
 
         // Populate UI with current values
         this.populateUI();
+        this._setupPastSessionsUI();
 
         document.addEventListener('cvi-locale-changed', function () {
             self._applySettingsPlaceholders();
             self.refreshWordHistoryIfOpen();
+            self._populatePastSessions();
             self._populateCustomImagesList();
             var guideModal = document.getElementById('settings-guide-modal');
             if (guideModal && !guideModal.hasAttribute('hidden') && self._guideMode) {
@@ -543,6 +545,7 @@ const CVISettings = {
 
         // Populate session word history
         this._populateWordHistory();
+        this._populatePastSessions();
 
         // Populate custom local images list
         this._populateCustomImagesList();
@@ -767,16 +770,99 @@ const CVISettings = {
         var historyEl = document.getElementById('session-word-history');
         if (!historyEl) return;
 
-        var history = CVIDisplay ? CVIDisplay.getWordHistory() : [];
+        var history = typeof CVITypingHistory !== 'undefined'
+            ? CVITypingHistory.getActiveWords()
+            : (CVIDisplay ? CVIDisplay.getWordHistory() : []);
         if (!history || history.length === 0) {
             historyEl.textContent = CVII18n.t('settingsPanel.labelsAndControls.historyTextareaPlaceholder');
             return;
         }
 
-        // Build a chronological list: "time — word" (preserve typed capitalization)
         historyEl.textContent = history.map(function (entry) {
+            if (typeof CVITypingHistory !== 'undefined') {
+                return CVITypingHistory.formatWordLine(entry);
+            }
             return entry.timestamp + '  —  ' + entry.word;
         }).join('\n');
+    },
+
+    /**
+     * Populate the past sessions selector and detail view.
+     */
+    _populatePastSessions() {
+        var selectEl = document.getElementById('past-session-select');
+        var detailEl = document.getElementById('past-session-detail');
+        if (!selectEl || !detailEl || typeof CVITypingHistory === 'undefined') return;
+
+        var past = CVITypingHistory.getPastSessions();
+        var selectedId = selectEl.value;
+
+        selectEl.innerHTML = '';
+        var placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = past.length === 0
+            ? CVII18n.t('settingsPanel.labelsAndControls.pastSessionsEmpty')
+            : CVII18n.t('settingsPanel.labelsAndControls.pastSessionsPlaceholder');
+        selectEl.appendChild(placeholder);
+
+        past.forEach(function (session) {
+            var opt = document.createElement('option');
+            opt.value = session.id;
+            opt.textContent = CVITypingHistory.formatSessionLabel(session);
+            selectEl.appendChild(opt);
+        });
+
+        if (selectedId && past.some(function (s) { return s.id === selectedId; })) {
+            selectEl.value = selectedId;
+        }
+
+        this._populatePastSessionDetail(selectEl.value);
+    },
+
+    _populatePastSessionDetail(sessionId) {
+        var detailEl = document.getElementById('past-session-detail');
+        if (!detailEl || typeof CVITypingHistory === 'undefined') return;
+
+        if (!sessionId) {
+            detailEl.textContent = CVII18n.t('settingsPanel.labelsAndControls.pastSessionDetailPlaceholder');
+            return;
+        }
+
+        var session = CVITypingHistory.getPastSessions().find(function (s) {
+            return s.id === sessionId;
+        });
+        if (!session || !session.words.length) {
+            detailEl.textContent = CVII18n.t('settingsPanel.labelsAndControls.pastSessionDetailPlaceholder');
+            return;
+        }
+
+        detailEl.textContent = session.words.map(function (entry) {
+            return CVITypingHistory.formatWordLine(entry);
+        }).join('\n');
+    },
+
+    _setupPastSessionsUI() {
+        var self = this;
+        var selectEl = document.getElementById('past-session-select');
+        if (selectEl) {
+            selectEl.addEventListener('change', function () {
+                self._populatePastSessionDetail(selectEl.value);
+            });
+        }
+
+        var clearBtn = document.getElementById('clear-typing-history');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function () {
+                if (confirm(CVII18n.t('browserDialogs.clearTypingHistoryConfirm'))) {
+                    CVITypingHistory.clearAll();
+                    if (CVIKeyboard && CVIKeyboard.enabled) {
+                        CVITypingHistory.startSession();
+                    }
+                    self._populateWordHistory();
+                    self._populatePastSessions();
+                }
+            });
+        }
     },
 
     /**
@@ -786,6 +872,7 @@ const CVISettings = {
         var panel = document.getElementById('settings-panel');
         if (panel && panel.classList.contains('visible')) {
             this._populateWordHistory();
+            this._populatePastSessions();
         }
     },
 

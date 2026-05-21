@@ -66,7 +66,7 @@
     "sectionMouseCursorTitle": "🖱 مؤشر الفأرة",
     "sectionMouseCursorBody": "تغيير نمط المؤشر — مفيد إذا كان الطالب يستخدم الفأرة للنقر على أسهم التنقل.",
     "sectionSessionHistoryTitle": "📋 سجل كلمات الجلسة",
-    "sectionSessionHistoryBody": "سجل مستمر لكل كلمة تمت كتابتها في هذه الجلسة مع الطوابع الزمنية — مفيد للمعلمين لمراجعة التقدم.",
+    "sectionSessionHistoryBody": "سجل مستمر لكل كلمة تمت كتابتها في هذه الجلسة مع الطوابع الزمنية وسرعة الكتابة (WPM/LPM). تُحفظ الجلسات السابقة في متصفحك لمراجعة المعلم.",
     "firstTimeDismiss": "فهمت! فتح الإعدادات ←",
     "repeatDismiss": "إغلاق",
     "firstTimeFooter": "لن يظهر هذا الدليل مرة أخرى.",
@@ -86,7 +86,8 @@
       "customLocalImages": "الصور المحلية المخصصة",
       "imageNavArrows": "أسهم التنقل بين الصور",
       "mouseCursor": "مؤشر الفأرة",
-      "sessionWordHistory": "سجل كلمات الجلسة"
+      "sessionWordHistory": "سجل كلمات الجلسة",
+      "pastSessions": "الجلسات السابقة"
     },
     "labelsAndControls": {
       "fontType": "نوع الخط:",
@@ -151,9 +152,18 @@
         "crosshair": "علامة تصويب",
         "hidden": "مخفي (تتبع العين / الوصول عبر المفتاح)"
       },
-      "sessionHistoryNote": "جميع الكلمات المكتوبة في هذه الجلسة، بالترتيب. يتم الاحتفاظ بهذه القائمة هنا حتى إذا قام الطالب بمسح الشاشة.",
-      "historyLabel": "الكلمات المكتوبة في هذه الجلسة، مع الطوابع الزمنية",
+      "sessionHistoryNote": "جميع الكلمات المكتوبة في هذه الجلسة، بالترتيب، مع WPM و LPM لكل كلمة. يتم الاحتفاظ بهذه القائمة هنا حتى إذا قام الطالب بمسح الشاشة.",
+      "historyLabel": "الكلمات المكتوبة في هذه الجلسة، مع الطوابع الزمنية والسرعة",
       "historyTextareaPlaceholder": "لم تُكتب أي كلمات بعد في هذه الجلسة.",
+      "historyWordLine": "{time}  —  {word}  (WPM: {wpm}, LPM: {lpm})",
+      "pastSessionsNote": "جلسات الكتابة السابقة المحفوظة في هذا المتصفح. اختر جلسة لمراجعة كل كلمة مع WPM و LPM.",
+      "pastSessionsLabel": "اختر جلسة:",
+      "pastSessionsPlaceholder": "اختر جلسة سابقة…",
+      "pastSessionsEmpty": "لا توجد جلسات سابقة محفوظة بعد",
+      "pastSessionDetailLabel": "كلمات الجلسة المحددة",
+      "pastSessionDetailPlaceholder": "اختر جلسة أعلاه لعرض سجل كلماتها.",
+      "pastSessionOption": "{date} — {words} كلمة — WPM: {wpm}, LPM: {lpm}{name}",
+      "clearTypingHistoryButton": "مسح كل سجل الجلسات",
       "placeholders": {
         "studentName": "مثال: Charlie",
         "preloadWords": "قطة، كلب، شجرة، منزل، كرة، حافلة...",
@@ -180,7 +190,8 @@
     "selectImageAlert": "الرجاء تحديد ملف صورة.",
     "errorSavingImage": "خطأ في حفظ الصورة: {message}",
     "removeCustomImageConfirm": "هل تريد إزالة الصورة المخصصة للكلمة \"{word}\"؟",
-    "teacherModePrompt": "أدخل كلمة الهدف لوضع المعلم (أو اتركه فارغًا للخروج):"
+    "teacherModePrompt": "أدخل كلمة الهدف لوضع المعلم (أو اتركه فارغًا للخروج):",
+    "clearTypingHistoryConfirm": "هل تريد مسح كل سجل جلسات الكتابة المحفوظ في هذا المتصفح؟ لا يمكن التراجع عن ذلك."
   },
   "screenReaderAnnouncements": {
     "settingsGuideOpened": "تم فتح دليل الإعدادات",

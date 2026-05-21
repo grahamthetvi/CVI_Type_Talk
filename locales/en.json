@@ -66,7 +66,7 @@
     "sectionMouseCursorTitle": "🖱 Mouse Cursor",
     "sectionMouseCursorBody": "Change the cursor style — useful if a student is using a mouse to click the navigation arrows.",
     "sectionSessionHistoryTitle": "📋 Session Word History",
-    "sectionSessionHistoryBody": "A running log of every word typed this session with timestamps — useful for teachers reviewing progress.",
+    "sectionSessionHistoryBody": "A running log of every word typed this session with timestamps and typing speed (WPM/LPM). Past sessions are saved in your browser for teacher review.",
     "firstTimeDismiss": "Got it! Open Settings →",
     "repeatDismiss": "Close",
     "firstTimeFooter": "This guide won't appear again.",
@@ -86,7 +86,8 @@
       "customLocalImages": "Custom Local Images",
       "imageNavArrows": "Image Navigation Arrows",
       "mouseCursor": "Mouse Cursor",
-      "sessionWordHistory": "Session Word History"
+      "sessionWordHistory": "Session Word History",
+      "pastSessions": "Past Sessions"
     },
     "labelsAndControls": {
       "fontType": "Font Type:",
@@ -151,9 +152,18 @@
         "crosshair": "Crosshair",
         "hidden": "Hidden (eye-gaze / switch access)"
       },
-      "sessionHistoryNote": "All words typed this session, in order. This list is preserved here even if the student clears the screen.",
-      "historyLabel": "Words typed this session, with timestamps",
+      "sessionHistoryNote": "All words typed this session, in order, with WPM and LPM at each word. This list is preserved here even if the student clears the screen.",
+      "historyLabel": "Words typed this session, with timestamps and speed",
       "historyTextareaPlaceholder": "No words typed yet this session.",
+      "historyWordLine": "{time}  —  {word}  (WPM: {wpm}, LPM: {lpm})",
+      "pastSessionsNote": "Previous typing sessions saved in this browser. Select a session to review every word with its WPM and LPM.",
+      "pastSessionsLabel": "Select a session:",
+      "pastSessionsPlaceholder": "Choose a past session…",
+      "pastSessionsEmpty": "No past sessions saved yet",
+      "pastSessionDetailLabel": "Words from selected session",
+      "pastSessionDetailPlaceholder": "Select a session above to view its word history.",
+      "pastSessionOption": "{date} — {words} words — WPM: {wpm}, LPM: {lpm}{name}",
+      "clearTypingHistoryButton": "Clear All Session History",
       "placeholders": {
         "studentName": "e.g. Charlie",
         "preloadWords": "cat, dog, tree, house, ball, bus...",
@@ -180,7 +190,8 @@
     "selectImageAlert": "Please select an image file.",
     "errorSavingImage": "Error saving image: {message}",
     "removeCustomImageConfirm": "Remove custom image for \"{word}\"?",
-    "teacherModePrompt": "Enter target word for Teacher Mode (or leave blank to exit):"
+    "teacherModePrompt": "Enter target word for Teacher Mode (or leave blank to exit):",
+    "clearTypingHistoryConfirm": "Clear all saved typing session history from this browser? This cannot be undone."
   },
   "screenReaderAnnouncements": {
     "settingsGuideOpened": "Settings guide opened",
