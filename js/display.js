@@ -97,10 +97,13 @@ const CVIDisplay = {
     },
 
     /**
-     * Record a word into the session history (persisted via CVITypingHistory).
+     * Record a completed word — single entry point for session and persisted history.
      */
     _recordWord(word) {
         if (!word || !word.trim()) return;
+        if (typeof CVIKeyboard !== 'undefined' && CVIKeyboard.recordWord) {
+            CVIKeyboard.recordWord(word.trim());
+        }
     },
 
     /**
