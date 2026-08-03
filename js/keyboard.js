@@ -7,6 +7,7 @@ const CVIKeyboard = {
     minInterval: 150,
     enabled: false,
     keyPressHistory: [],
+    _teacherCommitPending: false,
 
     // Typing speed tracking
     sessionStartTime: null,
@@ -143,8 +144,20 @@ const CVIKeyboard = {
         }
     },
 
+    _isEditableTarget(event) {
+        var el = event.target;
+        if (!el || !el.tagName) return false;
+        var tag = el.tagName.toLowerCase();
+        if (tag === 'input' || tag === 'textarea' || tag === 'select') return true;
+        if (el.isContentEditable) return true;
+        return false;
+    },
+
     _handleKeyDown(event) {
         if (!this.enabled) return;
+
+        // Let native form controls (language select, settings fields) receive typing
+        if (this._isEditableTarget(event)) return;
 
         var key = event.key;
 
@@ -160,9 +173,12 @@ const CVIKeyboard = {
         // Ctrl+Shift+C: clear screen
         if (event.ctrlKey && event.shiftKey && (key === 'C' || key === 'c')) {
             event.preventDefault();
+            var wasTeacherMode = !!CVIDisplay.targetWord;
             CVIDisplay.clear();
             CVIImages.hideImage();
-            CVISpeech.speakSystem(CVII18n.t('systemSpeech.screenCleared'));
+            CVISpeech.speakSystem(wasTeacherMode
+                ? CVII18n.t('systemSpeech.screenCleared') + ' ' + CVII18n.t('statusBar.exitedTeacherMode')
+                : CVII18n.t('systemSpeech.screenCleared'));
             return;
         }
 
@@ -189,6 +205,7 @@ const CVIKeyboard = {
                         CVIDisplay.commitLine();
                     }
                     CVIDisplay.targetWord = '';
+                    this._teacherCommitPending = false;
                     CVIDisplay._updateStatus(CVII18n.t('statusBar.exitedTeacherMode'));
                     CVIDisplay._render();
                 } else {
@@ -250,23 +267,26 @@ const CVIKeyboard = {
             return;
         }
 
-        // Max keys per second limiting
-        this.keyPressHistory.push(now);
-        // Keep only keys from the last second
+        // Max keys per second limiting — prune first, then reject without counting
         this.keyPressHistory = this.keyPressHistory.filter(function(time) {
             return now - time < 1000;
         });
 
-        if (this.keyPressHistory.length > maxKeysPerSecond) {
+        if (this.keyPressHistory.length >= maxKeysPerSecond) {
             event.preventDefault();
             return;
         }
 
-        this.lastKeyTime = now;
-
         // Backspace
         if (key === 'Backspace') {
+            // Ignore during the Teacher Mode commit delay window
+            if (this._teacherCommitPending) {
+                event.preventDefault();
+                return;
+            }
             event.preventDefault();
+            this.keyPressHistory.push(now);
+            this.lastKeyTime = now;
             var removed = CVIDisplay.removeCharacter();
             if (removed) {
                 CVISpeech.speakSystem(CVII18n.t('systemSpeech.backspace'));
@@ -277,6 +297,12 @@ const CVIKeyboard = {
         // Enter
         if (key === 'Enter') {
             event.preventDefault();
+            // In Teacher Mode, do not commit a partial target word
+            if (CVIDisplay.targetWord || this._teacherCommitPending) {
+                return;
+            }
+            this.keyPressHistory.push(now);
+            this.lastKeyTime = now;
             var word = CVIDisplay.commitLine();
             if (word) {
                 CVISpeech.speakWord(word);
@@ -291,6 +317,12 @@ const CVIKeyboard = {
         // Space
         if (key === ' ') {
             event.preventDefault();
+            // In Teacher Mode, do not commit a partial target word
+            if (CVIDisplay.targetWord || this._teacherCommitPending) {
+                return;
+            }
+            this.keyPressHistory.push(now);
+            this.lastKeyTime = now;
             var completedWord = CVIDisplay.handleSpace();
             if (completedWord) {
                 CVISpeech.speakWord(completedWord);
@@ -303,21 +335,35 @@ const CVIKeyboard = {
         // Letters only (no digits)
         if (this._isAllowedChar(key)) {
             event.preventDefault();
+
+            // Ignore further letters while Teacher Mode is finishing a word
+            if (this._teacherCommitPending) {
+                return;
+            }
             
             // Teacher Mode Enforcement
             if (CVIDisplay.targetWord) {
                 var expectedChar = CVIDisplay.targetWord[CVIDisplay.currentText.length];
-                if (expectedChar && key.toLowerCase() !== expectedChar.toLowerCase()) {
+                // Word already complete (should be covered by _teacherCommitPending)
+                if (!expectedChar) {
+                    return;
+                }
+                if (key.toLowerCase() !== expectedChar.toLowerCase()) {
                     CVISpeech.speakSystem(this._teacherKeyPromptMessage(expectedChar, true));
                     return;
                 }
             }
 
+            this.keyPressHistory.push(now);
+            this.lastKeyTime = now;
             this.letterCount++;
             var charToAdd = key;
             if (CVIDisplay.targetWord) {
                 // Force the typed character to match the teacher's capitalization
                 charToAdd = CVIDisplay.targetWord[CVIDisplay.currentText.length];
+            }
+            if (typeof charToAdd !== 'string' || charToAdd.length !== 1) {
+                return;
             }
             CVIDisplay.addCharacter(charToAdd);
             CVISpeech.speakLetter(charToAdd);
@@ -325,14 +371,18 @@ const CVIKeyboard = {
 
             // Check if word is complete in Teacher Mode
             if (CVIDisplay.targetWord && CVIDisplay.currentText.length === CVIDisplay.targetWord.length) {
+                // Block further input immediately so late keypresses cannot append "undefined"
+                this._teacherCommitPending = true;
+                var self = this;
                 // Short delay so they can hear the last letter before the word is spoken
-                setTimeout(() => {
+                setTimeout(function () {
                     var word = CVIDisplay.commitLine();
                     CVIDisplay.targetWord = ''; // Exit teacher mode after successful word
+                    self._teacherCommitPending = false;
                     if (word) {
                         CVISpeech.speakWord(word);
                         CVIImages.showImage(word);
-                        if (this.speedDisplayMode) this._showSpeed();
+                        if (self.speedDisplayMode) self._showSpeed();
                     }
                 }, 400);
             }

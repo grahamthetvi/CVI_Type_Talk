@@ -161,6 +161,9 @@ const CVIImages = {
         }
 
         var normalized = word.toLowerCase().trim();
+
+        // Invalidate any in-flight image request as soon as a new word is shown
+        var requestId = ++this._currentRequest;
         
         var settings = CVISettings ? CVISettings.getSettings() : null;
         var studentName = settings && settings.studentName ? settings.studentName.toLowerCase().trim() : '';
@@ -187,6 +190,7 @@ const CVIImages = {
         // ── Custom Local Images ──────────────────────────────────────────────
         if (typeof CVILocalImages !== 'undefined') {
             var customImgDataUrl = await CVILocalImages.getImage(normalized);
+            if (requestId !== this._currentRequest) return;
             if (customImgDataUrl) {
                 this._currentPhotos = [{ url: customImgDataUrl, title: normalized }];
                 this._currentPhotoIndex = 0;
@@ -224,10 +228,10 @@ const CVIImages = {
         }
 
         // ── Dictionary validation (only for words not yet in cache) ──────────
-        var settings = CVISettings ? CVISettings.getSettings() : null;
         var skipValidation = settings && settings.customWordListEnabled;
         if (!skipValidation) {
             var isReal = await this._isRealWord(normalized);
+            if (requestId !== this._currentRequest) return;
             if (!isReal) {
                 this._showNonsenseWord(normalized);
                 return;
@@ -237,9 +241,6 @@ const CVIImages = {
         // Show loading state
         this._showLoading(normalized);
         this._hideArrows();
-
-        // Track request to handle race conditions
-        var requestId = ++this._currentRequest;
 
         try {
             var results = await this._fetchFromWikimedia(normalized);
@@ -260,7 +261,7 @@ const CVIImages = {
             }
         } catch (err) {
             if (requestId !== this._currentRequest) return;
-            this.cache.set(normalized, []);
+            // Do not cache failures — transient network/rate-limit errors should retry later
             this._showTextOnly(normalized);
         }
     },
@@ -312,6 +313,9 @@ const CVIImages = {
             + '&origin=*';
 
         var response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Wikimedia request failed: ' + response.status);
+        }
         var data = await response.json();
 
         if (!data.query || !data.query.pages) return [];

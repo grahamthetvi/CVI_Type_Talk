@@ -50,7 +50,12 @@ const CVIApp = {
         }
         CVIDisplay.init();
         CVIImages.init();
-        await CVISpeech.init();
+        if (CVISpeech.isSupported()) {
+            await CVISpeech.init();
+        } else {
+            document.getElementById('status-text').textContent =
+                CVII18n.t('ttsNotSupported.warning');
+        }
         CVIKeyboard.init();
 
         // Start pre-loading images in the background immediately.
@@ -60,12 +65,6 @@ const CVIApp = {
             setTimeout(function () {
                 CVIImages.preloadWords(preloadList);
             }, 800);
-        }
-
-        // Warn if TTS is not supported
-        if (!CVISpeech.isSupported()) {
-            document.getElementById('status-text').textContent =
-                CVII18n.t('ttsNotSupported.warning');
         }
 
         // Instructions first; first-time visitors see consent after "Start Typing"
@@ -117,7 +116,11 @@ const CVIApp = {
 
         if (consentAcceptBtn) {
             consentAcceptBtn.addEventListener('click', function () {
-                localStorage.setItem('cvi-consent-accepted', 'true');
+                try {
+                    localStorage.setItem('cvi-consent-accepted', 'true');
+                } catch (e) {
+                    console.error('Failed to persist consent:', e);
+                }
                 hasConsent = true;
                 beginApp();
             });

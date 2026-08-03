@@ -102,7 +102,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 40px 30px;
-    border-left: 2px solid #222222;
+    border-inline-start: 2px solid #222222;
 }
 
 .image-container {
@@ -1003,7 +1003,7 @@ html[dir="rtl"] .floating-toolbar {
     }
 
     .image-panel {
-        border-left: none;
+        border-inline-start: none;
         border-top: 2px solid #222222;
         padding: 20px;
     }

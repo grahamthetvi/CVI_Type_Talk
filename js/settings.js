@@ -68,7 +68,11 @@ const CVISettings = {
      * Save settings to localStorage
      */
     saveSettings() {
-        localStorage.setItem('cvi-settings', JSON.stringify(this.current));
+        try {
+            localStorage.setItem('cvi-settings', JSON.stringify(this.current));
+        } catch (e) {
+            console.error('Failed to save settings:', e);
+        }
     },
 
     /**
@@ -369,18 +373,19 @@ const CVISettings = {
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
 
-            // Set up focus trap
+            // Set up focus trap (single listener — remove previous if reopening)
+            if (this._focusTrapBound) {
+                panel.removeEventListener('keydown', this._focusTrapBound);
+            }
+            this._focusTrapBound = this._handleFocusTrap.bind(this);
+            panel.addEventListener('keydown', this._focusTrapBound);
+
             if (this.focusableElements.length > 0) {
                 var settingsTitle = document.getElementById('settings-title');
                 if (settingsTitle) {
                     settingsTitle.setAttribute('tabindex', '-1');
                     settingsTitle.focus();
                 }
-
-                var firstFocusable = this.focusableElements[0];
-                var lastFocusable = this.focusableElements[this.focusableElements.length - 1];
-
-                panel.addEventListener('keydown', this._handleFocusTrap.bind(this, firstFocusable, lastFocusable));
             }
 
             // Announce to screen readers
@@ -395,6 +400,11 @@ const CVISettings = {
         var panel = document.getElementById('settings-panel');
         if (panel) {
             panel.classList.remove('visible');
+
+            if (this._focusTrapBound) {
+                panel.removeEventListener('keydown', this._focusTrapBound);
+                this._focusTrapBound = null;
+            }
 
             // Re-enable keyboard input
             if (CVIKeyboard && CVIKeyboard.enabled !== undefined) {
@@ -415,22 +425,34 @@ const CVISettings = {
     },
 
     /**
-     * Handle focus trapping within the dialog
+     * Handle focus trapping within the dialog.
+     * Re-queries focusable elements on each Tab so dynamically added controls are included.
      */
-    _handleFocusTrap(firstFocusable, lastFocusable, e) {
-        if (e.key === 'Tab') {
-            if (e.shiftKey) {
-                // Shift + Tab
-                if (document.activeElement === firstFocusable) {
-                    e.preventDefault();
-                    lastFocusable.focus();
-                }
-            } else {
-                // Tab
-                if (document.activeElement === lastFocusable) {
-                    e.preventDefault();
-                    firstFocusable.focus();
-                }
+    _handleFocusTrap(e) {
+        if (e.key !== 'Tab') return;
+
+        var panel = document.getElementById('settings-panel');
+        if (!panel) return;
+
+        var focusable = Array.prototype.slice.call(panel.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )).filter(function (el) {
+            return !el.disabled && el.offsetParent !== null;
+        });
+        if (focusable.length === 0) return;
+
+        var firstFocusable = focusable[0];
+        var lastFocusable = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+            if (document.activeElement === firstFocusable || !panel.contains(document.activeElement)) {
+                e.preventDefault();
+                lastFocusable.focus();
+            }
+        } else {
+            if (document.activeElement === lastFocusable || !panel.contains(document.activeElement)) {
+                e.preventDefault();
+                firstFocusable.focus();
             }
         }
     },
@@ -735,8 +757,9 @@ const CVISettings = {
                 .filter(function (w) { return w.length > 0; });
 
             for (var b = 0; b < blockedWords.length; b++) {
-                if (normalized === blockedWords[b] ||
-                    normalized.indexOf(blockedWords[b]) !== -1) {
+                // Exact token match only — substring matching blocked legitimate words
+                // (e.g. blocking "ass" also blocked "class" / "glass").
+                if (normalized === blockedWords[b]) {
                     return false;
                 }
             }
@@ -855,8 +878,13 @@ const CVISettings = {
             clearBtn.addEventListener('click', function () {
                 if (confirm(CVII18n.t('browserDialogs.clearTypingHistoryConfirm'))) {
                     CVITypingHistory.clearAll();
-                    if (CVIKeyboard && CVIKeyboard.enabled) {
-                        CVITypingHistory.startSession();
+                    if (CVIKeyboard) {
+                        CVIKeyboard.sessionStartTime = Date.now();
+                        CVIKeyboard.letterCount = 0;
+                        CVIKeyboard.wordCount = 0;
+                        if (CVIKeyboard.enabled) {
+                            CVITypingHistory.startSession();
+                        }
                     }
                     self._populateWordHistory();
                     self._populatePastSessions();

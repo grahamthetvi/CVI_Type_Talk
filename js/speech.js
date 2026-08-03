@@ -34,6 +34,12 @@ const CVISpeech = {
      */
     init() {
         return new Promise((resolve) => {
+            if (!this.isSupported() || !this.synth) {
+                this.synth = null;
+                this.voice = null;
+                resolve(null);
+                return;
+            }
             var prefix = this._langPrefix();
             var setVoice = () => {
                 var voices = this.synth.getVoices();
