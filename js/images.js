@@ -46,6 +46,26 @@ const CVIImages = {
     },
 
     /**
+     * True if the typed word should open the camera (locale pronouns or student name).
+     */
+    _isCameraTrigger(normalized, studentName) {
+        if (studentName && normalized === studentName) return true;
+
+        var triggers = (typeof CVII18n !== 'undefined' && CVII18n.get)
+            ? CVII18n.get('cameraTriggers.words')
+            : null;
+        if (!Array.isArray(triggers) || triggers.length === 0) {
+            triggers = ['me', 'you'];
+        }
+        for (var i = 0; i < triggers.length; i++) {
+            if (normalized === String(triggers[i]).toLowerCase().trim()) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    /**
      * Navigate to the previous photo for the current word.
      */
     showPrevPhoto() {
@@ -168,7 +188,7 @@ const CVIImages = {
         var settings = CVISettings ? CVISettings.getSettings() : null;
         var studentName = settings && settings.studentName ? settings.studentName.toLowerCase().trim() : '';
 
-        if (normalized === "me" || normalized === "you" || (studentName && normalized === studentName)) {
+        if (this._isCameraTrigger(normalized, studentName)) {
             this._showCamera(normalized);
             return;
         }

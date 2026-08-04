@@ -72,21 +72,32 @@ const CVIApp = {
         var consentAcceptBtn = document.getElementById('consent-accept-btn');
         var overlay = document.getElementById('instructions-overlay');
         var startBtn = document.getElementById('start-button');
-        var hasConsent = localStorage.getItem('cvi-consent-accepted') === 'true';
+        var hasConsent = false;
+        try {
+            hasConsent = localStorage.getItem('cvi-consent-accepted') === 'true';
+        } catch (e) { /* ignore */ }
 
         if (consentOverlay) {
             consentOverlay.classList.add('hidden');
+            if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(consentOverlay);
         }
         if (overlay) {
             overlay.classList.remove('hidden');
+            if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.trap(overlay);
         }
         if (startBtn) {
             startBtn.focus();
         }
 
         function beginApp() {
-            if (overlay) overlay.classList.add('hidden');
-            if (consentOverlay) consentOverlay.classList.add('hidden');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(overlay);
+            }
+            if (consentOverlay) {
+                consentOverlay.classList.add('hidden');
+                if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(consentOverlay);
+            }
             if (typeof CVITypingHistory !== 'undefined') {
                 CVITypingHistory.startSession();
             }
@@ -106,7 +117,11 @@ const CVIApp = {
             startBtn.addEventListener('click', function () {
                 if (!hasConsent) {
                     overlay.classList.add('hidden');
-                    if (consentOverlay) consentOverlay.classList.remove('hidden');
+                    if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(overlay);
+                    if (consentOverlay) {
+                        consentOverlay.classList.remove('hidden');
+                        if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.trap(consentOverlay);
+                    }
                     if (consentAcceptBtn) consentAcceptBtn.focus();
                 } else {
                     beginApp();
@@ -142,7 +157,14 @@ const CVIApp = {
             });
         }
 
-        window.addEventListener('pagehide', finalizeTypingSession);
+        function onPageLeave() {
+            finalizeTypingSession();
+            if (typeof CVIBackgroundRemoval !== 'undefined' && CVIBackgroundRemoval.clearCache) {
+                CVIBackgroundRemoval.clearCache();
+            }
+        }
+
+        window.addEventListener('pagehide', onPageLeave);
         window.addEventListener('beforeunload', finalizeTypingSession);
 
         // ── Image Lightbox ────────────────────────────────────────────────
@@ -155,25 +177,46 @@ const CVIApp = {
         var lightboxNext = document.getElementById('lightbox-next');
         var lightboxLabel = document.getElementById('lightbox-label');
         var wordImageEl = document.getElementById('word-image');
+        var _lightboxPreviousFocus = null;
 
         // Word shown in the lightbox — used to detect when to auto-close
         var _lightboxWord = '';
 
         function openLightbox() {
             if (!wordImageEl || wordImageEl.hidden || !wordImageEl.src) return;
+            _lightboxPreviousFocus = document.activeElement;
             _lightboxWord = CVIImages._currentWord;
             lightboxImg.src = wordImageEl.src;
             lightboxImg.alt = wordImageEl.alt;
             if (lightboxLabel) lightboxLabel.textContent = CVIImages._currentWord.toUpperCase();
             _syncLightboxArrows();
             lightbox.classList.remove('hidden');
+            if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.trap(lightbox);
+            if (CVIKeyboard) CVIKeyboard.disable();
             if (lightboxClose) lightboxClose.focus();
         }
 
         function closeLightbox() {
+            if (!lightbox || lightbox.classList.contains('hidden')) return;
             lightbox.classList.add('hidden');
             _lightboxWord = '';
-            document.getElementById('text-display').focus();
+            if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(lightbox);
+            if (CVIKeyboard) {
+                var instructions = document.getElementById('instructions-overlay');
+                var settingsPanel = document.getElementById('settings-panel');
+                var guideModal = document.getElementById('settings-guide-modal');
+                var settingsOpen = settingsPanel && settingsPanel.classList.contains('visible');
+                var guideOpen = guideModal && !guideModal.hasAttribute('hidden');
+                if ((!instructions || instructions.classList.contains('hidden')) && !settingsOpen && !guideOpen) {
+                    CVIKeyboard.enable();
+                }
+            }
+            if (_lightboxPreviousFocus && _lightboxPreviousFocus.focus) {
+                _lightboxPreviousFocus.focus();
+            } else {
+                document.getElementById('text-display').focus();
+            }
+            _lightboxPreviousFocus = null;
         }
 
         function _syncLightboxArrows() {

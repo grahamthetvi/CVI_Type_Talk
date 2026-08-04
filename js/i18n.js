@@ -38,6 +38,13 @@ var CVII18n = {
         return s;
     },
 
+    /**
+     * Return a raw value from the locale dict (string, array, object, or null).
+     */
+    get(path) {
+        return this._get(this.dict, path);
+    },
+
     /** Convert **bold** segments to <strong> for consent/settings copy. */
     formatRich(text) {
         if (!text) return '';

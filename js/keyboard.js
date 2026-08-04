@@ -15,9 +15,9 @@ const CVIKeyboard = {
     wordCount: 0,
     speedDisplayMode: null, // null | 'wpm' | 'lpm'
 
-    /** Allowed single characters: letters only (no digits) */
+    /** Allowed single characters: Unicode letters (Latin, Arabic, etc.) */
     _isAllowedChar: function(key) {
-        return (key.length === 1 && /[a-zA-Z]/.test(key));
+        return (key.length === 1 && /^\p{L}$/u.test(key));
     },
 
     /** Finger id for i18n (systemSpeech.fingerNames.*) */

@@ -130,6 +130,7 @@ const CVISpeech = {
         if (/[0-9]/.test(char)) {
             return this._digitWord(char);
         }
+        // Non-Latin letters (e.g. Arabic): speak the character as-is
         return char;
     },
 

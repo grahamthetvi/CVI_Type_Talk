@@ -27,8 +27,8 @@ const CVIDisplay = {
         if (this.currentText.trim().length > 0) {
             this.commitLine();
         }
-        // Keep letters only so targets like "Hello!" remain completable
-        var sanitized = String(word || '').replace(/[^a-zA-Z]/g, '');
+        // Keep letters only so targets remain completable with the keyboard
+        var sanitized = String(word || '').replace(/[^\p{L}]/gu, '');
         if (!sanitized) {
             this.targetWord = '';
             this._updateStatus(CVII18n.t('statusBar.exitedTeacherMode'));
