@@ -8,6 +8,7 @@ var CVIBackgroundRemoval = {
     _loading: false,
     _loadPromise: null,
     _processedCache: new Map(),
+    _maxCacheEntries: 30,
 
     /**
      * Load the background removal library on demand.
@@ -44,6 +45,38 @@ var CVIBackgroundRemoval = {
      */
     isEnabled: function() {
         return CVISettings && CVISettings.current && CVISettings.current.removeBackground;
+    },
+
+    /**
+     * Remember a processed blob URL; evict oldest entries when over the cap.
+     */
+    _cacheSet: function(imageUrl, processedUrl) {
+        // Refresh insertion order for LRU behavior
+        if (this._processedCache.has(imageUrl)) {
+            var existing = this._processedCache.get(imageUrl);
+            if (existing !== processedUrl) {
+                URL.revokeObjectURL(existing);
+            }
+            this._processedCache.delete(imageUrl);
+        }
+        this._processedCache.set(imageUrl, processedUrl);
+        while (this._processedCache.size > this._maxCacheEntries) {
+            var oldestKey = this._processedCache.keys().next().value;
+            var oldestUrl = this._processedCache.get(oldestKey);
+            if (oldestUrl) URL.revokeObjectURL(oldestUrl);
+            this._processedCache.delete(oldestKey);
+        }
+    },
+
+    /**
+     * Touch an existing cache entry so it counts as most recently used.
+     */
+    _cacheGet: function(imageUrl) {
+        if (!this._processedCache.has(imageUrl)) return null;
+        var url = this._processedCache.get(imageUrl);
+        this._processedCache.delete(imageUrl);
+        this._processedCache.set(imageUrl, url);
+        return url;
     },
 
     /**
@@ -106,8 +139,9 @@ var CVIBackgroundRemoval = {
         }
 
         // Check cache first — return instantly if already processed
-        if (this._processedCache.has(imageUrl)) {
-            return this._processedCache.get(imageUrl);
+        var cached = this._cacheGet(imageUrl);
+        if (cached) {
+            return cached;
         }
 
         // Only look up the live DOM element when we're allowed to write to it
@@ -140,7 +174,7 @@ var CVIBackgroundRemoval = {
 
             // Create a URL for the processed image
             var processedUrl = URL.createObjectURL(resultBlob);
-            this._processedCache.set(imageUrl, processedUrl);
+            this._cacheSet(imageUrl, processedUrl);
 
             if (attributionEl) {
                 attributionEl.textContent = CVII18n.t('backgroundRemoval.success');

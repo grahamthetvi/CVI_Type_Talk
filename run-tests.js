@@ -23,7 +23,9 @@ const testCases = [
     { word: 'fuck', expectBlocked: true },
     { word: 'fucking', expectBlocked: true },
     { word: 'FUCK', expectBlocked: true }, // Case insensitivity check
-    { word: 'f u c k', expectBlocked: true }
+    { word: 'f u c k', expectBlocked: true },
+    { word: 'am', expectBlocked: false }, // Common English word must not be blocked
+    { word: 'anita', expectBlocked: false } // Common name must not be blocked
 ];
 
 let allPassed = true;

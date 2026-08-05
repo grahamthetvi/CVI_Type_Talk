@@ -32,6 +32,7 @@ const CVISettings = {
     current: {},
     previousFocus: null,
     focusableElements: [],
+    _lastAppliedRemoveBackground: false,
 
     // Common profanity words to filter - now handled by CVIBadWords in badwords.js
     profanityList: [],
@@ -68,7 +69,11 @@ const CVISettings = {
      * Save settings to localStorage
      */
     saveSettings() {
-        localStorage.setItem('cvi-settings', JSON.stringify(this.current));
+        try {
+            localStorage.setItem('cvi-settings', JSON.stringify(this.current));
+        } catch (e) {
+            console.error('Failed to save settings:', e);
+        }
     },
 
     /**
@@ -197,6 +202,19 @@ const CVISettings = {
             });
         }
 
+        var customListEnabled = document.getElementById('custom-word-list-enabled');
+        var customList = document.getElementById('custom-word-list');
+        if (customListEnabled) {
+            customListEnabled.addEventListener('change', function () {
+                self._updateCustomWordListWarning();
+            });
+        }
+        if (customList) {
+            customList.addEventListener('input', function () {
+                self._updateCustomWordListWarning();
+            });
+        }
+
         // Close on Escape key (settings guide takes priority over settings panel)
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
@@ -298,28 +316,9 @@ const CVISettings = {
 
         if (CVIKeyboard) CVIKeyboard.disable();
         modal.removeAttribute('hidden');
+        if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.trap(modal);
         dismissBtn.focus();
         this._announceToScreenReader(CVII18n.t('screenReaderAnnouncements.settingsGuideOpened'));
-
-        if (!this._guideKeydownBound) {
-            this._guideKeydownBound = true;
-            modal.addEventListener('keydown', function (e) {
-                if (e.key !== 'Tab') return;
-                var focusables = modal.querySelectorAll(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                );
-                if (focusables.length === 0) return;
-                var first = focusables[0];
-                var last = focusables[focusables.length - 1];
-                if (e.shiftKey && document.activeElement === first) {
-                    e.preventDefault();
-                    last.focus();
-                } else if (!e.shiftKey && document.activeElement === last) {
-                    e.preventDefault();
-                    first.focus();
-                }
-            });
-        }
     },
 
     /**
@@ -331,6 +330,7 @@ const CVISettings = {
 
         var mode = this._guideMode;
         modal.setAttribute('hidden', '');
+        if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(modal);
 
         if (mode === 'first') {
             localStorage.setItem('cvi-settings-guide-seen', '1');
@@ -364,23 +364,12 @@ const CVISettings = {
                 CVIKeyboard.disable();
             }
 
-            // Get all focusable elements within the panel
-            this.focusableElements = panel.querySelectorAll(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            );
+            if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.trap(panel);
 
-            // Set up focus trap
-            if (this.focusableElements.length > 0) {
-                var settingsTitle = document.getElementById('settings-title');
-                if (settingsTitle) {
-                    settingsTitle.setAttribute('tabindex', '-1');
-                    settingsTitle.focus();
-                }
-
-                var firstFocusable = this.focusableElements[0];
-                var lastFocusable = this.focusableElements[this.focusableElements.length - 1];
-
-                panel.addEventListener('keydown', this._handleFocusTrap.bind(this, firstFocusable, lastFocusable));
+            var settingsTitle = document.getElementById('settings-title');
+            if (settingsTitle) {
+                settingsTitle.setAttribute('tabindex', '-1');
+                settingsTitle.focus();
             }
 
             // Announce to screen readers
@@ -395,6 +384,7 @@ const CVISettings = {
         var panel = document.getElementById('settings-panel');
         if (panel) {
             panel.classList.remove('visible');
+            if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(panel);
 
             // Re-enable keyboard input
             if (CVIKeyboard && CVIKeyboard.enabled !== undefined) {
@@ -411,27 +401,6 @@ const CVISettings = {
 
             // Announce to screen readers
             this._announceToScreenReader(CVII18n.t('screenReaderAnnouncements.settingsPanelClosed'));
-        }
-    },
-
-    /**
-     * Handle focus trapping within the dialog
-     */
-    _handleFocusTrap(firstFocusable, lastFocusable, e) {
-        if (e.key === 'Tab') {
-            if (e.shiftKey) {
-                // Shift + Tab
-                if (document.activeElement === firstFocusable) {
-                    e.preventDefault();
-                    lastFocusable.focus();
-                }
-            } else {
-                // Tab
-                if (document.activeElement === lastFocusable) {
-                    e.preventDefault();
-                    firstFocusable.focus();
-                }
-            }
         }
     },
 
@@ -509,6 +478,8 @@ const CVISettings = {
 
         var customList = document.getElementById('custom-word-list');
         if (customList) customList.value = this.current.customWordList;
+
+        this._updateCustomWordListWarning();
 
         var blockedList = document.getElementById('blocked-word-list');
         if (blockedList) blockedList.value = this.current.blockedWordList;
@@ -646,9 +617,30 @@ const CVISettings = {
     },
 
     /**
+     * Show a warning when "custom word list only" is on but the list is empty.
+     */
+    _updateCustomWordListWarning() {
+        var warning = document.getElementById('custom-word-list-empty-warning');
+        if (!warning) return;
+        var enabledEl = document.getElementById('custom-word-list-enabled');
+        var listEl = document.getElementById('custom-word-list');
+        var enabled = enabledEl ? enabledEl.checked : this.current.customWordListEnabled;
+        var listValue = listEl ? listEl.value : this.current.customWordList;
+        var hasWords = String(listValue || '').split(',').some(function (w) {
+            return w.trim().length > 0;
+        });
+        if (enabled && !hasWords) {
+            warning.hidden = false;
+        } else {
+            warning.hidden = true;
+        }
+    },
+
+    /**
      * Apply current settings to the application
      */
     applySettings() {
+        var previousRemoveBackground = this._lastAppliedRemoveBackground;
         var textDisplay = document.getElementById('text-display');
         if (textDisplay) {
             textDisplay.style.fontFamily = this.current.fontFamily;
@@ -712,6 +704,14 @@ const CVISettings = {
             CVIImages._updateArrows();
         }
 
+        // Clear background-removal blob cache when the feature is turned off
+        if (previousRemoveBackground && !this.current.removeBackground) {
+            if (typeof CVIBackgroundRemoval !== 'undefined' && CVIBackgroundRemoval.clearCache) {
+                CVIBackgroundRemoval.clearCache();
+            }
+        }
+        this._lastAppliedRemoveBackground = !!this.current.removeBackground;
+
         // Re-run pre-loading whenever settings are saved, in case the word list changed
         if (typeof CVIImages !== 'undefined' && this.current.preloadWords) {
             CVIImages.preloadWords(this.current.preloadWords);
@@ -735,14 +735,15 @@ const CVISettings = {
                 .filter(function (w) { return w.length > 0; });
 
             for (var b = 0; b < blockedWords.length; b++) {
-                if (normalized === blockedWords[b] ||
-                    normalized.indexOf(blockedWords[b]) !== -1) {
+                // Exact token match only — substring matching blocked legitimate words
+                // (e.g. blocking "ass" also blocked "class" / "glass").
+                if (normalized === blockedWords[b]) {
                     return false;
                 }
             }
         }
 
-        // If using custom word list only
+        // If using custom word list only — empty list means "not configured"
         if (this.current.customWordListEnabled) {
             var allowedWords = this.current.customWordList
                 .toLowerCase()
@@ -750,7 +751,10 @@ const CVISettings = {
                 .map(function (w) { return w.trim(); })
                 .filter(function (w) { return w.length > 0; });
 
-            return allowedWords.indexOf(normalized) !== -1;
+            if (allowedWords.length > 0) {
+                return allowedWords.indexOf(normalized) !== -1;
+            }
+            // Fall through to blocked/profanity/default when allow-list is empty
         }
 
         // If filtering profanity
@@ -855,8 +859,13 @@ const CVISettings = {
             clearBtn.addEventListener('click', function () {
                 if (confirm(CVII18n.t('browserDialogs.clearTypingHistoryConfirm'))) {
                     CVITypingHistory.clearAll();
-                    if (CVIKeyboard && CVIKeyboard.enabled) {
-                        CVITypingHistory.startSession();
+                    if (CVIKeyboard) {
+                        CVIKeyboard.sessionStartTime = Date.now();
+                        CVIKeyboard.letterCount = 0;
+                        CVIKeyboard.wordCount = 0;
+                        if (CVIKeyboard.enabled) {
+                            CVITypingHistory.startSession();
+                        }
                     }
                     self._populateWordHistory();
                     self._populatePastSessions();

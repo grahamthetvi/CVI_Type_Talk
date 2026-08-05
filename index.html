@@ -16,7 +16,7 @@
 <body>
     <a href="#typing-area" class="skip-link" data-i18n="mainShellNavigation.skipLink">Skip to typing area</a>
 
-    <main id="app" class="app-container" role="application"
+    <main id="app" class="app-container"
         data-i18n-attr="aria-label:mainShellNavigation.mainAriaLabel"
         aria-label="CVI Type Talker - Type words to hear them spoken and see images">
 
@@ -360,6 +360,9 @@
                     <label for="custom-word-list-enabled" data-i18n="settingsPanel.labelsAndControls.useCustomWordListOnly">Use Custom Word List Only:</label>
                     <input type="checkbox" id="custom-word-list-enabled">
                 </div>
+                <p id="custom-word-list-empty-warning" class="setting-note custom-list-empty-warning" hidden
+                    data-i18n="settingsPanel.labelsAndControls.customWordListEmptyWarning"
+                    role="status">Custom word list is empty — images will still show for other words until you add allowed words.</p>
                 <div class="setting-row full-width">
                     <label for="custom-word-list" data-i18n="settingsPanel.labelsAndControls.allowedWords">Allowed Words (comma-separated):</label>
                     <textarea id="custom-word-list" rows="4" placeholder="cat, dog, tree, house, car..."></textarea>
@@ -529,6 +532,7 @@
     </div>
 
     <script src="js/i18n.js"></script>
+    <script src="js/focus-trap.js"></script>
     <script src="js/speech.js"></script>
     <script src="js/background-removal.js"></script>
     <script src="js/local-images.js"></script>

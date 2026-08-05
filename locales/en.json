@@ -133,6 +133,7 @@
       "preloadImagesNote": "Images for these words will be fetched (and background-removed, if enabled) as soon as the session starts — so they appear instantly when the child types them. Separate words with commas.",
       "filterProfanity": "Filter Profanity:",
       "useCustomWordListOnly": "Use Custom Word List Only:",
+      "customWordListEmptyWarning": "Custom word list is empty — images will still show for other words until you add allowed words.",
       "allowedWords": "Allowed Words (comma-separated):",
       "blockedWords": "Blocked Words (comma-separated):",
       "blockedWordsNote": "These words will never show images, regardless of other settings.",
@@ -233,6 +234,9 @@
     "removingPct": "Removing background... {pct}%",
     "success": "Background removed - Wikimedia Commons",
     "failed": "Background removal failed - Wikimedia Commons"
+  },
+  "cameraTriggers": {
+    "words": ["me", "you"]
   },
   "customImagesList": {
     "emptyState": "No custom images added yet.",
