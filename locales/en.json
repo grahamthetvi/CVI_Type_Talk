@@ -185,7 +185,16 @@
     "ariaLabel": "Expanded image view",
     "closeButtonAriaLabel": "Close expanded image",
     "prevAriaLabel": "Previous image",
-    "nextAriaLabel": "Next image"
+    "nextAriaLabel": "Next image",
+    "toolbarAriaLabel": "Expanded image options",
+    "removeBackground": "Remove background",
+    "outline": "Outline",
+    "outlineColor": "Outline colour",
+    "outlineColorAriaLabel": "Outline colour",
+    "download": "Download image",
+    "downloadAriaLabel": "Download image",
+    "processing": "Processing image...",
+    "downloadFailed": "Download failed"
   },
   "browserDialogs": {
     "resetConfirm": "Reset all settings to defaults?",

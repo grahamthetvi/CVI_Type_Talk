@@ -394,7 +394,6 @@ const CVIImages = {
                 if (self.imageEl.src === src || self.imageEl.src === processedUrl) {
                     self.imageEl.src = processedUrl;
                     self.imageEl.classList.remove('processing');
-                    self._applyImageOutline && self._applyImageOutline();
                 }
             }).catch(function () {
                 self.imageEl.classList.remove('processing');

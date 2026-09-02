@@ -133,8 +133,118 @@ var CVIBackgroundRemoval = {
      *                             (used during background pre-loading so the student
      *                             never sees "Removing background…" flicker mid-session)
      */
-    processImage: async function(imageUrl, word, silent) {
-        if (!this.isEnabled()) {
+    /**
+     * Load an Image element from a Blob.
+     */
+    _loadImageFromBlob: function(blob) {
+        return new Promise(function(resolve, reject) {
+            var objectUrl = URL.createObjectURL(blob);
+            var img = new Image();
+            img.onload = function() {
+                URL.revokeObjectURL(objectUrl);
+                resolve(img);
+            };
+            img.onerror = function() {
+                URL.revokeObjectURL(objectUrl);
+                reject(new Error('Failed to load image from blob'));
+            };
+            img.src = objectUrl;
+        });
+    },
+
+    /**
+     * Draw a coloured outline around the non-transparent pixels of an image blob.
+     */
+    applyOutlineToBlob: async function(blob, color, thickness) {
+        var img = await this._loadImageFromBlob(blob);
+        var width = img.width;
+        var height = img.height;
+        var pad = thickness || 6;
+        var radius = pad / 2;
+        var steps = Math.max(16, Math.round(pad * 4));
+        var outlineColor = color || '#FFFF00';
+
+        var tintCanvas = document.createElement('canvas');
+        tintCanvas.width = width;
+        tintCanvas.height = height;
+        var tintCtx = tintCanvas.getContext('2d');
+        tintCtx.drawImage(img, 0, 0);
+        tintCtx.globalCompositeOperation = 'source-in';
+        tintCtx.fillStyle = outlineColor;
+        tintCtx.fillRect(0, 0, width, height);
+
+        var outCanvas = document.createElement('canvas');
+        outCanvas.width = width + pad * 2;
+        outCanvas.height = height + pad * 2;
+        var outCtx = outCanvas.getContext('2d');
+
+        for (var i = 0; i < steps; i += 1) {
+            var angle = (i / steps) * Math.PI * 2;
+            var dx = Math.cos(angle) * radius;
+            var dy = Math.sin(angle) * radius;
+            outCtx.drawImage(tintCanvas, pad + dx, pad + dy);
+        }
+        outCtx.drawImage(img, pad, pad);
+
+        return new Promise(function(resolve, reject) {
+            outCanvas.toBlob(function(result) {
+                if (result) resolve(result);
+                else reject(new Error('Failed to create outlined image blob'));
+            }, 'image/png');
+        });
+    },
+
+    /**
+     * Apply outline to an image URL and return a new blob URL.
+     */
+    applyOutlineToUrl: async function(imageUrl, color, thickness) {
+        var response = await fetch(imageUrl);
+        var blob = await response.blob();
+        var outlinedBlob = await this.applyOutlineToBlob(blob, color, thickness);
+        return URL.createObjectURL(outlinedBlob);
+    },
+
+    /**
+     * Process image for display with optional forced background removal and outline.
+     * @param {object} [options]
+     * @param {boolean} [options.bgRemoval]
+     * @param {boolean} [options.outline]
+     * @param {string}  [options.outlineColor]
+     * @param {number}  [options.outlineThickness]
+     * @param {boolean} [options.silent]
+     */
+    processForDisplay: async function(imageUrl, word, options) {
+        options = options || {};
+        var currentUrl = imageUrl;
+        var createdUrls = [];
+
+        try {
+            if (options.bgRemoval) {
+                currentUrl = await this.processImage(imageUrl, word, options.silent, true);
+            }
+
+            if (options.outline) {
+                var response = await fetch(currentUrl);
+                var sourceBlob = await response.blob();
+                var outlinedBlob = await this.applyOutlineToBlob(
+                    sourceBlob,
+                    options.outlineColor,
+                    options.outlineThickness
+                );
+                var outlinedUrl = URL.createObjectURL(outlinedBlob);
+                createdUrls.push(outlinedUrl);
+                return { url: outlinedUrl, revoke: createdUrls };
+            }
+
+            return { url: currentUrl, revoke: createdUrls };
+        } catch (err) {
+            createdUrls.forEach(function(url) { URL.revokeObjectURL(url); });
+            throw err;
+        }
+    },
+
+    processImage: async function(imageUrl, word, silent, force) {
+        if (!force && !this.isEnabled()) {
             return imageUrl;
         }
 
