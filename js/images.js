@@ -14,9 +14,6 @@ const CVIImages = {
 
     // Cache: word -> array of { url, title }
     cache: new Map(),
-    // Dictionary validation cache: word -> boolean
-    _wordValidCache: new Map(),
-
     _currentRequest: 0,
 
     // Current word's photo list and index
@@ -247,18 +244,15 @@ const CVIImages = {
             return;
         }
 
-        // ── Dictionary validation (only for words not yet in cache) ──────────
+        // ── Local dictionary validation (only for words not yet in cache) ────
         var skipValidation = settings && settings.customWordListEnabled;
-        if (!skipValidation) {
-            var isReal = await this._isRealWord(normalized);
-            if (requestId !== this._currentRequest) return;
-            if (!isReal) {
+        if (!skipValidation && typeof CVIWordDictionary !== 'undefined') {
+            if (!CVIWordDictionary.isRealWord(normalized)) {
                 this._showNonsenseWord(normalized);
                 return;
             }
         }
 
-        // Show loading state
         this._showLoading(normalized);
         this._hideArrows();
 
@@ -283,35 +277,6 @@ const CVIImages = {
             if (requestId !== this._currentRequest) return;
             // Do not cache failures — transient network/rate-limit errors should retry later
             this._showTextOnly(normalized);
-        }
-    },
-
-    /**
-     * Check if a word exists in the English dictionary via free API.
-     * Results are cached for the session.
-     */
-    async _isRealWord(word) {
-        if (this._wordValidCache.has(word)) {
-            return this._wordValidCache.get(word);
-        }
-
-        // Single letters are handled before this call; just in case
-        if (word.length === 1) {
-            this._wordValidCache.set(word, false);
-            return false;
-        }
-
-        try {
-            var response = await fetch(
-                'https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word)
-            );
-            var isReal = response.ok; // 200 = found, 404 = not found
-            this._wordValidCache.set(word, isReal);
-            return isReal;
-        } catch (err) {
-            // Network error — allow word through so connectivity issues don't block the student
-            this._wordValidCache.set(word, true);
-            return true;
         }
     },
 
@@ -525,8 +490,9 @@ const CVIImages = {
                 var results = await self._fetchFromWikimedia(word);
                 if (results && results.length > 0) {
                     self.cache.set(word, results);
-                    // Mark as a known-real word so showImage() skips the dictionary API call
-                    self._wordValidCache.set(word, true);
+                    if (typeof CVIWordDictionary !== 'undefined') {
+                        CVIWordDictionary.registerWord(word);
+                    }
 
                     // If background removal is on, process the first photo now silently
                     // (silent=true suppresses any visible attribution updates)

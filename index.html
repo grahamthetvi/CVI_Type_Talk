@@ -283,6 +283,11 @@
             <section class="settings-section">
                 <h3 data-i18n="settingsPanel.sectionHeadings.typingControl">Typing Control</h3>
                 <div class="setting-row">
+                    <label for="rate-limit-enabled" data-i18n="settingsPanel.labelsAndControls.enableRateLimit">Limit Fast Typing (Keyboard Pounding):</label>
+                    <input type="checkbox" id="rate-limit-enabled">
+                </div>
+                <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.rateLimitNote">When off, every key goes through so students can explore freely. Turn this on to slow down very fast typing. The app may suggest enabling it if rapid typing produces nonsense words.</p>
+                <div class="setting-row">
                     <label for="typing-interval" data-i18n="settingsPanel.labelsAndControls.minimumTimeBetweenKeys">Minimum Time Between Keys:</label>
                     <input type="range" id="typing-interval" min="0" max="1000" step="50" value="150"
                         aria-describedby="typing-interval-value">
@@ -537,6 +542,7 @@
     <script src="js/background-removal.js"></script>
     <script src="js/local-images.js"></script>
     <script src="js/badwords.js"></script>
+    <script src="js/word-dictionary.js"></script>
     <script src="js/images.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/typing-history.js"></script>

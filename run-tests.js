@@ -39,10 +39,12 @@ for (const tc of testCases) {
     if (!passed) allPassed = false;
 }
 
-if (allPassed) {
-    console.log("\nAll tests passed successfully!");
-    process.exit(0);
-} else {
-    console.error("\nSome tests failed.");
+if (!allPassed) {
+    console.error("\nSome profanity filter tests failed.");
     process.exit(1);
 }
+
+console.log("\nAll profanity filter tests passed.");
+console.log('\nRunning word dictionary tests...');
+const dictExit = require('child_process').spawnSync('node', ['test-word-dictionary.js'], { stdio: 'inherit' });
+process.exit(dictExit.status === 0 ? 0 : 1);

@@ -45,6 +45,21 @@ const CVIApp = {
             await CVILocalImages.init().catch(e => console.error("Failed to init CVILocalImages", e));
         }
         CVISettings.init();
+        if (typeof CVIWordDictionary !== 'undefined') {
+            await CVIWordDictionary.init().catch(function (e) {
+                console.error('Failed to init CVIWordDictionary', e);
+            });
+            if (typeof CVILocalImages !== 'undefined' && CVILocalImages.getAllImages) {
+                try {
+                    var customImages = await CVILocalImages.getAllImages();
+                    customImages.forEach(function (entry) {
+                        CVIWordDictionary.registerWord(entry.word);
+                    });
+                } catch (e) {
+                    console.error('Failed to register custom image words', e);
+                }
+            }
+        }
         if (typeof CVITypingHistory !== 'undefined') {
             CVITypingHistory.init();
         }

@@ -123,6 +123,8 @@
       "bubbleSize": "Bubble Size:",
       "minimumTimeBetweenKeys": "Minimum Time Between Keys:",
       "maxKeysPerSecond": "Max Keys Per Second:",
+      "enableRateLimit": "Limit Fast Typing (Keyboard Pounding):",
+      "rateLimitNote": "When off, every key goes through so students can explore freely. Turn this on to slow down very fast typing. The app may suggest enabling it if rapid typing produces nonsense words.",
       "imageSize": "Image Size:",
       "imageWordSize": "Image Word Size:",
       "imagePanelBackgroundColor": "Image Panel Background Color:",
@@ -206,7 +208,8 @@
     "newLine": "New line",
     "exitedTeacherMode": "Exited Teacher Mode",
     "wpm": "Words per minute: {n} WPM  |  Press Ctrl+Shift+M to hide",
-    "lpm": "Letters per minute: {n} LPM  |  Press Ctrl+Shift+L to hide"
+    "lpm": "Letters per minute: {n} LPM  |  Press Ctrl+Shift+L to hide",
+    "rateLimitSuggestion": "Typing very fast created nonsense words. Open Settings and turn on Limit Fast Typing."
   },
   "imageArea": {
     "customPhotoAlt": "Custom photo of {word}",
