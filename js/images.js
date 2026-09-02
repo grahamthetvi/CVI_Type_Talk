@@ -14,9 +14,6 @@ const CVIImages = {
 
     // Cache: word -> array of { url, title }
     cache: new Map(),
-    // Dictionary validation cache: word -> boolean
-    _wordValidCache: new Map(),
-
     _currentRequest: 0,
 
     // Current word's photo list and index
@@ -253,10 +250,8 @@ const CVIImages = {
 
         // ── Dictionary validation (only for words not yet in cache) ──────────
         var skipValidation = settings && settings.customWordListEnabled;
-        if (!skipValidation) {
-            var isReal = await this._isRealWord(normalized);
-            if (requestId !== this._currentRequest) return;
-            if (!isReal) {
+        if (!skipValidation && typeof CVIWordDictionary !== 'undefined') {
+            if (!CVIWordDictionary.isRealWord(normalized)) {
                 this._showNonsenseWord(normalized);
                 return;
             }
@@ -529,8 +524,9 @@ const CVIImages = {
                 var results = await self._fetchFromWikimedia(word);
                 if (results && results.length > 0) {
                     self.cache.set(word, results);
-                    // Mark as a known-real word so showImage() skips the dictionary API call
-                    self._wordValidCache.set(word, true);
+                    if (typeof CVIWordDictionary !== 'undefined') {
+                        CVIWordDictionary.registerWord(word);
+                    }
 
                     // If background removal is on, process the first photo now silently
                     // (silent=true suppresses any visible attribution updates)

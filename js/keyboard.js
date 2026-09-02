@@ -8,6 +8,8 @@ const CVIKeyboard = {
     enabled: false,
     keyPressHistory: [],
     _teacherCommitPending: false,
+    _wordKeyTimes: [],
+    _rateLimitSuggestionShown: false,
 
     // Typing speed tracking
     sessionStartTime: null,
@@ -144,6 +146,71 @@ const CVIKeyboard = {
         }
     },
 
+    /**
+     * Track key timing for the word currently being typed.
+     */
+    _trackWordKey(now) {
+        this._wordKeyTimes.push(now);
+    },
+
+    _resetWordKeyTracking() {
+        this._wordKeyTimes = [];
+    },
+
+    /**
+     * Detect rapid key pounding on the current word (even when rate limiting is off).
+     */
+    _wasPoundingCurrentWord() {
+        var times = this._wordKeyTimes;
+        if (times.length < 3) return false;
+
+        var intervals = [];
+        for (var i = 1; i < times.length; i++) {
+            intervals.push(times[i] - times[i - 1]);
+        }
+        intervals.sort(function (a, b) { return a - b; });
+        var median = intervals[Math.floor(intervals.length / 2)];
+
+        var settings = CVISettings ? CVISettings.getSettings() : null;
+        var minInterval = settings ? settings.typingInterval : this.minInterval;
+        var maxKeysPerSecond = settings ? settings.maxKeysPerSecond : 10;
+
+        if (median < Math.max(60, minInterval * 0.6)) return true;
+
+        var windowStart = times[times.length - 1] - 1000;
+        var keysInLastSecond = 0;
+        for (var j = times.length - 1; j >= 0; j--) {
+            if (times[j] >= windowStart) keysInLastSecond++;
+        }
+        return keysInLastSecond >= maxKeysPerSecond;
+    },
+
+    /**
+     * After fast nonsense typing, suggest enabling Typing Control in Settings.
+     */
+    _maybeSuggestRateLimit(word) {
+        var settings = CVISettings ? CVISettings.getSettings() : null;
+        if (!word || !settings || settings.rateLimitEnabled || this._rateLimitSuggestionShown) {
+            return;
+        }
+        if (!this._wasPoundingCurrentWord()) return;
+        if (typeof CVIWordDictionary !== 'undefined' && CVIWordDictionary.isRealWord(word)) {
+            return;
+        }
+
+        this._rateLimitSuggestionShown = true;
+        var message = CVII18n.t('statusBar.rateLimitSuggestion');
+        CVIDisplay._updateStatus(message);
+        CVISpeech.speakSystem(message);
+    },
+
+    _onWordCompleted(word) {
+        if (word) {
+            this._maybeSuggestRateLimit(word);
+        }
+        this._resetWordKeyTracking();
+    },
+
     _isEditableTarget(event) {
         var el = event.target;
         if (!el || !el.tagName) return false;
@@ -176,6 +243,7 @@ const CVIKeyboard = {
             var wasTeacherMode = !!CVIDisplay.targetWord;
             CVIDisplay.clear();
             CVIImages.hideImage();
+            this._resetWordKeyTracking();
             CVISpeech.speakSystem(wasTeacherMode
                 ? CVII18n.t('systemSpeech.screenCleared') + ' ' + CVII18n.t('statusBar.exitedTeacherMode')
                 : CVII18n.t('systemSpeech.screenCleared'));
@@ -259,20 +327,23 @@ const CVIKeyboard = {
         var settings = CVISettings ? CVISettings.getSettings() : null;
         var minInterval = settings ? settings.typingInterval : this.minInterval;
         var maxKeysPerSecond = settings ? settings.maxKeysPerSecond : 10;
+        var rateLimitEnabled = settings ? settings.rateLimitEnabled : false;
 
-        // Rate limiting - minimum interval between keys
+        // Rate limiting — only when enabled in Settings
         var now = Date.now();
-        if (now - this.lastKeyTime < minInterval) {
-            event.preventDefault();
-            return;
+        if (rateLimitEnabled) {
+            if (now - this.lastKeyTime < minInterval) {
+                event.preventDefault();
+                return;
+            }
         }
 
-        // Max keys per second limiting — prune first, then reject without counting
+        // Track recent keypresses for pounding detection (always, even when limit is off)
         this.keyPressHistory = this.keyPressHistory.filter(function(time) {
             return now - time < 1000;
         });
 
-        if (this.keyPressHistory.length >= maxKeysPerSecond) {
+        if (rateLimitEnabled && this.keyPressHistory.length >= maxKeysPerSecond) {
             event.preventDefault();
             return;
         }
@@ -307,6 +378,7 @@ const CVIKeyboard = {
             if (word) {
                 CVISpeech.speakWord(word);
                 CVIImages.showImage(word);
+                this._onWordCompleted(word);
                 if (this.speedDisplayMode) this._showSpeed();
             } else {
                 CVISpeech.speakSystem(CVII18n.t('systemSpeech.newLine'));
@@ -327,6 +399,7 @@ const CVIKeyboard = {
             if (completedWord) {
                 CVISpeech.speakWord(completedWord);
                 CVIImages.showImage(completedWord);
+                this._onWordCompleted(completedWord);
                 if (this.speedDisplayMode) this._showSpeed();
             }
             return;
@@ -356,6 +429,7 @@ const CVIKeyboard = {
 
             this.keyPressHistory.push(now);
             this.lastKeyTime = now;
+            this._trackWordKey(now);
             this.letterCount++;
             var charToAdd = key;
             if (CVIDisplay.targetWord) {
@@ -382,6 +456,7 @@ const CVIKeyboard = {
                     if (word) {
                         CVISpeech.speakWord(word);
                         CVIImages.showImage(word);
+                        self._onWordCompleted(word);
                         if (self.speedDisplayMode) self._showSpeed();
                     }
                 }, 400);

@@ -13,6 +13,7 @@ const CVISettings = {
         bubbleSize: 4,
         typingInterval: 150,
         maxKeysPerSecond: 10,
+        rateLimitEnabled: false,
         removeBackground: false,
         imageBgColor: '#000000',
         filterProfanity: true,
@@ -168,6 +169,13 @@ const CVISettings = {
         if (maxKeys && maxKeysValue) {
             maxKeys.addEventListener('input', function () {
                 maxKeysValue.textContent = this.value;
+            });
+        }
+
+        var rateLimitEnabled = document.getElementById('rate-limit-enabled');
+        if (rateLimitEnabled) {
+            rateLimitEnabled.addEventListener('change', function () {
+                self._updateRateLimitControls();
             });
         }
 
@@ -464,6 +472,10 @@ const CVISettings = {
         if (maxKeys) maxKeys.value = this.current.maxKeysPerSecond;
         if (maxKeysValue) maxKeysValue.textContent = this.current.maxKeysPerSecond;
 
+        var rateLimitEnabled = document.getElementById('rate-limit-enabled');
+        if (rateLimitEnabled) rateLimitEnabled.checked = this.current.rateLimitEnabled;
+        this._updateRateLimitControls();
+
         var removeBackground = document.getElementById('remove-background');
         if (removeBackground) removeBackground.checked = this.current.removeBackground;
 
@@ -572,6 +584,9 @@ const CVISettings = {
 
         var maxKeys = document.getElementById('max-keys-per-second');
         if (maxKeys) this.current.maxKeysPerSecond = parseInt(maxKeys.value);
+
+        var rateLimitEnabled = document.getElementById('rate-limit-enabled');
+        if (rateLimitEnabled) this.current.rateLimitEnabled = rateLimitEnabled.checked;
 
         var removeBackground = document.getElementById('remove-background');
         if (removeBackground) this.current.removeBackground = removeBackground.checked;
@@ -716,6 +731,23 @@ const CVISettings = {
         if (typeof CVIImages !== 'undefined' && this.current.preloadWords) {
             CVIImages.preloadWords(this.current.preloadWords);
         }
+
+        if (typeof CVIWordDictionary !== 'undefined' && CVIWordDictionary.refreshExtras) {
+            CVIWordDictionary.refreshExtras();
+        }
+    },
+
+    /**
+     * Enable/disable typing-control sliders based on the rate-limit toggle.
+     */
+    _updateRateLimitControls() {
+        var enabledEl = document.getElementById('rate-limit-enabled');
+        var typingInterval = document.getElementById('typing-interval');
+        var maxKeys = document.getElementById('max-keys-per-second');
+        var enabled = enabledEl ? enabledEl.checked : this.current.rateLimitEnabled;
+
+        if (typingInterval) typingInterval.disabled = !enabled;
+        if (maxKeys) maxKeys.disabled = !enabled;
     },
 
     /**
@@ -911,6 +943,9 @@ const CVISettings = {
             var dataUrl = e.target.result;
             if (typeof CVILocalImages !== 'undefined') {
                 CVILocalImages.saveImage(word, dataUrl).then(function() {
+                    if (typeof CVIWordDictionary !== 'undefined') {
+                        CVIWordDictionary.registerWord(word);
+                    }
                     wordInput.value = '';
                     fileInput.value = '';
                     self._populateCustomImagesList();
