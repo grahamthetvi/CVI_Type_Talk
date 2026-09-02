@@ -247,6 +247,10 @@ const CVIImages = {
             return;
         }
 
+        // Show loading immediately so the panel doesn't look stuck while we validate/fetch.
+        this._showLoading(normalized);
+        this._hideArrows();
+
         // ── Dictionary validation (only for words not yet in cache) ──────────
         var skipValidation = settings && settings.customWordListEnabled;
         if (!skipValidation) {
@@ -257,10 +261,6 @@ const CVIImages = {
                 return;
             }
         }
-
-        // Show loading state
-        this._showLoading(normalized);
-        this._hideArrows();
 
         try {
             var results = await this._fetchFromWikimedia(normalized);
@@ -302,14 +302,18 @@ const CVIImages = {
         }
 
         try {
+            var controller = new AbortController();
+            var timeoutId = setTimeout(function () { controller.abort(); }, 5000);
             var response = await fetch(
-                'https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word)
+                'https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word),
+                { signal: controller.signal }
             );
+            clearTimeout(timeoutId);
             var isReal = response.ok; // 200 = found, 404 = not found
             this._wordValidCache.set(word, isReal);
             return isReal;
         } catch (err) {
-            // Network error — allow word through so connectivity issues don't block the student
+            // Network error or timeout — allow word through so connectivity issues don't block the student
             this._wordValidCache.set(word, true);
             return true;
         }
