@@ -185,7 +185,16 @@
     "ariaLabel": "عرض الصورة الموسعة",
     "closeButtonAriaLabel": "إغلاق الصورة الموسعة",
     "prevAriaLabel": "الصورة السابقة",
-    "nextAriaLabel": "الصورة التالية"
+    "nextAriaLabel": "الصورة التالية",
+    "toolbarAriaLabel": "خيارات الصورة الموسعة",
+    "removeBackground": "إزالة الخلفية",
+    "outline": "حدود",
+    "outlineColor": "لون الحدود",
+    "outlineColorAriaLabel": "لون الحدود",
+    "download": "تنزيل الصورة",
+    "downloadAriaLabel": "تنزيل الصورة",
+    "processing": "جارٍ معالجة الصورة...",
+    "downloadFailed": "فشل التنزيل"
   },
   "browserDialogs": {
     "resetConfirm": "هل تريد إعادة تعيين جميع الإعدادات إلى الافتراضي؟",

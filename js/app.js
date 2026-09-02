@@ -191,20 +191,122 @@ const CVIApp = {
         var lightboxPrev = document.getElementById('lightbox-prev');
         var lightboxNext = document.getElementById('lightbox-next');
         var lightboxLabel = document.getElementById('lightbox-label');
+        var lightboxBgRemoval = document.getElementById('lightbox-bg-removal');
+        var lightboxOutline = document.getElementById('lightbox-outline');
+        var lightboxOutlineColor = document.getElementById('lightbox-outline-color');
+        var lightboxOutlineColorWrap = document.getElementById('lightbox-outline-color-wrap');
+        var lightboxDownload = document.getElementById('lightbox-download');
+        var lightboxStatus = document.getElementById('lightbox-status');
         var wordImageEl = document.getElementById('word-image');
         var _lightboxPreviousFocus = null;
+        var _lightboxDisplayRequest = 0;
+        var _lightboxRevokeUrls = [];
 
         // Word shown in the lightbox — used to detect when to auto-close
         var _lightboxWord = '';
+        var _lightboxOriginalSrc = '';
+
+        function _revokeLightboxUrls() {
+            _lightboxRevokeUrls.forEach(function(url) {
+                if (url && url.indexOf('blob:') === 0) {
+                    URL.revokeObjectURL(url);
+                }
+            });
+            _lightboxRevokeUrls = [];
+        }
+
+        function _setLightboxStatus(message) {
+            if (lightboxStatus) lightboxStatus.textContent = message || '';
+        }
+
+        function _syncLightboxOutlineControls() {
+            var outlineOn = lightboxOutline && lightboxOutline.checked;
+            if (lightboxOutlineColorWrap) {
+                lightboxOutlineColorWrap.classList.toggle('disabled', !outlineOn);
+            }
+            if (lightboxOutlineColor) {
+                lightboxOutlineColor.disabled = !outlineOn;
+            }
+        }
+
+        function _getLightboxOriginalSrc() {
+            var photos = CVIImages._currentPhotos;
+            var index = CVIImages._currentPhotoIndex;
+            if (photos && photos[index] && photos[index].url) {
+                return photos[index].url;
+            }
+            return wordImageEl ? wordImageEl.src : '';
+        }
+
+        function _updateLightboxImage(src) {
+            if (!lightboxImg || !src) return;
+            _lightboxOriginalSrc = src;
+            var requestId = ++_lightboxDisplayRequest;
+            var bgRemovalOn = lightboxBgRemoval && lightboxBgRemoval.checked;
+            var outlineOn = lightboxOutline && lightboxOutline.checked;
+            var outlineColor = lightboxOutlineColor ? lightboxOutlineColor.value : '#FFFF00';
+
+            _revokeLightboxUrls();
+            lightboxImg.classList.add('processing');
+            _setLightboxStatus(CVII18n.t('lightbox.processing'));
+
+            var options = {
+                bgRemoval: bgRemovalOn,
+                outline: outlineOn,
+                outlineColor: outlineColor,
+                outlineThickness: 6,
+                silent: true
+            };
+
+            var finish = function(displayUrl) {
+                if (requestId !== _lightboxDisplayRequest) return;
+                lightboxImg.src = displayUrl;
+                lightboxImg.classList.remove('processing');
+                _setLightboxStatus('');
+            };
+
+            if ((bgRemovalOn || outlineOn) && typeof CVIBackgroundRemoval !== 'undefined') {
+                CVIBackgroundRemoval.processForDisplay(src, _lightboxWord, options)
+                    .then(function(result) {
+                        if (requestId !== _lightboxDisplayRequest) {
+                            if (result.revoke) {
+                                result.revoke.forEach(function(url) { URL.revokeObjectURL(url); });
+                            }
+                            return;
+                        }
+                        if (result.revoke) {
+                            _lightboxRevokeUrls = result.revoke.slice();
+                        }
+                        finish(result.url);
+                    })
+                    .catch(function() {
+                        if (requestId !== _lightboxDisplayRequest) return;
+                        lightboxImg.classList.remove('processing');
+                        _setLightboxStatus('');
+                        finish(src);
+                    });
+            } else {
+                finish(src);
+            }
+        }
 
         function openLightbox() {
             if (!wordImageEl || wordImageEl.hidden || !wordImageEl.src) return;
             _lightboxPreviousFocus = document.activeElement;
             _lightboxWord = CVIImages._currentWord;
-            lightboxImg.src = wordImageEl.src;
+
+            var settings = CVISettings ? CVISettings.getSettings() : null;
+            if (lightboxBgRemoval) {
+                lightboxBgRemoval.checked = settings ? !!settings.removeBackground : false;
+            }
+            if (lightboxOutline) lightboxOutline.checked = false;
+            if (lightboxOutlineColor) lightboxOutlineColor.value = '#FFFF00';
+            _syncLightboxOutlineControls();
+
             lightboxImg.alt = wordImageEl.alt;
             if (lightboxLabel) lightboxLabel.textContent = CVIImages._currentWord.toUpperCase();
             _syncLightboxArrows();
+            _updateLightboxImage(_getLightboxOriginalSrc());
             lightbox.classList.remove('hidden');
             if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.trap(lightbox);
             if (CVIKeyboard) CVIKeyboard.disable();
@@ -213,8 +315,13 @@ const CVIApp = {
 
         function closeLightbox() {
             if (!lightbox || lightbox.classList.contains('hidden')) return;
+            _lightboxDisplayRequest++;
+            _revokeLightboxUrls();
             lightbox.classList.add('hidden');
             _lightboxWord = '';
+            _lightboxOriginalSrc = '';
+            _setLightboxStatus('');
+            if (lightboxImg) lightboxImg.classList.remove('processing');
             if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(lightbox);
             if (CVIKeyboard) {
                 var instructions = document.getElementById('instructions-overlay');
@@ -268,6 +375,63 @@ const CVIApp = {
         if (lightboxPrev) lightboxPrev.addEventListener('click', function () { CVIImages.showPrevPhoto(); });
         if (lightboxNext) lightboxNext.addEventListener('click', function () { CVIImages.showNextPhoto(); });
 
+        if (lightboxBgRemoval) {
+            lightboxBgRemoval.addEventListener('change', function () {
+                if (!lightbox.classList.contains('hidden')) {
+                    _updateLightboxImage(_lightboxOriginalSrc || _getLightboxOriginalSrc());
+                }
+            });
+        }
+        if (lightboxOutline) {
+            lightboxOutline.addEventListener('change', function () {
+                _syncLightboxOutlineControls();
+                if (!lightbox.classList.contains('hidden')) {
+                    _updateLightboxImage(_lightboxOriginalSrc || _getLightboxOriginalSrc());
+                }
+            });
+        }
+        if (lightboxOutlineColor) {
+            lightboxOutlineColor.addEventListener('input', function () {
+                if (!lightbox.classList.contains('hidden') && lightboxOutline && lightboxOutline.checked) {
+                    _updateLightboxImage(_lightboxOriginalSrc || _getLightboxOriginalSrc());
+                }
+            });
+        }
+        if (lightboxDownload) {
+            lightboxDownload.addEventListener('click', function () {
+                if (!lightboxImg || !lightboxImg.src) return;
+                var filename = (_lightboxWord || 'image') + '.png';
+                fetch(lightboxImg.src)
+                    .then(function(response) { return response.blob(); })
+                    .then(function(blob) {
+                        var url = URL.createObjectURL(blob);
+                        var link = document.createElement('a');
+                        link.href = url;
+                        link.download = filename;
+                        link.click();
+                        URL.revokeObjectURL(url);
+                    })
+                    .catch(function() {
+                        _setLightboxStatus(CVII18n.t('lightbox.downloadFailed'));
+                    });
+            });
+        }
+
+        // Arrow keys navigate photos while the lightbox is open (keyboard module is disabled there)
+        document.addEventListener('keydown', function (e) {
+            if (!lightbox || lightbox.classList.contains('hidden')) return;
+            if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) {
+                return;
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                CVIImages.showPrevPhoto();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                CVIImages.showNextPhoto();
+            }
+        });
+
         // Escape key closes the lightbox
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) {
@@ -282,8 +446,8 @@ const CVIApp = {
             _origDisplayImage(src, word, title);
             if (lightbox && !lightbox.classList.contains('hidden')) {
                 if (word === _lightboxWord) {
-                    // Same word, different photo — update lightbox image
-                    lightboxImg.src = src;
+                    // Same word, different photo — update lightbox image with processing options
+                    _updateLightboxImage(src);
                     _syncLightboxArrows();
                 } else {
                     // New word typed — close lightbox so student can see the panel

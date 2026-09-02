@@ -510,6 +510,29 @@
                 style="display:none">&#8594;</button>
         </div>
         <p id="lightbox-label" class="lightbox-label"></p>
+        <div class="lightbox-toolbar" role="toolbar"
+            data-i18n-attr="aria-label:lightbox.toolbarAriaLabel"
+            aria-label="Expanded image options">
+            <label class="lightbox-control">
+                <input type="checkbox" id="lightbox-bg-removal">
+                <span data-i18n="lightbox.removeBackground">Remove background</span>
+            </label>
+            <label class="lightbox-control">
+                <input type="checkbox" id="lightbox-outline">
+                <span data-i18n="lightbox.outline">Outline</span>
+            </label>
+            <label class="lightbox-control lightbox-color-control" id="lightbox-outline-color-wrap">
+                <span data-i18n="lightbox.outlineColor">Outline colour</span>
+                <input type="color" id="lightbox-outline-color" value="#FFFF00"
+                    data-i18n-attr="aria-label:lightbox.outlineColorAriaLabel"
+                    aria-label="Outline colour">
+            </label>
+            <button type="button" id="lightbox-download" class="lightbox-download-btn"
+                data-i18n="lightbox.download"
+                data-i18n-attr="aria-label:lightbox.downloadAriaLabel"
+                aria-label="Download image">Download image</button>
+            <p id="lightbox-status" class="lightbox-status" aria-live="polite"></p>
+        </div>
     </div>
 
     <!-- Toolbar: guide, settings, optional tip link -->

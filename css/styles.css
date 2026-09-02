@@ -265,6 +265,78 @@ body {
     margin: 0;
 }
 
+.lightbox-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px 24px;
+    max-width: 95vw;
+    padding: 0 16px;
+}
+
+.lightbox-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.lightbox-control input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.lightbox-color-control input[type="color"] {
+    width: 48px;
+    height: 36px;
+    padding: 2px;
+    border: 2px solid #FFFFFF;
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.lightbox-color-control.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.lightbox-download-btn {
+    font-size: 18px;
+    color: #FFFFFF;
+    background: none;
+    border: 2px solid #FFFFFF;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.lightbox-download-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.lightbox-download-btn:focus {
+    outline: 4px solid #FFFFFF;
+    outline-offset: 4px;
+}
+
+.lightbox-status {
+    flex-basis: 100%;
+    text-align: center;
+    font-size: 16px;
+    color: #CCCCCC;
+    min-height: 20px;
+    margin: 0;
+}
+
+.lightbox-image.processing {
+    opacity: 0.6;
+}
+
 /* Pre-load status indicator */
 .preload-status {
     font-size: 14px;
