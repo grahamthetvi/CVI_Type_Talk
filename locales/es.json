@@ -1,0 +1,299 @@
+{
+  "documentSeo": {
+    "metaDescription": "CVI Type Talker - Una aplicación de escritura accesible para estudiantes con discapacidad visual cortical. Escribe palabras para oírlas y ver imágenes reales.",
+    "title": "CVI Type Talker"
+  },
+  "mainShellNavigation": {
+    "skipLink": "Saltar al área de escritura",
+    "mainAriaLabel": "CVI Type Talker - Escribe palabras para oírlas y ver imágenes",
+    "typedTextDisplayAriaLabel": "Pantalla de texto escrito",
+    "imagePanelPrevButtonAriaLabel": "Imagen anterior",
+    "imagePanelNextButtonAriaLabel": "Imagen siguiente",
+    "defaultImageLabel": "¡Escribe una palabra!",
+    "statusBarInitial": "Escribe una letra para comenzar",
+    "toolbarAriaLabel": "Ajustes y ayuda",
+    "guideButtonVisibleText": "Guía",
+    "guideButtonAriaLabel": "Abrir la guía de ajustes",
+    "settingsGearAriaLabel": "Abrir ajustes",
+    "tipLinkVisibleText": "Apoyar",
+    "tipLinkAriaLabel": "Apoya el proyecto en Buy Me a Coffee (se abre en una pestaña nueva)",
+    "languageSelectAriaLabel": "Idioma"
+  },
+  "consentOverlay": {
+    "title": "Acerca de las imágenes",
+    "body1": "Cuando terminas una palabra, esta aplicación muestra una imagen que coincide. Filtramos lo que podemos para que la experiencia sea adecuada para el aprendizaje.",
+    "body2": "Los filtros automáticos no son perfectos. Si necesitas más control, abre **Ajustes** en cualquier momento para opciones como **Filtro de groserías** y listas de palabras aprobadas.",
+    "body3": "Continuar significa que te sientes cómodo usando la aplicación con eso en mente.",
+    "button": "Continuar"
+  },
+  "instructionsOverlay": {
+    "title": "CVI Type Talker",
+    "languageLabel": "Idioma",
+    "lines": {
+      "typeLetters": "Escribe letras para oírlas en voz alta.",
+      "pressSpaceEnter": "Pulsa **Espacio** o **Intro** para oír la palabra completa y ver una imagen.",
+      "pressBackspace": "Pulsa **Retroceso** para borrar una letra.",
+      "pressArrows": "Pulsa las teclas de flecha **← →** para pasar por las fotos de la misma palabra.",
+      "pressWpm": "Pulsa **Ctrl+Shift+M** para mostrar las palabras por minuto.",
+      "pressLpm": "Pulsa **Ctrl+Shift+L** para mostrar las letras por minuto.",
+      "pressClear": "Pulsa **Ctrl+Shift+C** para borrar la pantalla.",
+      "pressTeacherMode": "Pulsa **Ctrl+Shift+Y** para iniciar el modo maestro (el estudiante completa una palabra objetivo).",
+      "pressTeacherPrompt": "Pulsa **Tab** o **?** en el modo maestro para oír la siguiente letra."
+    },
+    "keyboardNotice": "⌨️ Esta aplicación requiere un **teclado físico**. No funcionará en una pantalla táctil sin uno conectado.",
+    "screenReaderRegionAriaLabel": "Nota para usuarios de lectores de pantalla",
+    "headingScreenReader": "¿Usas un lector de pantalla?",
+    "screenReaderParagraph": "El área de escritura **no** es un campo de texto estándar del navegador, así que tu lector de pantalla puede no leer lo que escribes como lo haría en un cuadro de texto normal. La aplicación pronuncia cada letra y palabra con la voz integrada, y la barra de estado al pie de la página anuncia muchas actualizaciones (incluidas las palabras que terminas).",
+    "buttonStartTyping": "Empezar a escribir",
+    "footer": "Licencia MIT - Creador Addison Graham"
+  },
+  "settingsGuideModal": {
+    "title": "⚙️ Guía de ajustes",
+    "intro": "Aquí tienes un resumen de todo lo que puedes personalizar:",
+    "sectionTextAppearanceTitle": "🔤 Apariencia del texto",
+    "sectionTextAppearanceBody": "Cambia el estilo, el tamaño y el color de la fuente en la pantalla de escritura, además del color de fondo.",
+    "sectionBubbleLettersTitle": "🔵 Letras burbuja",
+    "sectionBubbleLettersBody": "Añade un contorno de color alrededor de cada letra para que el texto destaque sobre cualquier fondo.",
+    "sectionTypingControlTitle": "⏱ Control de escritura",
+    "sectionTypingControlBody": "Establece un retraso mínimo entre pulsaciones: útil para estudiantes que pulsan teclas por accidente o demasiado rápido.",
+    "sectionImageDisplayTitle": "🖼 Visualización de imágenes",
+    "sectionImageDisplayBody": "Controla el tamaño de la imagen. Precarga imágenes de palabras concretas para que aparezcan al instante al escribirlas.",
+    "sectionImageFilteringTitle": "🚫 Filtro de imágenes",
+    "sectionImageFilteringBody": "Bloquea ciertas palabras para que nunca muestren una imagen, o limita la aplicación a una lista de palabras aprobadas.",
+    "sectionImageNavArrowsTitle": "← → Flechas de navegación de imágenes",
+    "sectionImageNavArrowsBody": "Muestra u oculta los botones de flecha en pantalla para pasar entre varias fotos. Las teclas de flecha del teclado también funcionan siempre.",
+    "sectionTeacherModeTitle": "👩‍🏫 Modo maestro",
+    "sectionTeacherModeBody": "Pulsa **Ctrl+Shift+Y** para introducir una palabra objetivo que el estudiante debe completar. Pulsa **Tab** o **?** para oír una pista de audio de la siguiente letra.",
+    "sectionMouseCursorTitle": "🖱 Cursor del ratón",
+    "sectionMouseCursorBody": "Cambia el estilo del cursor: útil si un estudiante usa el ratón para pulsar las flechas de navegación.",
+    "sectionSessionHistoryTitle": "📋 Historial de palabras de la sesión",
+    "sectionSessionHistoryBody": "Un registro continuo de cada palabra escrita en esta sesión, con marcas de tiempo y velocidad (PPM/LPM). Las sesiones anteriores se guardan en el navegador para revisión del maestro.",
+    "firstTimeDismiss": "¡Entendido! Abrir ajustes →",
+    "repeatDismiss": "Cerrar",
+    "firstTimeFooter": "Esta guía no volverá a aparecer.",
+    "repeatFooter": "Abre Ajustes desde el botón del engranaje para cambiar las opciones. Puedes volver a abrir esta guía en cualquier momento."
+  },
+  "settingsPanel": {
+    "panelTitle": "Ajustes",
+    "sectionAriaLabel": "Información para lectores de pantalla",
+    "screenReaderUsers": "Usuarios de lectores de pantalla",
+    "screenReaderNote": "El área principal de escritura no es un campo de texto estándar, así que tu lector de pantalla puede no tratarla como un cuadro de texto normal. La aplicación usa voz integrada para letras y palabras, y la barra de estado al pie de la página anuncia muchas actualizaciones. La misma información aparece en la primera pantalla al abrir la aplicación.",
+    "sectionHeadings": {
+      "textAppearance": "Apariencia del texto",
+      "bubbleLetters": "Letras burbuja",
+      "typingControl": "Control de escritura",
+      "imageDisplay": "Visualización de imágenes",
+      "imageFiltering": "Filtro de imágenes",
+      "customLocalImages": "Imágenes locales personalizadas",
+      "imageNavArrows": "Flechas de navegación de imágenes",
+      "mouseCursor": "Cursor del ratón",
+      "sessionWordHistory": "Historial de palabras de la sesión",
+      "pastSessions": "Sesiones anteriores"
+    },
+    "labelsAndControls": {
+      "fontType": "Tipo de fuente:",
+      "fontSize": "Tamaño de fuente:",
+      "fontColor": "Color de fuente:",
+      "backgroundColor": "Color de fondo:",
+      "fontOptions": [
+        "Arial",
+        "Comic Sans",
+        "Courier New",
+        "Georgia",
+        "Times New Roman",
+        "Verdana",
+        "Trebuchet MS"
+      ],
+      "colorOptions": {
+        "white": "Blanco",
+        "black": "Negro",
+        "red": "Rojo",
+        "green": "Verde",
+        "blue": "Azul",
+        "yellow": "Amarillo",
+        "magenta": "Magenta",
+        "cyan": "Cian",
+        "orange": "Naranja",
+        "purple": "Morado",
+        "pink": "Rosa",
+        "brown": "Marrón",
+        "gray": "Gris"
+      },
+      "enableBubbleLetters": "Activar letras burbuja:",
+      "bubbleColor": "Color de burbuja:",
+      "bubbleSize": "Tamaño de burbuja:",
+      "minimumTimeBetweenKeys": "Tiempo mínimo entre teclas:",
+      "maxKeysPerSecond": "Máximo de teclas por segundo:",
+      "enableRateLimit": "Limitar escritura rápida (golpear el teclado):",
+      "rateLimitNote": "Si está desactivado, cada tecla se procesa para que los estudiantes exploren con libertad. Actívalo para ralentizar la escritura muy rápida. La aplicación puede sugerirlo si la escritura rápida produce palabras sin sentido.",
+      "imageSize": "Tamaño de imagen:",
+      "imageWordSize": "Tamaño de la palabra de la imagen:",
+      "imagePanelBackgroundColor": "Color de fondo del panel de imagen:",
+      "studentNameForCamera": "Nombre del estudiante (para la cámara):",
+      "removeImageBackground": "Quitar el fondo de la imagen:",
+      "removeImageBackgroundNote": "Usa IA para aislar el sujeto sobre un fondo transparente. Descarga un modelo de ~30 MB la primera vez (luego queda en caché).",
+      "preloadImages": "Precargar imágenes de estas palabras:",
+      "preloadImagesNote": "Las imágenes de estas palabras se buscarán (y se les quitará el fondo, si está activado) al iniciar la sesión, para que aparezcan al instante cuando el niño las escriba. Separa las palabras con comas.",
+      "filterProfanity": "Filtrar groserías:",
+      "useCustomWordListOnly": "Usar solo la lista de palabras personalizada:",
+      "customWordListEmptyWarning": "La lista de palabras personalizada está vacía: las imágenes seguirán mostrándose para otras palabras hasta que añadas palabras permitidas.",
+      "allowedWords": "Palabras permitidas (separadas por comas):",
+      "blockedWords": "Palabras bloqueadas (separadas por comas):",
+      "blockedWordsNote": "Estas palabras nunca mostrarán imágenes, independientemente de los demás ajustes.",
+      "customImagesIntroNote": "Añade tus propias fotos de este dispositivo para palabras concretas. Se guardan de forma segura sin conexión y tienen prioridad sobre las imágenes de Wikimedia.",
+      "word": "Palabra:",
+      "picture": "Imagen:",
+      "addCustomPictureButton": "Añadir imagen personalizada",
+      "arrowsSectionNote": "Las flechas permiten pasar entre varias fotos de la misma palabra. También puedes usar las teclas de flecha ← → del teclado.",
+      "showNavigationArrows": "Mostrar flechas de navegación:",
+      "arrowColor": "Color de la flecha:",
+      "arrowButtonSize": "Tamaño del botón de flecha:",
+      "cursorSectionNote": "Cambia el estilo del cursor. Un puntero grande puede ayudar a los niños a ver dónde pulsar para pasar las fotos. Nota: los navegadores limitan la personalización del cursor; para pasar fotos, las teclas de flecha (← →) siempre funcionan, sea cual sea el estilo del cursor.",
+      "cursorStyle": "Estilo del cursor:",
+      "cursorOptions": {
+        "default": "Flecha predeterminada",
+        "hand": "Mano / Puntero",
+        "crosshair": "Punto de mira",
+        "hidden": "Oculto (seguimiento ocular / acceso por pulsador)"
+      },
+      "sessionHistoryNote": "Todas las palabras escritas en esta sesión, en orden, con PPM y LPM en cada palabra. Esta lista se conserva aquí aunque el estudiante borre la pantalla.",
+      "historyLabel": "Palabras escritas en esta sesión, con marcas de tiempo y velocidad",
+      "historyTextareaPlaceholder": "Aún no se ha escrito ninguna palabra en esta sesión.",
+      "historyWordLine": "{time}  —  {word}  (PPM: {wpm}, LPM: {lpm})",
+      "pastSessionsNote": "Sesiones de escritura anteriores guardadas en este navegador. Selecciona una sesión para revisar cada palabra con su PPM y LPM.",
+      "pastSessionsLabel": "Selecciona una sesión:",
+      "pastSessionsPlaceholder": "Elige una sesión anterior…",
+      "pastSessionsEmpty": "Aún no hay sesiones anteriores guardadas",
+      "pastSessionDetailLabel": "Palabras de la sesión seleccionada",
+      "pastSessionDetailPlaceholder": "Selecciona una sesión arriba para ver su historial de palabras.",
+      "pastSessionOption": "{date} — {words} palabras — PPM: {wpm}, LPM: {lpm}{name}",
+      "clearTypingHistoryButton": "Borrar todo el historial de sesiones",
+      "placeholders": {
+        "studentName": "p. ej. Carlos",
+        "preloadWords": "gato, perro, árbol, casa, pelota, autobús...",
+        "allowedWords": "gato, perro, árbol, casa, coche...",
+        "blockedWords": "Escribe palabras que nunca deban mostrar imágenes...",
+        "customImageWord": "p. ej. perro"
+      },
+      "buttons": {
+        "saveAndClose": "Guardar y cerrar",
+        "resetToDefaults": "Restablecer valores",
+        "cancel": "Cancelar"
+      }
+    }
+  },
+  "lightbox": {
+    "ariaLabel": "Vista de imagen ampliada",
+    "closeButtonAriaLabel": "Cerrar imagen ampliada",
+    "prevAriaLabel": "Imagen anterior",
+    "nextAriaLabel": "Imagen siguiente",
+    "toolbarAriaLabel": "Opciones de la imagen ampliada",
+    "removeBackground": "Quitar fondo",
+    "outline": "Contorno",
+    "outlineColor": "Color del contorno",
+    "outlineColorAriaLabel": "Color del contorno",
+    "download": "Descargar imagen",
+    "downloadAriaLabel": "Descargar imagen",
+    "processing": "Procesando imagen...",
+    "downloadFailed": "Error al descargar"
+  },
+  "browserDialogs": {
+    "resetConfirm": "¿Restablecer todos los ajustes a los valores predeterminados?",
+    "enterWordAlert": "Introduce una palabra.",
+    "selectImageAlert": "Selecciona un archivo de imagen.",
+    "errorSavingImage": "Error al guardar la imagen: {message}",
+    "removeCustomImageConfirm": "¿Quitar la imagen personalizada de \"{word}\"?",
+    "teacherModePrompt": "Introduce la palabra objetivo del modo maestro (o déjalo en blanco para salir):",
+    "clearTypingHistoryConfirm": "¿Borrar todo el historial de sesiones de escritura de este navegador? Esta acción no se puede deshacer."
+  },
+  "screenReaderAnnouncements": {
+    "settingsGuideOpened": "Guía de ajustes abierta",
+    "settingsGuideClosed": "Guía de ajustes cerrada",
+    "settingsPanelOpened": "Panel de ajustes abierto",
+    "settingsPanelClosed": "Panel de ajustes cerrado"
+  },
+  "statusBar": {
+    "teacherMode": "Modo maestro: escribe la palabra \"{word}\"",
+    "youTyped": "Escribiste: {word}",
+    "newLine": "Nueva línea",
+    "exitedTeacherMode": "Saliste del modo maestro",
+    "wpm": "Palabras por minuto: {n} PPM  |  Pulsa Ctrl+Shift+M para ocultar",
+    "lpm": "Letras por minuto: {n} LPM  |  Pulsa Ctrl+Shift+L para ocultar",
+    "rateLimitSuggestion": "Escribir muy rápido creó palabras sin sentido. Abre Ajustes y activa Limitar escritura rápida."
+  },
+  "imageArea": {
+    "customPhotoAlt": "Foto personalizada de {word}",
+    "photoAlt": "Foto de {word}",
+    "labels": {
+      "customLocal": "Imagen local personalizada",
+      "wikimedia": "Imagen de Wikimedia Commons",
+      "imageXofY": "Imagen {i} de {n} — Wikimedia Commons",
+      "preparingBgRemoval": "Preparando la eliminación del fondo...",
+      "searching": "Buscando imagen...",
+      "notRealWord": "No es una palabra real — no se muestra imagen",
+      "loadingPattern": "{WORD}..."
+    },
+    "preloadStatus": {
+      "preloading": "Precargando {n} palabras…",
+      "preloadingOne": "Precargando 1 palabra…",
+      "preloadedXY": "Precargadas {loaded} / {total}",
+      "allPreloaded": "✓ Las {n} palabras están precargadas",
+      "allPreloadedOne": "✓ 1 palabra precargada"
+    }
+  },
+  "backgroundRemoval": {
+    "loadingModel": "Cargando el modelo de eliminación de fondo...",
+    "removing": "Quitando el fondo...",
+    "removingPct": "Quitando el fondo... {pct}%",
+    "success": "Fondo eliminado - Wikimedia Commons",
+    "failed": "Error al quitar el fondo - Wikimedia Commons"
+  },
+  "cameraTriggers": {
+    "words": ["yo", "tú", "tu", "usted", "me", "you"]
+  },
+  "customImagesList": {
+    "emptyState": "Aún no se han añadido imágenes personalizadas.",
+    "buttonRemove": "Quitar"
+  },
+  "ttsNotSupported": {
+    "warning": "Aviso: este navegador no admite texto a voz. Usa Chrome, Edge, Firefox o Safari."
+  },
+  "systemSpeech": {
+    "ready": "Listo. Empieza a escribir.",
+    "screenCleared": "pantalla borrada",
+    "backspace": "retroceso",
+    "newLine": "nueva línea",
+    "digits": {
+      "0": "cero",
+      "1": "uno",
+      "2": "dos",
+      "3": "tres",
+      "4": "cuatro",
+      "5": "cinco",
+      "6": "seis",
+      "7": "siete",
+      "8": "ocho",
+      "9": "nueve"
+    },
+    "teacherModePrompts": {
+      "tryAgain": "Inténtalo de nuevo. ",
+      "pressCharWithFinger": "Pulsa {char} con tu {finger}",
+      "pressCharOnly": "Pulsa {char}",
+      "pressLowercaseWithFinger": "Pulsa {LETTER} con tu {finger}",
+      "pressLowercaseOnly": "Pulsa {LETTER}",
+      "pressUppercaseWithBothFingers": "Pulsa {LETTER} mayúscula. Mantén Mayús con tu {modifier_finger} y luego pulsa {LETTER} con tu {finger}",
+      "pressUppercaseShiftOnly": "Pulsa {LETTER} mayúscula. Mantén Mayús con tu {modifier_finger}"
+    },
+    "fingerNames": {
+      "leftPinky": "meñique izquierdo",
+      "leftRing": "anular izquierdo",
+      "leftMiddle": "dedo medio izquierdo",
+      "leftIndex": "índice izquierdo",
+      "rightIndex": "índice derecho",
+      "rightMiddle": "dedo medio derecho",
+      "rightRing": "anular derecho",
+      "rightPinky": "meñique derecho",
+      "thumb": "pulgar"
+    }
+  }
+}

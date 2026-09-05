@@ -1,0 +1,299 @@
+{
+  "documentSeo": {
+    "metaDescription": "CVI Type Talker - Une application de frappe accessible pour les élèves ayant une déficience visuelle corticale. Tapez des mots pour les entendre et voir de vraies images.",
+    "title": "CVI Type Talker"
+  },
+  "mainShellNavigation": {
+    "skipLink": "Aller à la zone de frappe",
+    "mainAriaLabel": "CVI Type Talker - Tapez des mots pour les entendre et voir des images",
+    "typedTextDisplayAriaLabel": "Affichage du texte saisi",
+    "imagePanelPrevButtonAriaLabel": "Image précédente",
+    "imagePanelNextButtonAriaLabel": "Image suivante",
+    "defaultImageLabel": "Tapez un mot !",
+    "statusBarInitial": "Tapez une lettre pour commencer",
+    "toolbarAriaLabel": "Paramètres et aide",
+    "guideButtonVisibleText": "Guide",
+    "guideButtonAriaLabel": "Ouvrir le guide des paramètres",
+    "settingsGearAriaLabel": "Ouvrir les paramètres",
+    "tipLinkVisibleText": "Soutenir",
+    "tipLinkAriaLabel": "Soutenir le projet sur Buy Me a Coffee (s’ouvre dans un nouvel onglet)",
+    "languageSelectAriaLabel": "Langue"
+  },
+  "consentOverlay": {
+    "title": "À propos des images",
+    "body1": "Lorsque vous terminez un mot, cette application affiche une image correspondante. Nous filtrons autant que possible pour que l’expérience reste adaptée à l’apprentissage.",
+    "body2": "Les filtres automatiques ne sont pas parfaits. Pour un contrôle plus strict, ouvrez les **Paramètres** à tout moment pour des options comme le **filtrage des jurons** et les listes de mots approuvés.",
+    "body3": "Continuer signifie que vous acceptez d’utiliser l’application en tenant compte de cela.",
+    "button": "Continuer"
+  },
+  "instructionsOverlay": {
+    "title": "CVI Type Talker",
+    "languageLabel": "Langue",
+    "lines": {
+      "typeLetters": "Tapez des lettres pour les entendre à voix haute.",
+      "pressSpaceEnter": "Appuyez sur **Espace** ou **Entrée** pour entendre le mot entier et voir une image.",
+      "pressBackspace": "Appuyez sur **Retour arrière** pour supprimer une lettre.",
+      "pressArrows": "Appuyez sur les flèches **← →** pour parcourir les photos du même mot.",
+      "pressWpm": "Appuyez sur **Ctrl+Maj+M** pour afficher le nombre de mots par minute.",
+      "pressLpm": "Appuyez sur **Ctrl+Maj+L** pour afficher le nombre de lettres par minute.",
+      "pressClear": "Appuyez sur **Ctrl+Maj+C** pour effacer l’écran.",
+      "pressTeacherMode": "Appuyez sur **Ctrl+Maj+Y** pour lancer le mode enseignant (l’élève complète un mot cible).",
+      "pressTeacherPrompt": "Appuyez sur **Tab** ou **?** en mode enseignant pour entendre la lettre suivante."
+    },
+    "keyboardNotice": "⌨️ Cette application nécessite un **clavier physique**. Elle ne fonctionnera pas sur un écran tactile sans clavier branché.",
+    "screenReaderRegionAriaLabel": "Note pour les utilisateurs de lecteurs d’écran",
+    "headingScreenReader": "Vous utilisez un lecteur d’écran ?",
+    "screenReaderParagraph": "La zone de frappe **n’est pas** un champ de texte standard du navigateur, donc votre lecteur d’écran peut ne pas lire ce que vous tapez comme dans une zone de texte normale. L’application prononce chaque lettre et chaque mot avec la synthèse vocale intégrée, et la barre d’état en bas de page annonce de nombreuses mises à jour (y compris les mots que vous terminez).",
+    "buttonStartTyping": "Commencer à taper",
+    "footer": "Licence MIT - Créateur Addison Graham"
+  },
+  "settingsGuideModal": {
+    "title": "⚙️ Guide des paramètres",
+    "intro": "Voici un aperçu de tout ce que vous pouvez personnaliser :",
+    "sectionTextAppearanceTitle": "🔤 Apparence du texte",
+    "sectionTextAppearanceBody": "Changez le style, la taille et la couleur de la police dans la zone de frappe, ainsi que la couleur d’arrière-plan.",
+    "sectionBubbleLettersTitle": "🔵 Lettres bulles",
+    "sectionBubbleLettersBody": "Ajoutez un contour coloré autour de chaque lettre pour faire ressortir le texte sur n’importe quel fond.",
+    "sectionTypingControlTitle": "⏱ Contrôle de la frappe",
+    "sectionTypingControlBody": "Définissez un délai minimum entre les touches — utile pour les élèves qui appuient par accident ou trop vite.",
+    "sectionImageDisplayTitle": "🖼 Affichage des images",
+    "sectionImageDisplayBody": "Contrôlez la taille de l’image. Préchargez des images pour certains mots afin qu’elles s’affichent immédiatement à la frappe.",
+    "sectionImageFilteringTitle": "🚫 Filtrage des images",
+    "sectionImageFilteringBody": "Empêchez certains mots d’afficher une image, ou limitez l’application à une liste de mots approuvés.",
+    "sectionImageNavArrowsTitle": "← → Flèches de navigation d’images",
+    "sectionImageNavArrowsBody": "Affichez ou masquez les boutons fléchés à l’écran pour parcourir plusieurs photos. Les flèches du clavier fonctionnent toujours aussi.",
+    "sectionTeacherModeTitle": "👩‍🏫 Mode enseignant",
+    "sectionTeacherModeBody": "Appuyez sur **Ctrl+Maj+Y** pour saisir un mot cible que l’élève doit compléter. Appuyez sur **Tab** ou **?** pour entendre une consigne audio de la lettre suivante.",
+    "sectionMouseCursorTitle": "🖱 Curseur de la souris",
+    "sectionMouseCursorBody": "Changez le style du curseur — utile si un élève utilise la souris pour cliquer sur les flèches de navigation.",
+    "sectionSessionHistoryTitle": "📋 Historique des mots de la session",
+    "sectionSessionHistoryBody": "Un journal de chaque mot tapé pendant cette session, avec horodatage et vitesse (MPM/LPM). Les sessions précédentes sont enregistrées dans le navigateur pour révision par l’enseignant.",
+    "firstTimeDismiss": "Compris ! Ouvrir les paramètres →",
+    "repeatDismiss": "Fermer",
+    "firstTimeFooter": "Ce guide n’apparaîtra plus.",
+    "repeatFooter": "Ouvrez les Paramètres via le bouton engrenage pour modifier les options. Vous pouvez rouvrir ce guide à tout moment."
+  },
+  "settingsPanel": {
+    "panelTitle": "Paramètres",
+    "sectionAriaLabel": "Informations pour lecteurs d’écran",
+    "screenReaderUsers": "Utilisateurs de lecteurs d’écran",
+    "screenReaderNote": "La zone de frappe principale n’est pas un champ de texte standard, donc votre lecteur d’écran peut ne pas la traiter comme une zone de texte normale. L’application utilise la synthèse vocale pour les lettres et les mots, et la barre d’état en bas de page annonce de nombreuses mises à jour. Les mêmes informations apparaissent sur le premier écran à l’ouverture de l’application.",
+    "sectionHeadings": {
+      "textAppearance": "Apparence du texte",
+      "bubbleLetters": "Lettres bulles",
+      "typingControl": "Contrôle de la frappe",
+      "imageDisplay": "Affichage des images",
+      "imageFiltering": "Filtrage des images",
+      "customLocalImages": "Images locales personnalisées",
+      "imageNavArrows": "Flèches de navigation d’images",
+      "mouseCursor": "Curseur de la souris",
+      "sessionWordHistory": "Historique des mots de la session",
+      "pastSessions": "Sessions précédentes"
+    },
+    "labelsAndControls": {
+      "fontType": "Type de police :",
+      "fontSize": "Taille de police :",
+      "fontColor": "Couleur de police :",
+      "backgroundColor": "Couleur d’arrière-plan :",
+      "fontOptions": [
+        "Arial",
+        "Comic Sans",
+        "Courier New",
+        "Georgia",
+        "Times New Roman",
+        "Verdana",
+        "Trebuchet MS"
+      ],
+      "colorOptions": {
+        "white": "Blanc",
+        "black": "Noir",
+        "red": "Rouge",
+        "green": "Vert",
+        "blue": "Bleu",
+        "yellow": "Jaune",
+        "magenta": "Magenta",
+        "cyan": "Cyan",
+        "orange": "Orange",
+        "purple": "Violet",
+        "pink": "Rose",
+        "brown": "Marron",
+        "gray": "Gris"
+      },
+      "enableBubbleLetters": "Activer les lettres bulles :",
+      "bubbleColor": "Couleur des bulles :",
+      "bubbleSize": "Taille des bulles :",
+      "minimumTimeBetweenKeys": "Temps minimum entre les touches :",
+      "maxKeysPerSecond": "Maximum de touches par seconde :",
+      "enableRateLimit": "Limiter la frappe rapide (martèlement du clavier) :",
+      "rateLimitNote": "Lorsque c’est désactivé, chaque touche est prise en compte pour que les élèves explorent librement. Activez cette option pour ralentir une frappe très rapide. L’application peut le proposer si une frappe rapide produit des mots sans sens.",
+      "imageSize": "Taille de l’image :",
+      "imageWordSize": "Taille du mot de l’image :",
+      "imagePanelBackgroundColor": "Couleur d’arrière-plan du panneau d’image :",
+      "studentNameForCamera": "Prénom de l’élève (pour la caméra) :",
+      "removeImageBackground": "Supprimer l’arrière-plan de l’image :",
+      "removeImageBackgroundNote": "Utilise l’IA pour isoler le sujet sur un fond transparent. Télécharge un modèle d’environ 30 Mo lors de la première utilisation (puis mis en cache).",
+      "preloadImages": "Précharger les images pour ces mots :",
+      "preloadImagesNote": "Les images de ces mots seront récupérées (et l’arrière-plan supprimé, si l’option est activée) dès le début de la session, pour qu’elles apparaissent immédiatement lorsque l’enfant les tape. Séparez les mots par des virgules.",
+      "filterProfanity": "Filtrer les jurons :",
+      "useCustomWordListOnly": "Utiliser uniquement la liste de mots personnalisée :",
+      "customWordListEmptyWarning": "La liste de mots personnalisée est vide — les images continueront de s’afficher pour les autres mots jusqu’à ce que vous ajoutiez des mots autorisés.",
+      "allowedWords": "Mots autorisés (séparés par des virgules) :",
+      "blockedWords": "Mots bloqués (séparés par des virgules) :",
+      "blockedWordsNote": "Ces mots n’afficheront jamais d’image, quels que soient les autres paramètres.",
+      "customImagesIntroNote": "Ajoutez vos propres photos depuis cet appareil pour des mots précis. Elles sont enregistrées hors ligne de façon sécurisée et ont priorité sur les images Wikimedia.",
+      "word": "Mot :",
+      "picture": "Image :",
+      "addCustomPictureButton": "Ajouter une image personnalisée",
+      "arrowsSectionNote": "Les flèches permettent de parcourir plusieurs photos du même mot. Vous pouvez aussi utiliser les flèches ← → du clavier.",
+      "showNavigationArrows": "Afficher les flèches de navigation :",
+      "arrowColor": "Couleur des flèches :",
+      "arrowButtonSize": "Taille du bouton flèche :",
+      "cursorSectionNote": "Changez le style du curseur. Un grand pointeur peut aider les enfants à voir où cliquer pour parcourir les photos. Remarque : les navigateurs limitent la personnalisation du curseur — pour parcourir les photos, les flèches du clavier (← →) fonctionnent toujours, quel que soit le style du curseur.",
+      "cursorStyle": "Style du curseur :",
+      "cursorOptions": {
+        "default": "Flèche par défaut",
+        "hand": "Main / Pointeur",
+        "crosshair": "Réticule",
+        "hidden": "Masqué (suivi du regard / accès par contacteur)"
+      },
+      "sessionHistoryNote": "Tous les mots tapés pendant cette session, dans l’ordre, avec MPM et LPM à chaque mot. Cette liste est conservée ici même si l’élève efface l’écran.",
+      "historyLabel": "Mots tapés pendant cette session, avec horodatage et vitesse",
+      "historyTextareaPlaceholder": "Aucun mot tapé pour l’instant dans cette session.",
+      "historyWordLine": "{time}  —  {word}  (MPM : {wpm}, LPM : {lpm})",
+      "pastSessionsNote": "Sessions de frappe précédentes enregistrées dans ce navigateur. Sélectionnez une session pour revoir chaque mot avec son MPM et LPM.",
+      "pastSessionsLabel": "Sélectionnez une session :",
+      "pastSessionsPlaceholder": "Choisir une session précédente…",
+      "pastSessionsEmpty": "Aucune session précédente enregistrée pour le moment",
+      "pastSessionDetailLabel": "Mots de la session sélectionnée",
+      "pastSessionDetailPlaceholder": "Sélectionnez une session ci-dessus pour voir son historique de mots.",
+      "pastSessionOption": "{date} — {words} mots — MPM : {wpm}, LPM : {lpm}{name}",
+      "clearTypingHistoryButton": "Effacer tout l’historique des sessions",
+      "placeholders": {
+        "studentName": "ex. Camille",
+        "preloadWords": "chat, chien, arbre, maison, balle, bus...",
+        "allowedWords": "chat, chien, arbre, maison, voiture...",
+        "blockedWords": "Saisissez des mots qui ne doivent jamais afficher d’image...",
+        "customImageWord": "ex. chien"
+      },
+      "buttons": {
+        "saveAndClose": "Enregistrer et fermer",
+        "resetToDefaults": "Réinitialiser",
+        "cancel": "Annuler"
+      }
+    }
+  },
+  "lightbox": {
+    "ariaLabel": "Vue d’image agrandie",
+    "closeButtonAriaLabel": "Fermer l’image agrandie",
+    "prevAriaLabel": "Image précédente",
+    "nextAriaLabel": "Image suivante",
+    "toolbarAriaLabel": "Options de l’image agrandie",
+    "removeBackground": "Supprimer l’arrière-plan",
+    "outline": "Contour",
+    "outlineColor": "Couleur du contour",
+    "outlineColorAriaLabel": "Couleur du contour",
+    "download": "Télécharger l’image",
+    "downloadAriaLabel": "Télécharger l’image",
+    "processing": "Traitement de l’image...",
+    "downloadFailed": "Échec du téléchargement"
+  },
+  "browserDialogs": {
+    "resetConfirm": "Réinitialiser tous les paramètres ?",
+    "enterWordAlert": "Veuillez saisir un mot.",
+    "selectImageAlert": "Veuillez sélectionner un fichier image.",
+    "errorSavingImage": "Erreur lors de l’enregistrement de l’image : {message}",
+    "removeCustomImageConfirm": "Supprimer l’image personnalisée pour « {word} » ?",
+    "teacherModePrompt": "Saisissez le mot cible du mode enseignant (ou laissez vide pour quitter) :",
+    "clearTypingHistoryConfirm": "Effacer tout l’historique des sessions de frappe de ce navigateur ? Cette action est irréversible."
+  },
+  "screenReaderAnnouncements": {
+    "settingsGuideOpened": "Guide des paramètres ouvert",
+    "settingsGuideClosed": "Guide des paramètres fermé",
+    "settingsPanelOpened": "Panneau des paramètres ouvert",
+    "settingsPanelClosed": "Panneau des paramètres fermé"
+  },
+  "statusBar": {
+    "teacherMode": "Mode enseignant : tapez le mot « {word} »",
+    "youTyped": "Vous avez tapé : {word}",
+    "newLine": "Nouvelle ligne",
+    "exitedTeacherMode": "Mode enseignant quitté",
+    "wpm": "Mots par minute : {n} MPM  |  Appuyez sur Ctrl+Maj+M pour masquer",
+    "lpm": "Lettres par minute : {n} LPM  |  Appuyez sur Ctrl+Maj+L pour masquer",
+    "rateLimitSuggestion": "Une frappe très rapide a créé des mots sans sens. Ouvrez les Paramètres et activez Limiter la frappe rapide."
+  },
+  "imageArea": {
+    "customPhotoAlt": "Photo personnalisée de {word}",
+    "photoAlt": "Photo de {word}",
+    "labels": {
+      "customLocal": "Image locale personnalisée",
+      "wikimedia": "Image de Wikimedia Commons",
+      "imageXofY": "Image {i} sur {n} — Wikimedia Commons",
+      "preparingBgRemoval": "Préparation de la suppression d’arrière-plan...",
+      "searching": "Recherche d’image...",
+      "notRealWord": "Ce n’est pas un vrai mot — aucune image affichée",
+      "loadingPattern": "{WORD}..."
+    },
+    "preloadStatus": {
+      "preloading": "Préchargement de {n} mots…",
+      "preloadingOne": "Préchargement de 1 mot…",
+      "preloadedXY": "Préchargé {loaded} / {total}",
+      "allPreloaded": "✓ Les {n} mots sont préchargés",
+      "allPreloadedOne": "✓ 1 mot préchargé"
+    }
+  },
+  "backgroundRemoval": {
+    "loadingModel": "Chargement du modèle de suppression d’arrière-plan...",
+    "removing": "Suppression de l’arrière-plan...",
+    "removingPct": "Suppression de l’arrière-plan... {pct}%",
+    "success": "Arrière-plan supprimé - Wikimedia Commons",
+    "failed": "Échec de la suppression d’arrière-plan - Wikimedia Commons"
+  },
+  "cameraTriggers": {
+    "words": ["moi", "toi", "vous", "me", "you"]
+  },
+  "customImagesList": {
+    "emptyState": "Aucune image personnalisée pour le moment.",
+    "buttonRemove": "Supprimer"
+  },
+  "ttsNotSupported": {
+    "warning": "Avertissement : la synthèse vocale n’est pas prise en charge dans ce navigateur. Veuillez utiliser Chrome, Edge, Firefox ou Safari."
+  },
+  "systemSpeech": {
+    "ready": "Prêt. Commencez à taper.",
+    "screenCleared": "écran effacé",
+    "backspace": "retour arrière",
+    "newLine": "nouvelle ligne",
+    "digits": {
+      "0": "zéro",
+      "1": "un",
+      "2": "deux",
+      "3": "trois",
+      "4": "quatre",
+      "5": "cinq",
+      "6": "six",
+      "7": "sept",
+      "8": "huit",
+      "9": "neuf"
+    },
+    "teacherModePrompts": {
+      "tryAgain": "Essayez encore. ",
+      "pressCharWithFinger": "Appuyez sur {char} avec votre {finger}",
+      "pressCharOnly": "Appuyez sur {char}",
+      "pressLowercaseWithFinger": "Appuyez sur {LETTER} avec votre {finger}",
+      "pressLowercaseOnly": "Appuyez sur {LETTER}",
+      "pressUppercaseWithBothFingers": "Appuyez sur {LETTER} majuscule. Maintenez Maj avec votre {modifier_finger}, puis appuyez sur {LETTER} avec votre {finger}",
+      "pressUppercaseShiftOnly": "Appuyez sur {LETTER} majuscule. Maintenez Maj avec votre {modifier_finger}"
+    },
+    "fingerNames": {
+      "leftPinky": "auriculaire gauche",
+      "leftRing": "annulaire gauche",
+      "leftMiddle": "majeur gauche",
+      "leftIndex": "index gauche",
+      "rightIndex": "index droit",
+      "rightMiddle": "majeur droit",
+      "rightRing": "annulaire droit",
+      "rightPinky": "auriculaire droit",
+      "thumb": "pouce"
+    }
+  }
+}

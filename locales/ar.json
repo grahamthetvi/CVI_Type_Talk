@@ -28,6 +28,7 @@
   },
   "instructionsOverlay": {
     "title": "CVI Type Talker",
+    "languageLabel": "اللغة",
     "lines": {
       "typeLetters": "اكتب الحروف لسماعها بصوت عالٍ.",
       "pressSpaceEnter": "اضغط على **مسافة** (Space) أو **إدخال** (Enter) لسماع الكلمة كاملة ورؤية صورة.",

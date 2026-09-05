@@ -27,6 +27,7 @@ async function run() {
         { word: 'asdfgh', expect: false },
         { word: 'xqzpt', expect: false },
         { word: 'a', expect: false },
+        { word: 'house', expect: true },
         { word: 'walked', expect: true }
     ];
 
@@ -38,6 +39,22 @@ async function run() {
         console.log(`${passed ? '✅ PASS' : '❌ FAIL'} | '${tc.word}' => ${result} (expected ${tc.expect})`);
         if (!passed) allPassed = false;
     }
+
+    var validateDefault = CVIWordDictionary.shouldValidate();
+    var validatePass = validateDefault === true;
+    console.log(`${validatePass ? '✅ PASS' : '❌ FAIL'} | shouldValidate() without locale => ${validateDefault} (expected true)`);
+    if (!validatePass) allPassed = false;
+
+    global.CVII18n = { current: 'es' };
+    var skipSpanish = CVIWordDictionary.shouldValidate() === false;
+    console.log(`${skipSpanish ? '✅ PASS' : '❌ FAIL'} | shouldValidate() for Spanish => ${CVIWordDictionary.shouldValidate()} (expected false)`);
+    if (!skipSpanish) allPassed = false;
+    global.CVII18n = { current: 'en' };
+    var keepEnglish = CVIWordDictionary.shouldValidate() === true;
+    console.log(`${keepEnglish ? '✅ PASS' : '❌ FAIL'} | shouldValidate() for English => ${CVIWordDictionary.shouldValidate()} (expected true)`);
+    if (!keepEnglish) allPassed = false;
+
+    try { fs.unlinkSync('./test-word-dictionary-runner.js'); } catch (e) { /* ignore */ }
 
     process.exit(allPassed ? 0 : 1);
 }

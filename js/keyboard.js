@@ -194,7 +194,10 @@ const CVIKeyboard = {
             return;
         }
         if (!this._wasPoundingCurrentWord()) return;
-        if (typeof CVIWordDictionary !== 'undefined' && CVIWordDictionary.isRealWord(word)) {
+        if (typeof CVIWordDictionary !== 'undefined' && CVIWordDictionary.shouldValidate && CVIWordDictionary.shouldValidate()) {
+            if (CVIWordDictionary.isRealWord(word)) return;
+        } else {
+            // Non-English locales have no word list — do not treat real words as gibberish.
             return;
         }
 
