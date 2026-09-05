@@ -122,8 +122,34 @@ const CVIImages = {
         if (this.nextBtn) this.nextBtn.style.display = 'none';
     },
 
-    async _startCamera() {
+    /**
+     * Request camera access early (after a user gesture) so typing "me", "you",
+     * or the student name does not interrupt the session with a permission prompt.
+     * Keeps the stream warm but hidden until a camera trigger word is shown.
+     */
+    async requestCameraPermission() {
         if (this._cameraStream) return;
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+
+        try {
+            this._cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+            if (this.cameraEl) {
+                this.cameraEl.hidden = true;
+                this.cameraEl.srcObject = null;
+            }
+        } catch (err) {
+            console.error("Camera permission error:", err);
+        }
+    },
+
+    async _startCamera() {
+        if (this._cameraStream) {
+            if (this.cameraEl) {
+                this.cameraEl.srcObject = this._cameraStream;
+                this.cameraEl.hidden = false;
+            }
+            return;
+        }
         try {
             this._cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
             if (this.cameraEl) {
