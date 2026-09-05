@@ -274,13 +274,15 @@ const CVIImages = {
         this._showLoading(normalized);
         this._hideArrows();
 
-        // ── Dictionary validation (only for words not yet in cache) ──────────
+        // ── Dictionary validation (English locale only; skipped for ar/es/fr) ─
         var skipValidation = settings && settings.customWordListEnabled;
-        if (!skipValidation && typeof CVIWordDictionary !== 'undefined') {
-            if (!CVIWordDictionary.isRealWord(normalized)) {
-                this._showNonsenseWord(normalized);
-                return;
-            }
+        if (!skipValidation
+            && typeof CVIWordDictionary !== 'undefined'
+            && CVIWordDictionary.shouldValidate
+            && CVIWordDictionary.shouldValidate()
+            && !CVIWordDictionary.isRealWord(normalized)) {
+            this._showNonsenseWord(normalized);
+            return;
         }
 
         try {
@@ -304,39 +306,6 @@ const CVIImages = {
             if (requestId !== this._currentRequest) return;
             // Do not cache failures — transient network/rate-limit errors should retry later
             this._showTextOnly(normalized);
-        }
-    },
-
-    /**
-     * Check if a word exists in the English dictionary via free API.
-     * Results are cached for the session.
-     */
-    async _isRealWord(word) {
-        if (this._wordValidCache.has(word)) {
-            return this._wordValidCache.get(word);
-        }
-
-        // Single letters are handled before this call; just in case
-        if (word.length === 1) {
-            this._wordValidCache.set(word, false);
-            return false;
-        }
-
-        try {
-            var controller = new AbortController();
-            var timeoutId = setTimeout(function () { controller.abort(); }, 5000);
-            var response = await fetch(
-                'https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word),
-                { signal: controller.signal }
-            );
-            clearTimeout(timeoutId);
-            var isReal = response.ok; // 200 = found, 404 = not found
-            this._wordValidCache.set(word, isReal);
-            return isReal;
-        } catch (err) {
-            // Network error or timeout — allow word through so connectivity issues don't block the student
-            this._wordValidCache.set(word, true);
-            return true;
         }
     },
 

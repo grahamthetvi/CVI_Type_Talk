@@ -4,6 +4,7 @@
  */
 var CVII18n = {
     STORAGE_KEY: 'cvi-locale',
+    SUPPORTED: ['en', 'ar', 'es', 'fr'],
     /** @type {string} */
     current: 'en',
     /** @type {object|null} */
@@ -78,11 +79,18 @@ var CVII18n = {
         return this.t('settingsPanel.labelsAndControls.cursorOptions.' + keys[value]);
     },
 
+    isSupported(code) {
+        return this.SUPPORTED.indexOf(code) !== -1;
+    },
+
     /**
-     * @param {string} code  'en' | 'ar'
+     * @param {string} code  'en' | 'ar' | 'es' | 'fr'
      * @param {boolean} [persist=true]
      */
     async setLocale(code, persist) {
+        if (!this.isSupported(code)) {
+            code = 'en';
+        }
         var res = await fetch('locales/' + code + '.json');
         if (!res.ok) throw new Error('Locale not found: ' + code);
         this.dict = await res.json();
@@ -92,7 +100,7 @@ var CVII18n = {
                 localStorage.setItem(this.STORAGE_KEY, code);
             } catch (e) { /* ignore */ }
         }
-        document.documentElement.lang = code === 'ar' ? 'ar' : 'en';
+        document.documentElement.lang = code;
         document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
         this.applyDom();
         document.dispatchEvent(new CustomEvent('cvi-locale-changed', { detail: { locale: code } }));
@@ -188,7 +196,7 @@ var CVII18n = {
         try {
             saved = localStorage.getItem(this.STORAGE_KEY) || 'en';
         } catch (e) { /* ignore */ }
-        if (saved !== 'en' && saved !== 'ar') saved = 'en';
+        if (!this.isSupported(saved)) saved = 'en';
         await this.setLocale(saved, false);
     }
 };

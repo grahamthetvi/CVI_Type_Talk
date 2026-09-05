@@ -1,7 +1,8 @@
 /**
  * CVI Type Talker - Local Word Dictionary
- * Offline English word validation using a bundled common-word list plus
- * teacher-configured extras (preload list, allow-list, student name, etc.).
+ * Offline English word validation using a bundled common-word list (~50k)
+ * plus teacher-configured extras (preload list, allow-list, student name, etc.).
+ * Validation runs only when the UI locale is English.
  */
 const CVIWordDictionary = {
     /** @type {Set<string>|null} */
@@ -64,6 +65,13 @@ const CVIWordDictionary = {
         String(csv).split(',').forEach(function (part) {
             CVIWordDictionary.registerWord(part);
         });
+    },
+
+    /**
+     * Dictionary checks are English-only. Other locales send typed words to Wikimedia.
+     */
+    shouldValidate() {
+        return typeof CVII18n === 'undefined' || CVII18n.current === 'en';
     },
 
     /**

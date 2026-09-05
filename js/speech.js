@@ -11,8 +11,15 @@ const CVISpeech = {
     volume: 1.0,
 
     _langPrefix() {
-        if (typeof CVII18n !== 'undefined' && CVII18n.current === 'ar') return 'ar';
+        var current = (typeof CVII18n !== 'undefined' && CVII18n.current) ? CVII18n.current : 'en';
+        if (current === 'ar' || current === 'es' || current === 'fr') return current;
         return 'en';
+    },
+
+    _utteranceLang() {
+        if (this.voice && this.voice.lang) return this.voice.lang;
+        var defaults = { en: 'en-US', ar: 'ar-SA', es: 'es-ES', fr: 'fr-FR' };
+        return defaults[this._langPrefix()] || 'en-US';
     },
 
     _digitWord(d) {
@@ -78,7 +85,7 @@ const CVISpeech = {
         const spokenText = this._charToSpoken(letter);
         const utterance = new SpeechSynthesisUtterance(spokenText);
         if (this.voice) utterance.voice = this.voice;
-        utterance.lang = this.voice ? this.voice.lang : (this._langPrefix() === 'ar' ? 'ar' : 'en-US');
+        utterance.lang = this._utteranceLang();
         utterance.rate = 0.9;
         utterance.pitch = this.pitch;
         utterance.volume = this.volume;
@@ -95,7 +102,7 @@ const CVISpeech = {
 
         const utterance = new SpeechSynthesisUtterance(word);
         if (this.voice) utterance.voice = this.voice;
-        utterance.lang = this.voice ? this.voice.lang : (this._langPrefix() === 'ar' ? 'ar' : 'en-US');
+        utterance.lang = this._utteranceLang();
         utterance.rate = this.rate;
         utterance.pitch = this.pitch;
         utterance.volume = this.volume;
@@ -112,7 +119,7 @@ const CVISpeech = {
 
         const utterance = new SpeechSynthesisUtterance(message);
         if (this.voice) utterance.voice = this.voice;
-        utterance.lang = this.voice ? this.voice.lang : (this._langPrefix() === 'ar' ? 'ar' : 'en-US');
+        utterance.lang = this._utteranceLang();
         utterance.rate = 1.1;
         utterance.pitch = 0.9;
         utterance.volume = this.volume;
@@ -144,7 +151,7 @@ const CVISpeech = {
         return 'speechSynthesis' in window;
     },
 
-    /** Re-select TTS voice after UI language change (e.g. Arabic vs English). */
+    /** Re-select TTS voice after UI language change. */
     refreshVoice() {
         return this.init();
     }
