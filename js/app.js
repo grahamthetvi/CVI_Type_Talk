@@ -118,6 +118,10 @@ const CVIApp = {
             }
             CVIKeyboard.enable();
 
+            if (typeof CVIImages !== 'undefined' && CVIImages.requestCameraPermission) {
+                CVIImages.requestCameraPermission();
+            }
+
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen().catch(function () {
                     // Fullscreen denied — continue without it
