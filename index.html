@@ -170,7 +170,7 @@
                 </div>
                 <div class="guide-section">
                     <h3 data-i18n="settingsGuideModal.sectionGamesTitle">🎮 Skill Games</h3>
-                    <p data-i18n="settingsGuideModal.sectionGamesBody">Open Play to practice the mouse and the arrow keys. In Drive, type car, truck, van, or SUV and that vehicle drives on the road.</p>
+                    <p data-i18n="settingsGuideModal.sectionGamesBody">Open Play to practice the mouse and the arrow keys. In Drive, type car, truck, van, or SUV and that vehicle drives on the road. Pop and Arrows plays are saved in this browser under Game History in Settings.</p>
                 </div>
                 <div class="guide-section">
                     <h3 data-i18n="settingsGuideModal.sectionSessionHistoryTitle">📋 Session Word History</h3>
@@ -511,6 +511,24 @@
                 </div>
             </section>
 
+            <!-- Pop and Arrows plays -->
+            <section class="settings-section">
+                <h3 data-i18n="settingsPanel.sectionHeadings.gameHistory">Game History</h3>
+                <p class="setting-note" data-i18n="settingsPanel.labelsAndControls.gameHistoryNote">Pop (mouse) and Arrows plays saved in this browser, with the student name from Settings. Each hit and miss records the time and the place. Each goal records the presses and the directions.</p>
+                <div class="setting-row full-width">
+                    <label for="game-session-select" data-i18n="settingsPanel.labelsAndControls.gameHistoryLabel">Select a play:</label>
+                    <select id="game-session-select" style="flex: 1; max-width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #666; background-color: #333; color: #FFF; font-size: 16px;"></select>
+                </div>
+                <div class="setting-row full-width">
+                    <label for="game-session-detail" class="sr-only" data-i18n="settingsPanel.labelsAndControls.gameHistoryDetailLabel">Details for the selected play</label>
+                    <textarea id="game-session-detail" rows="8" readonly
+                        style="font-family: monospace; font-size: 14px;"></textarea>
+                </div>
+                <div class="setting-row">
+                    <button id="clear-game-history" type="button" class="settings-button" data-i18n="settingsPanel.labelsAndControls.gameHistoryClearButton">Clear Game History</button>
+                </div>
+            </section>
+
             <div class="settings-buttons">
                 <button id="save-settings" class="settings-button primary" data-i18n="settingsPanel.labelsAndControls.buttons.saveAndClose">Save & Close</button>
                 <button id="reset-settings" class="settings-button" data-i18n="settingsPanel.labelsAndControls.buttons.resetToDefaults">Reset to Defaults</button>
@@ -679,6 +697,7 @@
     <script src="js/colors.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/typing-history.js"></script>
+    <script src="js/game-history.js"></script>
     <script src="js/display.js"></script>
     <script src="js/keyboard.js"></script>
     <script src="js/games.js"></script>

@@ -243,11 +243,13 @@ const CVISettings = {
         // Populate UI with current values
         this.populateUI();
         this._setupPastSessionsUI();
+        this._setupGameHistoryUI();
 
         document.addEventListener('cvi-locale-changed', function () {
             self._applySettingsPlaceholders();
             self.refreshWordHistoryIfOpen();
             self._populatePastSessions();
+            self._populateGameHistory();
             self._populateCustomImagesList();
             if (typeof CVIDisplay !== 'undefined' && CVIDisplay.displayEl && CVIDisplay._render) {
                 CVIDisplay._render();
@@ -532,9 +534,10 @@ const CVISettings = {
             colorWordMode.value = (mode === 'word' || mode === 'screen') ? mode : 'off';
         }
 
-        // Populate session word history
+        // Populate session word history and skill-game plays
         this._populateWordHistory();
         this._populatePastSessions();
+        this._populateGameHistory();
 
         // Populate custom local images list
         this._populateCustomImagesList();
@@ -922,6 +925,90 @@ const CVISettings = {
                     self._populatePastSessions();
                 }
             });
+        }
+    },
+
+    /**
+     * Populate the Pop and Arrows play selector and detail view.
+     */
+    _populateGameHistory() {
+        var selectEl = document.getElementById('game-session-select');
+        var detailEl = document.getElementById('game-session-detail');
+        if (!selectEl || !detailEl || typeof CVIGameHistory === 'undefined') return;
+
+        var plays = CVIGameHistory.getSessions();
+        var selectedId = selectEl.value;
+
+        selectEl.innerHTML = '';
+        var placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = plays.length === 0
+            ? CVII18n.t('settingsPanel.labelsAndControls.gameHistoryEmpty')
+            : CVII18n.t('settingsPanel.labelsAndControls.gameHistoryPlaceholder');
+        selectEl.appendChild(placeholder);
+
+        plays.forEach(function (session) {
+            var opt = document.createElement('option');
+            opt.value = session.id;
+            opt.textContent = CVIGameHistory.formatSessionLabel(session);
+            selectEl.appendChild(opt);
+        });
+
+        if (selectedId && plays.some(function (session) { return session.id === selectedId; })) {
+            selectEl.value = selectedId;
+        }
+
+        this._populateGameHistoryDetail(selectEl.value);
+    },
+
+    _populateGameHistoryDetail(sessionId) {
+        var detailEl = document.getElementById('game-session-detail');
+        if (!detailEl || typeof CVIGameHistory === 'undefined') return;
+
+        if (!sessionId) {
+            detailEl.textContent = CVII18n.t('settingsPanel.labelsAndControls.gameHistoryDetailPlaceholder');
+            return;
+        }
+
+        var session = CVIGameHistory.getSessions().find(function (item) {
+            return item.id === sessionId;
+        });
+        if (!session) {
+            detailEl.textContent = CVII18n.t('settingsPanel.labelsAndControls.gameHistoryDetailPlaceholder');
+            return;
+        }
+
+        detailEl.textContent = CVIGameHistory.formatDetail(session);
+    },
+
+    _setupGameHistoryUI() {
+        var self = this;
+        var selectEl = document.getElementById('game-session-select');
+        if (selectEl) {
+            selectEl.addEventListener('change', function () {
+                self._populateGameHistoryDetail(selectEl.value);
+            });
+        }
+
+        var clearBtn = document.getElementById('clear-game-history');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function () {
+                if (typeof CVIGameHistory === 'undefined') return;
+                if (confirm(CVII18n.t('browserDialogs.clearGameHistoryConfirm'))) {
+                    CVIGameHistory.clearAll();
+                    self._populateGameHistory();
+                }
+            });
+        }
+    },
+
+    /**
+     * Refresh the game history list if the settings panel is open.
+     */
+    refreshGameHistoryIfOpen() {
+        var panel = document.getElementById('settings-panel');
+        if (panel && panel.classList.contains('visible')) {
+            this._populateGameHistory();
         }
     },
 

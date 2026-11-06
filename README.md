@@ -14,6 +14,8 @@ Open the live site (or run locally as below). The first screen explains keyboard
 
 **Play** on the first screen or the toolbar (also **Ctrl+Shift+G**) opens three short games. **Drive** listens for a vehicle word — car, truck, van, or SUV, plus the same idea in Spanish, French, and Arabic — and puts that vehicle on a simple road. Arrow keys or a click steer it. **Pop** is one large circle to click. **Arrows** moves a circle with the arrow keys onto a red ring. The games use the same high-contrast colors as the typer and do not load photos from the web.
 
+Pop and Arrows plays are saved in this browser for a teacher to review under **Game History** in Settings. Each Pop click is stored as a hit or a miss, with the time, the place in the play area, and whether the pointer was a mouse, touch, pen, or the keyboard. Each Arrows press is stored with its direction, and each goal stores how many presses it took. The record stays on the device, with the student name from Settings. Drive stays in the typing history.
+
 ## Tech stack
 
 - **Vanilla** HTML, CSS, and JavaScript (no build step or package manager).
@@ -33,7 +35,7 @@ Then open the URL the tool prints (often `http://localhost:3000`).
 
 ## Tests
 
-Profanity-filter logic, the local English word dictionary, and locale key-tree parity are covered by small Node scripts:
+Profanity-filter logic, the local English word dictionary, locale key-tree parity, skill games, and game-history recording are covered by small Node scripts:
 
 ```bash
 node run-tests.js
@@ -61,7 +63,7 @@ Profanity filtering uses a bundled list generated from [LDNOOBWV2](https://githu
 
 Optional **background removal** uses [@imgly/background-removal](https://github.com/imgly/background-removal-js) loaded from **jsDelivr**; the model downloads client-side on first use (on the order of tens of megabytes) and is cached by the browser.
 
-Speech uses each visitor’s **local text-to-speech voices** (browser-dependent) matching the selected UI language when a voice is installed. Settings and one-time consent are stored in **`localStorage`** on the user’s device only.
+Speech uses each visitor’s **local text-to-speech voices** (browser-dependent) matching the selected UI language when a voice is installed. Settings, one-time consent, typing sessions (`cvi-typing-sessions`), and Pop / Arrows plays (`cvi-game-sessions`) are stored in **`localStorage`** on the user’s device only. Nothing from those records is uploaded.
 
 ## License
 
