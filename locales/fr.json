@@ -52,6 +52,8 @@
     "intro": "Voici un aperçu de tout ce que vous pouvez personnaliser :",
     "sectionTextAppearanceTitle": "🔤 Apparence du texte",
     "sectionTextAppearanceBody": "Changez le style, la taille et la couleur de la police dans la zone de frappe, ainsi que la couleur d’arrière-plan.",
+    "sectionColorWordsTitle": "🎨 Mots de couleur",
+    "sectionColorWordsBody": "Choisissez ce qui se passe quand un élève tape le nom d’une couleur : le mot peut prendre cette couleur, ou tout l’écran peut se remplir de cette couleur.",
     "sectionBubbleLettersTitle": "🔵 Lettres bulles",
     "sectionBubbleLettersBody": "Ajoutez un contour coloré autour de chaque lettre pour faire ressortir le texte sur n’importe quel fond.",
     "sectionTypingControlTitle": "⏱ Contrôle de la frappe",
@@ -80,6 +82,7 @@
     "screenReaderNote": "La zone de frappe principale n’est pas un champ de texte standard, donc votre lecteur d’écran peut ne pas la traiter comme une zone de texte normale. L’application utilise la synthèse vocale pour les lettres et les mots, et la barre d’état en bas de page annonce de nombreuses mises à jour. Les mêmes informations apparaissent sur le premier écran à l’ouverture de l’application.",
     "sectionHeadings": {
       "textAppearance": "Apparence du texte",
+      "colorWords": "Mots de couleur",
       "bubbleLetters": "Lettres bulles",
       "typingControl": "Contrôle de la frappe",
       "imageDisplay": "Affichage des images",
@@ -95,6 +98,13 @@
       "fontSize": "Taille de police :",
       "fontColor": "Couleur de police :",
       "backgroundColor": "Couleur d’arrière-plan :",
+      "colorWordsWhenTyped": "Quand un mot de couleur est tapé :",
+      "colorWordsModeOptions": {
+        "off": "Désactivé",
+        "word": "Colorer le mot",
+        "screen": "Colorer tout l’écran"
+      },
+      "colorWordsNote": "Colorer le mot affiche cette couleur sur le mot dès qu’il est épelé. Colorer tout l’écran remplit l’écran lorsque le mot est terminé avec Espace ou Entrée, et garde cette couleur jusqu’au prochain mot de couleur terminé ou jusqu’à ce que l’écran soit effacé. Les noms suivent la langue actuelle, et les noms de couleurs anglais fonctionnent dans toutes les langues.",
       "fontOptions": [
         "Arial",
         "Comic Sans",

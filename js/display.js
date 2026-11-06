@@ -143,21 +143,22 @@ const CVIDisplay = {
      * Re-render the text display from data model.
      */
     _render() {
+        if (!this.displayEl) return;
         var visibleLines = this.lines.slice(-this.maxVisibleLines);
 
-        var html = '';
-        for (var i = 0; i < visibleLines.length; i++) {
-            html += '<div class="completed-line">' + this._escapeHTML(visibleLines[i]) + '</div>';
-        }
+        this.displayEl.textContent = '';
 
-        this.displayEl.innerHTML = html;
+        for (var i = 0; i < visibleLines.length; i++) {
+            var line = document.createElement('div');
+            line.className = 'completed-line';
+            this._appendLineText(line, visibleLines[i]);
+            this.displayEl.appendChild(line);
+        }
 
         var lineSpan = document.createElement('span');
         lineSpan.id = 'current-line';
         lineSpan.className = 'current-line';
-        
-        var typedTextNode = document.createTextNode(this.currentText);
-        lineSpan.appendChild(typedTextNode);
+        this._appendLineText(lineSpan, this.currentText);
 
         var cursor = document.createElement('span');
         cursor.className = 'cursor';
@@ -178,18 +179,54 @@ const CVIDisplay = {
         this.displayEl.appendChild(lineSpan);
 
         this.displayEl.scrollTop = this.displayEl.scrollHeight;
+
+        if (typeof CVIColors !== 'undefined') {
+            CVIColors.syncFromDisplay(this.lines, this.currentText);
+        }
+    },
+
+    /**
+     * Put a line of typed text into the display.
+     * In "color the word" mode, a color name is wrapped so it shows in that color.
+     */
+    _appendLineText(parent, text) {
+        if (!text) return;
+        if (typeof CVIColors === 'undefined' || CVIColors.mode() !== 'word') {
+            parent.appendChild(document.createTextNode(text));
+            return;
+        }
+        var parts = String(text).split(/(\s+)/);
+        for (var i = 0; i < parts.length; i++) {
+            var part = parts[i];
+            if (!part) continue;
+            var hex = /^\s+$/.test(part) ? null : CVIColors.lookup(part);
+            if (hex) parent.appendChild(this._colorWordSpan(part, hex));
+            else parent.appendChild(document.createTextNode(part));
+        }
+    },
+
+    _colorWordSpan(text, hex) {
+        var span = document.createElement('span');
+        span.className = 'color-word';
+        span.style.color = hex;
+        span.textContent = text;
+
+        var settings = (typeof CVISettings !== 'undefined' && CVISettings.current)
+            ? CVISettings.current
+            : null;
+        var bg = (settings && settings.backgroundColor) || '#000000';
+        var bubbleOn = !!(settings && settings.bubbleLettersEnabled);
+        if (!bubbleOn && CVIColors.contrastRatio(hex, bg) < 4.5) {
+            span.classList.add('needs-outline');
+            span.style.setProperty('--color-word-stroke', CVIColors.readableText(bg));
+        }
+        return span;
     },
 
     _updateStatus(text) {
         if (this.statusTextEl) {
             this.statusTextEl.textContent = text;
         }
-    },
-
-    _escapeHTML(str) {
-        var div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
     },
 
     /**

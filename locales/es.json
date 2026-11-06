@@ -52,6 +52,8 @@
     "intro": "Aquí tienes un resumen de todo lo que puedes personalizar:",
     "sectionTextAppearanceTitle": "🔤 Apariencia del texto",
     "sectionTextAppearanceBody": "Cambia el estilo, el tamaño y el color de la fuente en la pantalla de escritura, además del color de fondo.",
+    "sectionColorWordsTitle": "🎨 Palabras de color",
+    "sectionColorWordsBody": "Elige qué ocurre cuando el estudiante escribe el nombre de un color: la palabra puede volverse de ese color, o toda la pantalla puede llenarse de ese color.",
     "sectionBubbleLettersTitle": "🔵 Letras burbuja",
     "sectionBubbleLettersBody": "Añade un contorno de color alrededor de cada letra para que el texto destaque sobre cualquier fondo.",
     "sectionTypingControlTitle": "⏱ Control de escritura",
@@ -80,6 +82,7 @@
     "screenReaderNote": "El área principal de escritura no es un campo de texto estándar, así que tu lector de pantalla puede no tratarla como un cuadro de texto normal. La aplicación usa voz integrada para letras y palabras, y la barra de estado al pie de la página anuncia muchas actualizaciones. La misma información aparece en la primera pantalla al abrir la aplicación.",
     "sectionHeadings": {
       "textAppearance": "Apariencia del texto",
+      "colorWords": "Palabras de color",
       "bubbleLetters": "Letras burbuja",
       "typingControl": "Control de escritura",
       "imageDisplay": "Visualización de imágenes",
@@ -95,6 +98,13 @@
       "fontSize": "Tamaño de fuente:",
       "fontColor": "Color de fuente:",
       "backgroundColor": "Color de fondo:",
+      "colorWordsWhenTyped": "Al escribir una palabra de color:",
+      "colorWordsModeOptions": {
+        "off": "Desactivado",
+        "word": "Colorear la palabra",
+        "screen": "Colorear toda la pantalla"
+      },
+      "colorWordsNote": "Colorear la palabra muestra ese color en la palabra en cuanto se escribe. Colorear toda la pantalla llena la pantalla al terminar la palabra con Espacio o Intro, y mantiene ese color hasta la siguiente palabra de color terminada o hasta que se borre la pantalla. Los nombres siguen el idioma actual, y los nombres de colores en inglés funcionan en todos los idiomas.",
       "fontOptions": [
         "Arial",
         "Comic Sans",

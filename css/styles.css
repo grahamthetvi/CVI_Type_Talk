@@ -78,6 +78,50 @@ body {
     opacity: 0.6;
 }
 
+/* Bubble outline is set on the display; inherit it so each word, including a colored one, keeps it. */
+.completed-line,
+.current-line,
+.color-word,
+.ghost-text {
+    text-shadow: inherit;
+}
+
+.color-word.needs-outline {
+    -webkit-text-stroke: 0.045em var(--color-word-stroke, #000000);
+    paint-order: stroke fill;
+}
+
+/* A finished color word can fill the page. Inline theme colors lose to these rules. */
+body.typed-color-screen {
+    background-color: var(--typed-screen-color) !important;
+}
+
+body.typed-color-screen #text-display {
+    color: var(--typed-text-color) !important;
+}
+
+body.typed-color-screen #image-panel {
+    background-color: var(--typed-screen-color) !important;
+    border-color: transparent;
+}
+
+body.typed-color-screen .status-bar {
+    background-color: var(--typed-screen-color);
+    color: var(--typed-text-color);
+    border-top-color: transparent;
+}
+
+body.typed-color-screen .cursor {
+    color: var(--typed-text-color);
+}
+
+body.typed-color-screen .image-label,
+body.typed-color-screen .image-label.has-image,
+body.typed-color-screen .image-label.loading,
+body.typed-color-screen .image-attribution {
+    color: var(--typed-text-color);
+}
+
 /* Teacher Mode ghost text placeholder */
 .ghost-text {
     opacity: 0.3;

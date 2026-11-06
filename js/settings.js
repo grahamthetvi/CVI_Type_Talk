@@ -27,7 +27,8 @@ const CVISettings = {
         preloadWords: '',
         imageSize: 55,
         imageLabelSize: 48,
-        studentName: ''
+        studentName: '',
+        colorWordMode: 'off'
     },
 
     current: {},
@@ -248,6 +249,9 @@ const CVISettings = {
             self.refreshWordHistoryIfOpen();
             self._populatePastSessions();
             self._populateCustomImagesList();
+            if (typeof CVIDisplay !== 'undefined' && CVIDisplay.displayEl && CVIDisplay._render) {
+                CVIDisplay._render();
+            }
             var guideModal = document.getElementById('settings-guide-modal');
             if (guideModal && !guideModal.hasAttribute('hidden') && self._guideMode) {
                 self._refreshSettingsGuideFooterForMode(self._guideMode);
@@ -526,6 +530,12 @@ const CVISettings = {
         var studentName = document.getElementById('student-name');
         if (studentName) studentName.value = this.current.studentName || '';
 
+        var colorWordMode = document.getElementById('color-word-mode');
+        if (colorWordMode) {
+            var mode = this.current.colorWordMode;
+            colorWordMode.value = (mode === 'word' || mode === 'screen') ? mode : 'off';
+        }
+
         // Populate session word history
         this._populateWordHistory();
         this._populatePastSessions();
@@ -629,6 +639,12 @@ const CVISettings = {
 
         var studentName = document.getElementById('student-name');
         if (studentName) this.current.studentName = studentName.value;
+
+        var colorWordMode = document.getElementById('color-word-mode');
+        if (colorWordMode) {
+            var mode = colorWordMode.value;
+            this.current.colorWordMode = (mode === 'word' || mode === 'screen') ? mode : 'off';
+        }
     },
 
     /**
@@ -734,6 +750,13 @@ const CVISettings = {
 
         if (typeof CVIWordDictionary !== 'undefined' && CVIWordDictionary.refreshExtras) {
             CVIWordDictionary.refreshExtras();
+        }
+
+        // Re-color words already on screen, and paint or clear a full-screen color.
+        if (typeof CVIDisplay !== 'undefined' && CVIDisplay.displayEl && CVIDisplay._render) {
+            CVIDisplay._render();
+        } else if (typeof CVIColors !== 'undefined') {
+            CVIColors.syncFromDisplay([], '');
         }
     },
 
