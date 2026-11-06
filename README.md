@@ -10,6 +10,10 @@ The interface, spoken prompts, and camera trigger words (for example *me* / *you
 
 Open the live site (or run locally as below). The first screen explains keyboard shortcuts, Teacher Mode, and that a **physical keyboard** is required. A **Settings** guide in the app describes every customization option. No install or account is needed.
 
+## Skill games
+
+**Play** on the first screen or the toolbar (also **Ctrl+Shift+G**) opens three short games. **Drive** listens for a vehicle word — car, truck, van, or SUV, plus the same idea in Spanish, French, and Arabic — and puts that vehicle on a simple road. Arrow keys or a click steer it. **Pop** is one large circle to click. **Arrows** moves a circle with the arrow keys onto a red ring. The games use the same high-contrast colors as the typer and do not load photos from the web.
+
 ## Tech stack
 
 - **Vanilla** HTML, CSS, and JavaScript (no build step or package manager).

@@ -1201,3 +1201,359 @@ html[dir="rtl"] .floating-toolbar {
         width: 100%;
     }
 }
+
+/* === Skill games === */
+.games-welcome-btn {
+    display: inline-block;
+    background: transparent;
+    color: #FFE600;
+    border: 3px solid #FFE600;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.games-welcome-btn:hover,
+.games-welcome-btn:focus {
+    background: #FFE600;
+    color: #000000;
+}
+
+.games-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 350;
+    display: flex;
+    background: #000000;
+    color: #FFFFFF;
+    overflow: auto;
+    padding: 16px 16px 24px;
+    box-sizing: border-box;
+}
+
+.games-overlay[hidden] {
+    display: none !important;
+}
+
+.games-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min(1040px, 100%);
+    margin: 0 auto;
+    min-height: 100%;
+    flex: 1 0 auto;
+}
+
+.games-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: #000000;
+    padding-bottom: 6px;
+}
+
+.games-back {
+    min-height: 56px;
+    padding: 10px 18px;
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 800;
+    color: #000000;
+    background: #FFE600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.games-back:focus,
+.games-choice:focus,
+.games-pad-btn:focus,
+.games-pop-target:focus {
+    outline: 4px solid #FFFFFF;
+    outline-offset: 3px;
+}
+
+.games-title {
+    margin: 0;
+    color: #FFE600;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.1;
+}
+
+.games-intro,
+.games-prompt,
+.games-status {
+    text-align: center;
+    font-weight: 700;
+}
+
+.games-intro,
+.games-prompt {
+    color: #FFFFFF;
+    font-size: clamp(18px, 2.8vw, 30px);
+}
+
+.games-status {
+    color: #00FF00;
+    font-size: clamp(20px, 3vw, 32px);
+    min-height: 1.3em;
+}
+
+.games-typed {
+    min-height: 1.15em;
+    text-align: center;
+    color: #FFE600;
+    font-size: clamp(42px, 8vw, 84px);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.games-typed::after {
+    content: '|';
+    font-weight: 400;
+}
+
+.games-menu {
+    width: min(720px, 100%);
+    margin: 0 auto;
+}
+
+.games-choice {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px 20px;
+    text-align: start;
+    color: #FFFFFF;
+    background: #000000;
+    border: 4px solid #FFE600;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.games-choice-title {
+    display: block;
+    color: #FFE600;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+}
+
+.games-choice-help {
+    display: block;
+    margin-top: 4px;
+    font-size: clamp(18px, 2.5vw, 28px);
+}
+
+.games-choice:hover,
+.games-choice:focus {
+    background: #FFE600;
+    color: #000000;
+}
+
+.games-choice:hover .games-choice-title,
+.games-choice:focus .games-choice-title,
+.games-choice:hover .games-choice-help,
+.games-choice:focus .games-choice-help {
+    color: #000000;
+}
+
+.games-screen {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+    outline: none;
+}
+
+.games-screen[hidden],
+.games-menu[hidden],
+.games-vehicle[hidden],
+.games-light[hidden] {
+    display: none !important;
+}
+
+.games-road,
+.games-field {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 300px;
+    border: 6px solid #FFE600;
+    border-radius: 16px;
+    background: #050505;
+    overflow: hidden;
+}
+
+.games-road {
+    cursor: pointer;
+}
+
+.games-lane-mark {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    transform: translateX(-50%);
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #FFE600 0 22px,
+        transparent 22px 58px
+    );
+    background-size: 6px 58px;
+    pointer-events: none;
+}
+
+.games-road.is-driving .games-lane-mark {
+    animation: games-drive var(--games-drive-ms, 1100ms) linear infinite;
+}
+
+@keyframes games-drive {
+    from { background-position-y: 0; }
+    to { background-position-y: 58px; }
+}
+
+.games-light {
+    position: absolute;
+    z-index: 1;
+    width: 72px;
+    height: 72px;
+    margin-left: -36px;
+    margin-top: -36px;
+    box-sizing: border-box;
+    border: 10px solid #FF2D2D;
+    border-radius: 50%;
+    background: #FFFFFF;
+    pointer-events: none;
+}
+
+.games-vehicle {
+    position: absolute;
+    z-index: 2;
+    bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(-50%);
+    pointer-events: none;
+    transition: left 0.28s ease;
+}
+
+.games-vehicle-name {
+    margin: 0 0 4px;
+    padding: 0 8px;
+    border: 3px solid currentColor;
+    border-radius: 8px;
+    background: #000000;
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.games-vehicle-art svg {
+    display: block;
+    width: auto;
+    height: clamp(120px, 22vh, 190px);
+}
+
+.games-pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.games-pad-row {
+    display: flex;
+    gap: 8px;
+}
+
+.games-pad-btn {
+    width: 84px;
+    height: 84px;
+    font-size: 40px;
+    font-weight: 800;
+    color: #FFE600;
+    background: #000000;
+    border: 4px solid #FFE600;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.games-pad-btn.is-pressed,
+.games-pad-btn:active {
+    background: #FFE600;
+    color: #000000;
+}
+
+.games-pop-target {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    border: 8px solid #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.games-player,
+.games-goal {
+    position: absolute;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.games-player {
+    width: 112px;
+    height: 112px;
+    margin-left: -56px;
+    margin-top: -56px;
+    border: 8px solid #FFFFFF;
+    border-radius: 50%;
+    background: #FFE600;
+}
+
+.games-goal {
+    width: 124px;
+    height: 124px;
+    margin-left: -62px;
+    margin-top: -62px;
+    border: 14px solid #FF2D2D;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.games-field:focus {
+    outline: none;
+}
+
+@media (max-height: 740px) {
+    .games-typed {
+        font-size: 48px;
+    }
+
+    .games-road,
+    .games-field {
+        min-height: 200px;
+    }
+
+    .games-pad-btn {
+        width: 72px;
+        height: 72px;
+        font-size: 32px;
+    }
+
+    .games-vehicle-art svg {
+        height: 110px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .games-road.is-driving .games-lane-mark {
+        animation: none;
+    }
+
+    .games-vehicle {
+        transition: none;
+    }
+}

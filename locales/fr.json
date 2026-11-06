@@ -38,7 +38,8 @@
       "pressLpm": "Appuyez sur **Ctrl+Maj+L** pour afficher le nombre de lettres par minute.",
       "pressClear": "Appuyez sur **Ctrl+Maj+C** pour effacer l’écran.",
       "pressTeacherMode": "Appuyez sur **Ctrl+Maj+Y** pour lancer le mode enseignant (l’élève complète un mot cible).",
-      "pressTeacherPrompt": "Appuyez sur **Tab** ou **?** en mode enseignant pour entendre la lettre suivante."
+      "pressTeacherPrompt": "Appuyez sur **Tab** ou **?** en mode enseignant pour entendre la lettre suivante.",
+      "pressPlay": "Appuyez sur **Ctrl+Shift+G** pour jouer et pratiquer la frappe, la souris et les flèches."
     },
     "keyboardNotice": "⌨️ Cette application nécessite un **clavier physique**. Elle ne fonctionnera pas sur un écran tactile sans clavier branché.",
     "screenReaderRegionAriaLabel": "Note pour les utilisateurs de lecteurs d’écran",
@@ -68,6 +69,8 @@
     "sectionTeacherModeBody": "Appuyez sur **Ctrl+Maj+Y** pour saisir un mot cible que l’élève doit compléter. Appuyez sur **Tab** ou **?** pour entendre une consigne audio de la lettre suivante.",
     "sectionMouseCursorTitle": "🖱 Curseur de la souris",
     "sectionMouseCursorBody": "Changez le style du curseur — utile si un élève utilise la souris pour cliquer sur les flèches de navigation.",
+    "sectionGamesTitle": "🎮 Jeux d'adresse",
+    "sectionGamesBody": "Ouvrez Jouer pour vous entraîner à la souris et aux flèches. Dans Conduire, tapez voiture, camion, fourgonnette ou SUV et ce véhicule roule sur la route.",
     "sectionSessionHistoryTitle": "📋 Historique des mots de la session",
     "sectionSessionHistoryBody": "Un journal de chaque mot tapé pendant cette session, avec horodatage et vitesse (MPM/LPM). Les sessions précédentes sont enregistrées dans le navigateur pour révision par l’enseignant.",
     "firstTimeDismiss": "Compris ! Ouvrir les paramètres →",
@@ -220,7 +223,9 @@
     "settingsGuideOpened": "Guide des paramètres ouvert",
     "settingsGuideClosed": "Guide des paramètres fermé",
     "settingsPanelOpened": "Panneau des paramètres ouvert",
-    "settingsPanelClosed": "Panneau des paramètres fermé"
+    "settingsPanelClosed": "Panneau des paramètres fermé",
+    "gamesOpened": "Jeux ouverts",
+    "gamesClosed": "Jeux fermés"
   },
   "statusBar": {
     "teacherMode": "Mode enseignant : tapez le mot « {word} »",
@@ -304,6 +309,49 @@
       "rightRing": "annulaire droit",
       "rightPinky": "auriculaire droit",
       "thumb": "pouce"
+    }
+  },
+  "games": {
+    "welcomeButton": "Jeux",
+    "openButton": "Jouer",
+    "openButtonAria": "Jouer aux jeux d'adresse",
+    "title": "Jouer",
+    "intro": "Jeux courts pour la frappe, la souris et les flèches.",
+    "back": "Retour",
+    "backAria": "Retour à la liste des jeux",
+    "close": "Fermer",
+    "closeAria": "Fermer les jeux",
+    "menuDrive": "Conduire",
+    "menuDriveHelp": "Tapez un véhicule et dirigez-le.",
+    "menuPop": "Cercle",
+    "menuPopHelp": "Cliquez sur le cercle brillant.",
+    "menuArrows": "Flèches",
+    "menuArrowsHelp": "Déplacez-vous avec les flèches.",
+    "drivePrompt": "Tapez {car}, {truck}, {van} ou {suv}. Puis appuyez sur Espace.",
+    "driveSteer": "Les flèches ou un clic dirigent le véhicule. Haut va plus vite. Bas va plus lentement.",
+    "driveTryAgain": "Essayez {car}, {truck}, {van} ou {suv}.",
+    "driveLights": "Lumières : {count}",
+    "popHelp": "Cliquez sur le cercle.",
+    "popCount": "Clics : {count}",
+    "popWord": "pop",
+    "popTargetAria": "Cercle brillant",
+    "arrowHelp": "Appuyez sur les flèches pour atteindre le cercle rouge.",
+    "arrowCount": "Arrivées : {count}",
+    "yes": "oui",
+    "faster": "plus vite",
+    "slower": "plus lentement",
+    "vehicles": {
+      "car": "voiture",
+      "truck": "camion",
+      "van": "fourgonnette",
+      "suv": "SUV"
+    },
+    "pad": {
+      "group": "Touches fléchées",
+      "up": "Haut",
+      "down": "Bas",
+      "left": "Gauche",
+      "right": "Droite"
     }
   }
 }

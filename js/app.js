@@ -3,6 +3,8 @@
  * Initializes all modules and manages app lifecycle.
  */
 const CVIApp = {
+    started: false,
+
     async init() {
         await CVII18n.init();
 
@@ -72,6 +74,7 @@ const CVIApp = {
                 CVII18n.t('ttsNotSupported.warning');
         }
         CVIKeyboard.init();
+        if (typeof CVIGames !== 'undefined') CVIGames.init();
 
         // Start pre-loading images in the background immediately.
         // Uses a short delay so the browser can finish rendering first.
@@ -105,6 +108,7 @@ const CVIApp = {
         }
 
         function beginApp() {
+            CVIApp.started = true;
             if (overlay) {
                 overlay.classList.add('hidden');
                 if (typeof CVIFocusTrap !== 'undefined') CVIFocusTrap.release(overlay);

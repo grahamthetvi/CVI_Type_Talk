@@ -424,14 +424,10 @@ const CVISettings = {
         if (!announcer) {
             announcer = document.createElement('div');
             announcer.id = 'sr-announcer';
+            announcer.className = 'sr-only';
             announcer.setAttribute('role', 'status');
             announcer.setAttribute('aria-live', 'polite');
             announcer.setAttribute('aria-atomic', 'true');
-            announcer.style.position = 'absolute';
-            announcer.style.left = '-10000px';
-            announcer.style.width = '1px';
-            announcer.style.height = '1px';
-            announcer.style.overflow = 'hidden';
             document.body.appendChild(announcer);
         }
         announcer.textContent = message;

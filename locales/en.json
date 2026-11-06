@@ -38,7 +38,8 @@
       "pressLpm": "Press **Ctrl+Shift+L** to show letters-per-minute speed.",
       "pressClear": "Press **Ctrl+Shift+C** to clear the screen.",
       "pressTeacherMode": "Press **Ctrl+Shift+Y** to start Teacher Mode (student fills in a target word).",
-      "pressTeacherPrompt": "Press **Tab** or **?** in Teacher Mode to hear the next letter."
+      "pressTeacherPrompt": "Press **Tab** or **?** in Teacher Mode to hear the next letter.",
+      "pressPlay": "Press **Ctrl+Shift+G** to play games for typing, the mouse, and the arrow keys."
     },
     "keyboardNotice": "⌨️ This app requires a **physical keyboard**. It will not work on a touchscreen without one connected.",
     "screenReaderRegionAriaLabel": "Note for screen reader users",
@@ -68,6 +69,8 @@
     "sectionTeacherModeBody": "Press **Ctrl+Shift+Y** to enter a target word for the student to fill in. Press **Tab** or **?** to hear an audio prompt for the next letter.",
     "sectionMouseCursorTitle": "🖱 Mouse Cursor",
     "sectionMouseCursorBody": "Change the cursor style — useful if a student is using a mouse to click the navigation arrows.",
+    "sectionGamesTitle": "🎮 Skill Games",
+    "sectionGamesBody": "Open Play to practice the mouse and the arrow keys. In Drive, type car, truck, van, or SUV and that vehicle drives on the road.",
     "sectionSessionHistoryTitle": "📋 Session Word History",
     "sectionSessionHistoryBody": "A running log of every word typed this session with timestamps and typing speed (WPM/LPM). Past sessions are saved in your browser for teacher review.",
     "firstTimeDismiss": "Got it! Open Settings →",
@@ -220,7 +223,9 @@
     "settingsGuideOpened": "Settings guide opened",
     "settingsGuideClosed": "Settings guide closed",
     "settingsPanelOpened": "Settings panel opened",
-    "settingsPanelClosed": "Settings panel closed"
+    "settingsPanelClosed": "Settings panel closed",
+    "gamesOpened": "Games opened",
+    "gamesClosed": "Games closed"
   },
   "statusBar": {
     "teacherMode": "Teacher Mode: Type the word \"{word}\"",
@@ -304,6 +309,49 @@
       "rightRing": "right ring finger",
       "rightPinky": "right pinky",
       "thumb": "thumb"
+    }
+  },
+  "games": {
+    "welcomeButton": "Play games",
+    "openButton": "Play",
+    "openButtonAria": "Play skill games",
+    "title": "Play",
+    "intro": "Short games for typing, the mouse, and the arrow keys.",
+    "back": "Back",
+    "backAria": "Back to the game list",
+    "close": "Close",
+    "closeAria": "Close games",
+    "menuDrive": "Drive",
+    "menuDriveHelp": "Type a vehicle and steer it.",
+    "menuPop": "Pop",
+    "menuPopHelp": "Click the bright circle.",
+    "menuArrows": "Arrows",
+    "menuArrowsHelp": "Move with the arrow keys.",
+    "drivePrompt": "Type {car}, {truck}, {van}, or {suv}. Then press Space.",
+    "driveSteer": "Arrows or a click steer the vehicle. Up is faster. Down is slower.",
+    "driveTryAgain": "Try {car}, {truck}, {van}, or {suv}.",
+    "driveLights": "Lights: {count}",
+    "popHelp": "Click the circle.",
+    "popCount": "Pops: {count}",
+    "popWord": "pop",
+    "popTargetAria": "Bright circle",
+    "arrowHelp": "Press the arrow keys to reach the red circle.",
+    "arrowCount": "Reached: {count}",
+    "yes": "yes",
+    "faster": "faster",
+    "slower": "slower",
+    "vehicles": {
+      "car": "car",
+      "truck": "truck",
+      "van": "van",
+      "suv": "SUV"
+    },
+    "pad": {
+      "group": "Arrow keys",
+      "up": "Up",
+      "down": "Down",
+      "left": "Left",
+      "right": "Right"
     }
   }
 }
