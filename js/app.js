@@ -188,7 +188,8 @@ const CVIApp = {
 
         // ── Image Lightbox ────────────────────────────────────────────────
         // Clicking the image opens a near-fullscreen expanded view.
-        // Prev/next arrows and Escape / X / backdrop click all close it.
+        // Click the left or right half of that photo to move between pictures.
+        // Escape, the X button, and the dark backdrop close it.
         var lightbox = document.getElementById('image-lightbox');
         var lightboxImg = document.getElementById('lightbox-image');
         var lightboxClose = document.getElementById('lightbox-close');
@@ -350,6 +351,9 @@ const CVIApp = {
             var arrowsEnabled = settings ? settings.arrowsEnabled : true;
             var arrowColor = settings ? (settings.arrowColor || '#FFFF00') : '#FFFF00';
             var show = CVIImages._currentPhotos.length > 1 && arrowsEnabled;
+            if (lightboxImg) {
+                lightboxImg.style.cursor = CVIImages._currentPhotos.length > 1 ? 'pointer' : 'default';
+            }
             if (lightboxPrev) {
                 lightboxPrev.style.display = show ? 'flex' : 'none';
                 lightboxPrev.style.borderColor = arrowColor;
@@ -378,6 +382,23 @@ const CVIApp = {
         // Lightbox arrows delegate to CVIImages which triggers _displayImage
         if (lightboxPrev) lightboxPrev.addEventListener('click', function () { CVIImages.showPrevPhoto(); });
         if (lightboxNext) lightboxNext.addEventListener('click', function () { CVIImages.showNextPhoto(); });
+
+        // The enlarged photo is the large click target: left half goes back,
+        // right half goes forward. One photo has nowhere to move.
+        if (lightboxImg) {
+            lightboxImg.addEventListener('click', function (e) {
+                if (!CVIImages._currentPhotos || CVIImages._currentPhotos.length <= 1) return;
+                e.stopPropagation();
+                var rect = lightboxImg.getBoundingClientRect();
+                if (rect.width <= 0) return;
+                var x = (typeof e.clientX === 'number') ? e.clientX - rect.left : rect.width;
+                if (x < rect.width / 2) {
+                    CVIImages.showPrevPhoto();
+                } else {
+                    CVIImages.showNextPhoto();
+                }
+            });
+        }
 
         if (lightboxBgRemoval) {
             lightboxBgRemoval.addEventListener('change', function () {
