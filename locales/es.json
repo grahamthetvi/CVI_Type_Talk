@@ -38,7 +38,8 @@
       "pressLpm": "Pulsa **Ctrl+Shift+L** para mostrar las letras por minuto.",
       "pressClear": "Pulsa **Ctrl+Shift+C** para borrar la pantalla.",
       "pressTeacherMode": "Pulsa **Ctrl+Shift+Y** para iniciar el modo maestro (el estudiante completa una palabra objetivo).",
-      "pressTeacherPrompt": "Pulsa **Tab** o **?** en el modo maestro para oír la siguiente letra."
+      "pressTeacherPrompt": "Pulsa **Tab** o **?** en el modo maestro para oír la siguiente letra.",
+      "pressPlay": "Pulsa **Ctrl+Shift+G** para jugar y practicar la escritura, el ratón y las flechas."
     },
     "keyboardNotice": "⌨️ Esta aplicación requiere un **teclado físico**. No funcionará en una pantalla táctil sin uno conectado.",
     "screenReaderRegionAriaLabel": "Nota para usuarios de lectores de pantalla",
@@ -66,6 +67,8 @@
     "sectionTeacherModeBody": "Pulsa **Ctrl+Shift+Y** para introducir una palabra objetivo que el estudiante debe completar. Pulsa **Tab** o **?** para oír una pista de audio de la siguiente letra.",
     "sectionMouseCursorTitle": "🖱 Cursor del ratón",
     "sectionMouseCursorBody": "Cambia el estilo del cursor: útil si un estudiante usa el ratón para pulsar las flechas de navegación.",
+    "sectionGamesTitle": "🎮 Juegos de habilidades",
+    "sectionGamesBody": "Abre Jugar para practicar el ratón y las flechas. En Conducir, escribe coche, camión, furgoneta o SUV y ese vehículo circula por la carretera.",
     "sectionSessionHistoryTitle": "📋 Historial de palabras de la sesión",
     "sectionSessionHistoryBody": "Un registro continuo de cada palabra escrita en esta sesión, con marcas de tiempo y velocidad (PPM/LPM). Las sesiones anteriores se guardan en el navegador para revisión del maestro.",
     "firstTimeDismiss": "¡Entendido! Abrir ajustes →",
@@ -210,7 +213,9 @@
     "settingsGuideOpened": "Guía de ajustes abierta",
     "settingsGuideClosed": "Guía de ajustes cerrada",
     "settingsPanelOpened": "Panel de ajustes abierto",
-    "settingsPanelClosed": "Panel de ajustes cerrado"
+    "settingsPanelClosed": "Panel de ajustes cerrado",
+    "gamesOpened": "Juegos abiertos",
+    "gamesClosed": "Juegos cerrados"
   },
   "statusBar": {
     "teacherMode": "Modo maestro: escribe la palabra \"{word}\"",
@@ -294,6 +299,49 @@
       "rightRing": "anular derecho",
       "rightPinky": "meñique derecho",
       "thumb": "pulgar"
+    }
+  },
+  "games": {
+    "welcomeButton": "Juegos",
+    "openButton": "Jugar",
+    "openButtonAria": "Jugar a los juegos de habilidades",
+    "title": "Jugar",
+    "intro": "Juegos cortos para escribir, el ratón y las flechas.",
+    "back": "Volver",
+    "backAria": "Volver a la lista de juegos",
+    "close": "Cerrar",
+    "closeAria": "Cerrar los juegos",
+    "menuDrive": "Conducir",
+    "menuDriveHelp": "Escribe un vehículo y dirígelo.",
+    "menuPop": "Toca",
+    "menuPopHelp": "Haz clic en el círculo brillante.",
+    "menuArrows": "Flechas",
+    "menuArrowsHelp": "Muévete con las teclas de flecha.",
+    "drivePrompt": "Escribe {car}, {truck}, {van} o {suv}. Luego pulsa Espacio.",
+    "driveSteer": "Las flechas o un clic dirigen el vehículo. Arriba acelera. Abajo frena.",
+    "driveTryAgain": "Prueba {car}, {truck}, {van} o {suv}.",
+    "driveLights": "Luces: {count}",
+    "popHelp": "Haz clic en el círculo.",
+    "popCount": "Toques: {count}",
+    "popWord": "pop",
+    "popTargetAria": "Círculo brillante",
+    "arrowHelp": "Pulsa las flechas para llegar al círculo rojo.",
+    "arrowCount": "Llegadas: {count}",
+    "yes": "sí",
+    "faster": "más rápido",
+    "slower": "más despacio",
+    "vehicles": {
+      "car": "coche",
+      "truck": "camión",
+      "van": "furgoneta",
+      "suv": "SUV"
+    },
+    "pad": {
+      "group": "Teclas de flecha",
+      "up": "Arriba",
+      "down": "Abajo",
+      "left": "Izquierda",
+      "right": "Derecha"
     }
   }
 }

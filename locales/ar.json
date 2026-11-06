@@ -38,7 +38,8 @@
       "pressLpm": "اضغط على **Ctrl+Shift+L** لإظهار سرعة الحروف في الدقيقة.",
       "pressClear": "اضغط على **Ctrl+Shift+C** لمسح الشاشة.",
       "pressTeacherMode": "اضغط على **Ctrl+Shift+Y** لبدء وضع المعلم (يقوم الطالب بملء كلمة الهدف).",
-      "pressTeacherPrompt": "اضغط على **Tab** أو **?** في وضع المعلم لسماع الحرف التالي."
+      "pressTeacherPrompt": "اضغط على **Tab** أو **?** في وضع المعلم لسماع الحرف التالي.",
+      "pressPlay": "اضغط **Ctrl+Shift+G** للعب والتدرّب على الكتابة والفأرة وأسهم الاتجاه."
     },
     "keyboardNotice": "⌨️ يتطلب هذا التطبيق **لوحة مفاتيح فعلية**. لن يعمل على شاشة تعمل باللمس دون توصيل واحدة.",
     "screenReaderRegionAriaLabel": "ملاحظة لمستخدمي قارئ الشاشة",
@@ -66,6 +67,8 @@
     "sectionTeacherModeBody": "اضغط على **Ctrl+Shift+Y** لإدخال كلمة هدف ليقوم الطالب بملئها. اضغط على **Tab** أو **?** لسماع مطالبة صوتية للحرف التالي.",
     "sectionMouseCursorTitle": "🖱 مؤشر الفأرة",
     "sectionMouseCursorBody": "تغيير نمط المؤشر — مفيد إذا كان الطالب يستخدم الفأرة للنقر على أسهم التنقل.",
+    "sectionGamesTitle": "🎮 ألعاب المهارات",
+    "sectionGamesBody": "افتح العب للتدرّب على الفأرة وأسهم الاتجاه. في القيادة، اكتب سيارة أو شاحنة أو فان أو جيب فتسير تلك المركبة على الطريق.",
     "sectionSessionHistoryTitle": "📋 سجل كلمات الجلسة",
     "sectionSessionHistoryBody": "سجل مستمر لكل كلمة تمت كتابتها في هذه الجلسة مع الطوابع الزمنية وسرعة الكتابة (WPM/LPM). تُحفظ الجلسات السابقة في متصفحك لمراجعة المعلم.",
     "firstTimeDismiss": "فهمت! فتح الإعدادات ←",
@@ -210,7 +213,9 @@
     "settingsGuideOpened": "تم فتح دليل الإعدادات",
     "settingsGuideClosed": "تم إغلاق دليل الإعدادات",
     "settingsPanelOpened": "تم فتح لوحة الإعدادات",
-    "settingsPanelClosed": "تم إغلاق لوحة الإعدادات"
+    "settingsPanelClosed": "تم إغلاق لوحة الإعدادات",
+    "gamesOpened": "تم فتح الألعاب",
+    "gamesClosed": "تم إغلاق الألعاب"
   },
   "statusBar": {
     "teacherMode": "وضع المعلم: اكتب كلمة \"{word}\"",
@@ -294,6 +299,49 @@
       "rightRing": "البنصر الأيمن",
       "rightPinky": "الخنصر الأيمن",
       "thumb": "الإبهام"
+    }
+  },
+  "games": {
+    "welcomeButton": "ألعاب",
+    "openButton": "العب",
+    "openButtonAria": "العب ألعاب المهارات",
+    "title": "العب",
+    "intro": "ألعاب قصيرة للكتابة والفأرة وأسهم الاتجاه.",
+    "back": "رجوع",
+    "backAria": "الرجوع إلى قائمة الألعاب",
+    "close": "إغلاق",
+    "closeAria": "إغلاق الألعاب",
+    "menuDrive": "قيادة",
+    "menuDriveHelp": "اكتب مركبة وقُدها.",
+    "menuPop": "انقر",
+    "menuPopHelp": "انقر الدائرة المضيئة.",
+    "menuArrows": "أسهم",
+    "menuArrowsHelp": "تحرّك بمفاتيح الأسهم.",
+    "drivePrompt": "اكتب {car} أو {truck} أو {van} أو {suv}. ثم اضغط مسافة.",
+    "driveSteer": "الأسهم أو النقرة توجه المركبة. الأعلى أسرع. الأسفل أبطأ.",
+    "driveTryAgain": "جرّب {car} أو {truck} أو {van} أو {suv}.",
+    "driveLights": "أضواء: {count}",
+    "popHelp": "انقر الدائرة.",
+    "popCount": "نقرات: {count}",
+    "popWord": "بوب",
+    "popTargetAria": "دائرة مضيئة",
+    "arrowHelp": "اضغط الأسهم للوصول إلى الدائرة الحمراء.",
+    "arrowCount": "وصول: {count}",
+    "yes": "نعم",
+    "faster": "أسرع",
+    "slower": "أبطأ",
+    "vehicles": {
+      "car": "سيارة",
+      "truck": "شاحنة",
+      "van": "فان",
+      "suv": "جيب"
+    },
+    "pad": {
+      "group": "مفاتيح الأسهم",
+      "up": "أعلى",
+      "down": "أسفل",
+      "left": "يسار",
+      "right": "يمين"
     }
   }
 }

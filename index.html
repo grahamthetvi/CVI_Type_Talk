@@ -88,6 +88,10 @@
                     </select>
                 </div>
             </div>
+            <button id="games-welcome-button" type="button" class="start-button games-welcome-btn"
+                data-i18n="games.welcomeButton">
+                Play games
+            </button>
             <p data-i18n="instructionsOverlay.lines.typeLetters">Type letters to hear them spoken aloud.</p>
             <p data-i18n="instructionsOverlay.lines.pressSpaceEnter" data-i18n-html></p>
             <p data-i18n="instructionsOverlay.lines.pressBackspace" data-i18n-html></p>
@@ -97,6 +101,7 @@
             <p data-i18n="instructionsOverlay.lines.pressClear" data-i18n-html></p>
             <p data-i18n="instructionsOverlay.lines.pressTeacherMode" data-i18n-html></p>
             <p data-i18n="instructionsOverlay.lines.pressTeacherPrompt" data-i18n-html></p>
+            <p data-i18n="instructionsOverlay.lines.pressPlay" data-i18n-html></p>
             <p class="keyboard-notice" data-i18n="instructionsOverlay.keyboardNotice" data-i18n-html></p>
             <div class="keyboard-notice screenreader-notice" role="region"
                 data-i18n-attr="aria-label:instructionsOverlay.screenReaderRegionAriaLabel"
@@ -158,6 +163,10 @@
                     <h3 data-i18n="settingsGuideModal.sectionMouseCursorTitle">🖱 Mouse Cursor</h3>
                     <p data-i18n="settingsGuideModal.sectionMouseCursorBody">Change the cursor style — useful if a student is using a mouse to click the navigation arrows.
                     </p>
+                </div>
+                <div class="guide-section">
+                    <h3 data-i18n="settingsGuideModal.sectionGamesTitle">🎮 Skill Games</h3>
+                    <p data-i18n="settingsGuideModal.sectionGamesBody">Open Play to practice the mouse and the arrow keys. In Drive, type car, truck, van, or SUV and that vehicle drives on the road.</p>
                 </div>
                 <div class="guide-section">
                     <h3 data-i18n="settingsGuideModal.sectionSessionHistoryTitle">📋 Session Word History</h3>
@@ -537,6 +546,80 @@
         </div>
     </div>
 
+    <!-- Skill games: typing a vehicle, mouse targets, arrow keys -->
+    <div id="games-overlay" class="games-overlay" role="dialog" aria-modal="true" aria-labelledby="games-title" hidden>
+        <div class="games-shell">
+            <header class="games-header">
+                <button type="button" id="games-back" class="games-back">Close</button>
+                <h2 id="games-title" class="games-title">Play</h2>
+            </header>
+
+            <div id="games-menu" class="games-menu">
+                <p id="games-intro" class="games-intro" data-i18n="games.intro">Short games for typing, the mouse, and the arrow keys.</p>
+                <button type="button" class="games-choice" id="games-choice-drive" data-game="drive">
+                    <span class="games-choice-title" data-i18n="games.menuDrive">Drive</span>
+                    <span class="games-choice-help" data-i18n="games.menuDriveHelp">Type a vehicle and steer it.</span>
+                </button>
+                <button type="button" class="games-choice" id="games-choice-pop" data-game="pop">
+                    <span class="games-choice-title" data-i18n="games.menuPop">Pop</span>
+                    <span class="games-choice-help" data-i18n="games.menuPopHelp">Click the bright circle.</span>
+                </button>
+                <button type="button" class="games-choice" id="games-choice-arrows" data-game="arrows">
+                    <span class="games-choice-title" data-i18n="games.menuArrows">Arrows</span>
+                    <span class="games-choice-help" data-i18n="games.menuArrowsHelp">Move with the arrow keys.</span>
+                </button>
+            </div>
+
+            <div id="games-drive" class="games-screen" tabindex="-1" hidden>
+                <p id="games-drive-prompt" class="games-prompt">Type car, truck, van, or SUV. Then press Space.</p>
+                <p id="games-drive-typed" class="games-typed" aria-hidden="true"></p>
+                <p id="games-drive-status" class="games-status" aria-live="polite"></p>
+                <div id="games-road" class="games-road" dir="ltr">
+                    <div class="games-lane-mark" style="left:33.33%"></div>
+                    <div class="games-lane-mark" style="left:66.67%"></div>
+                    <div id="games-light" class="games-light" hidden></div>
+                    <div id="games-vehicle" class="games-vehicle" hidden>
+                        <p id="games-vehicle-name" class="games-vehicle-name"></p>
+                        <div id="games-vehicle-art" class="games-vehicle-art"></div>
+                    </div>
+                </div>
+                <div class="games-pad" dir="ltr" role="group" data-i18n-attr="aria-label:games.pad.group" aria-label="Arrow keys">
+                    <button type="button" class="games-pad-btn" data-dir="up" data-i18n-attr="aria-label:games.pad.up" aria-label="Up">↑</button>
+                    <div class="games-pad-row">
+                        <button type="button" class="games-pad-btn" data-dir="left" data-i18n-attr="aria-label:games.pad.left" aria-label="Left">←</button>
+                        <button type="button" class="games-pad-btn" data-dir="down" data-i18n-attr="aria-label:games.pad.down" aria-label="Down">↓</button>
+                        <button type="button" class="games-pad-btn" data-dir="right" data-i18n-attr="aria-label:games.pad.right" aria-label="Right">→</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="games-pop" class="games-screen" hidden>
+                <p class="games-prompt" data-i18n="games.popHelp">Click the circle.</p>
+                <p id="games-pop-status" class="games-status" aria-live="polite"></p>
+                <div id="games-pop-field" class="games-field" tabindex="-1">
+                    <button type="button" id="games-pop-target" class="games-pop-target" data-i18n-attr="aria-label:games.popTargetAria" aria-label="Bright circle"></button>
+                </div>
+            </div>
+
+            <div id="games-arrows" class="games-screen" hidden>
+                <p class="games-prompt" data-i18n="games.arrowHelp">Press the arrow keys to reach the red circle.</p>
+                <p id="games-arrow-status" class="games-status" aria-live="polite"></p>
+                <div id="games-arrow-field" class="games-field" dir="ltr" tabindex="-1">
+                    <div id="games-arrow-goal" class="games-goal"></div>
+                    <div id="games-arrow-player" class="games-player"></div>
+                </div>
+                <div class="games-pad" dir="ltr" role="group" data-i18n-attr="aria-label:games.pad.group" aria-label="Arrow keys">
+                    <button type="button" class="games-pad-btn" data-dir="up" data-i18n-attr="aria-label:games.pad.up" aria-label="Up">↑</button>
+                    <div class="games-pad-row">
+                        <button type="button" class="games-pad-btn" data-dir="left" data-i18n-attr="aria-label:games.pad.left" aria-label="Left">←</button>
+                        <button type="button" class="games-pad-btn" data-dir="down" data-i18n-attr="aria-label:games.pad.down" aria-label="Down">↓</button>
+                        <button type="button" class="games-pad-btn" data-dir="right" data-i18n-attr="aria-label:games.pad.right" aria-label="Right">→</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toolbar: guide, settings, optional tip link -->
     <div class="floating-toolbar" role="toolbar"
         data-i18n-attr="aria-label:mainShellNavigation.toolbarAriaLabel"
@@ -549,6 +632,10 @@
             <option value="fr">Français</option>
             <option value="ar">العربية</option>
         </select>
+        <button type="button" id="games-button" class="toolbar-guide-btn"
+            data-i18n="games.openButton"
+            data-i18n-attr="aria-label:games.openButtonAria"
+            aria-label="Play skill games">Play</button>
         <button type="button" id="settings-guide-button" class="toolbar-guide-btn"
             data-i18n-attr="aria-label:mainShellNavigation.guideButtonAriaLabel"
             aria-label="Open settings guide">
@@ -575,6 +662,7 @@
     <script src="js/typing-history.js"></script>
     <script src="js/display.js"></script>
     <script src="js/keyboard.js"></script>
+    <script src="js/games.js"></script>
     <script src="js/app.js"></script>
 </body>
 
