@@ -130,7 +130,16 @@ var CVIGames = {
             pop.addEventListener('pointerdown', function (event) {
                 if (event.button !== 0) return;
                 event.preventDefault();
-                self._popHit();
+                self._popHit(event);
+            });
+        }
+
+        var popField = document.getElementById('games-pop-field');
+        if (popField) {
+            popField.addEventListener('pointerdown', function (event) {
+                if (event.button !== 0) return;
+                if (event.target && event.target.closest && event.target.closest('#games-pop-target')) return;
+                self._popMiss(event);
             });
         }
     },
@@ -154,6 +163,7 @@ var CVIGames = {
 
     close: function () {
         if (!this.isOpen()) return;
+        this._finishGameTracking();
         this.mode = null;
         this._stopLoop();
         var overlay = document.getElementById('games-overlay');
@@ -169,6 +179,7 @@ var CVIGames = {
     },
 
     showMenu: function () {
+        this._finishGameTracking();
         this.mode = null;
         this._stopLoop();
         this._showOnly('menu');
@@ -185,6 +196,7 @@ var CVIGames = {
         if (id === 'drive') this._resetDrive();
         else if (id === 'pop') this._resetPop();
         else this._resetArrows();
+        this._trackGame(id);
         if (id === 'drive' || id === 'pop') this._startLoop();
         else this._stopLoop();
         var nameKey = id === 'drive' ? 'games.menuDrive' : id === 'pop' ? 'games.menuPop' : 'games.menuArrows';
@@ -341,7 +353,7 @@ var CVIGames = {
             event.preventDefault();
             event.stopPropagation();
             var dir = key === 'ArrowLeft' ? 'left' : key === 'ArrowRight' ? 'right' : key === 'ArrowUp' ? 'up' : 'down';
-            this._onDir(dir);
+            this._onDir(dir, 'key');
             return;
         }
 
@@ -385,7 +397,7 @@ var CVIGames = {
             }
             var pad = target.closest('[data-dir]');
             if (pad) {
-                this._onDir(pad.getAttribute('data-dir'));
+                this._onDir(pad.getAttribute('data-dir'), 'pad');
                 return;
             }
         }
@@ -405,7 +417,7 @@ var CVIGames = {
             return;
         }
         var pad = target.closest('[data-dir]');
-        if (pad) this._onDir(pad.getAttribute('data-dir'));
+        if (pad) this._onDir(pad.getAttribute('data-dir'), 'pad');
     },
 
     _onBack: function () {
@@ -413,7 +425,7 @@ var CVIGames = {
         else this.close();
     },
 
-    _onDir: function (dir) {
+    _onDir: function (dir, input) {
         if (dir !== 'left' && dir !== 'right' && dir !== 'up' && dir !== 'down') return;
         if (this.mode !== 'drive' && this.mode !== 'arrows') return;
         this._flashPad(dir);
@@ -424,7 +436,23 @@ var CVIGames = {
             else this._setSpeed(-1);
             return;
         }
-        this._stepArrow(dir);
+        this._stepArrow(dir, input === 'pad' ? 'pad' : 'key');
+    },
+
+    _history: function () {
+        return typeof CVIGameHistory !== 'undefined' ? CVIGameHistory : null;
+    },
+
+    _trackGame: function (id) {
+        var history = this._history();
+        if (!history) return;
+        if (id === 'pop' || id === 'arrows') history.startSession(id);
+        else history.endSession();
+    },
+
+    _finishGameTracking: function () {
+        var history = this._history();
+        if (history) history.endSession();
     },
 
     _flashPad: function (dir) {
@@ -798,6 +826,7 @@ var CVIGames = {
         }
         this.pop.padX = padX;
         this.pop.padY = padY;
+        this.pop.diameter = diameter;
         this.pop.drift = this.pop.count >= 4 && !this._reducedMotion();
         target.style.width = diameter + 'px';
         target.style.height = diameter + 'px';
@@ -831,12 +860,56 @@ var CVIGames = {
         target.style.top = (this.pop.y * 100) + '%';
     },
 
-    _popHit: function () {
+    _popPointer: function (event) {
+        if (!event) return 'key';
+        if (event.pointerType === 'mouse' || event.pointerType === 'touch' || event.pointerType === 'pen') {
+            return event.pointerType;
+        }
+        if (event.key) return 'key';
+        return 'unknown';
+    },
+
+    _popPoint: function (event) {
+        if (!event || typeof event.clientX !== 'number') return null;
+        var field = document.getElementById('games-pop-field');
+        if (!field) return null;
+        var rect = field.getBoundingClientRect();
+        if (!rect.width || !rect.height) return null;
+        return {
+            x: (event.clientX - rect.left) / rect.width,
+            y: (event.clientY - rect.top) / rect.height
+        };
+    },
+
+    _popHit: function (event) {
         if (this.mode !== 'pop' || !this.pop) return;
+        var history = this._history();
+        if (history) {
+            var point = this._popPoint(event);
+            history.recordPopHit({
+                diameter: this.pop.diameter,
+                moving: !!this.pop.drift,
+                x: point ? point.x : this.pop.x,
+                y: point ? point.y : this.pop.y,
+                pointer: this._popPointer(event)
+            });
+        }
         this.pop.count += 1;
         this._speak(this._t('games.popWord'));
         this._setText('games-pop-status', this._t('games.popCount', { count: this.pop.count }));
         this._layoutPop(true);
+    },
+
+    _popMiss: function (event) {
+        if (this.mode !== 'pop' || !this.pop || !event) return;
+        var point = this._popPoint(event);
+        var history = this._history();
+        if (!history) return;
+        history.recordPopMiss({
+            x: point ? point.x : null,
+            y: point ? point.y : null,
+            pointer: this._popPointer(event)
+        });
     },
 
     _resetArrows: function () {
@@ -874,7 +947,7 @@ var CVIGames = {
         }
     },
 
-    _stepArrow: function (dir) {
+    _stepArrow: function (dir, input) {
         if (!this.arrow) return;
         var step = 0.16;
         if (dir === 'left') this.arrow.x -= step;
@@ -885,8 +958,11 @@ var CVIGames = {
         if (this.arrow.x > 0.88) this.arrow.x = 0.88;
         if (this.arrow.y < 0.16) this.arrow.y = 0.16;
         if (this.arrow.y > 0.84) this.arrow.y = 0.84;
+        var history = this._history();
+        if (history) history.recordArrowStep(dir, input);
         this._renderArrow();
         if (this.reachedGoal(this.arrow.x, this.arrow.y, this.arrow.gx, this.arrow.gy)) {
+            if (history) history.recordArrowGoal();
             this._reachGoal();
         }
     },

@@ -65,6 +65,9 @@ const CVIApp = {
         if (typeof CVITypingHistory !== 'undefined') {
             CVITypingHistory.init();
         }
+        if (typeof CVIGameHistory !== 'undefined') {
+            CVIGameHistory.init();
+        }
         CVIDisplay.init();
         CVIImages.init();
         if (CVISpeech.isSupported()) {
@@ -182,6 +185,7 @@ const CVIApp = {
 
         function onPageLeave() {
             finalizeTypingSession();
+            if (typeof CVIGameHistory !== 'undefined') CVIGameHistory.endSession();
             if (typeof CVIBackgroundRemoval !== 'undefined' && CVIBackgroundRemoval.clearCache) {
                 CVIBackgroundRemoval.clearCache();
             }
