@@ -52,6 +52,8 @@
     "intro": "Here's a quick overview of everything you can customise:",
     "sectionTextAppearanceTitle": "🔤 Text Appearance",
     "sectionTextAppearanceBody": "Change the font style, size, and colour of the typing display, plus the background colour.",
+    "sectionColorWordsTitle": "🎨 Color Words",
+    "sectionColorWordsBody": "Choose what happens when a student types a color name: the word itself can turn that color, or the whole screen can fill with that color.",
     "sectionBubbleLettersTitle": "🔵 Bubble Letters",
     "sectionBubbleLettersBody": "Add a coloured outline around every letter to make text pop against any background.",
     "sectionTypingControlTitle": "⏱ Typing Control",
@@ -80,6 +82,7 @@
     "screenReaderNote": "The main typing area is not a standard text field, so your screen reader may not treat it like a normal text box. The app uses built-in speech for letters and words, and the status line at the bottom of the page announces many updates. The same information appears on the first screen when you open the app.",
     "sectionHeadings": {
       "textAppearance": "Text Appearance",
+      "colorWords": "Color Words",
       "bubbleLetters": "Bubble Letters",
       "typingControl": "Typing Control",
       "imageDisplay": "Image Display",
@@ -95,6 +98,13 @@
       "fontSize": "Font Size:",
       "fontColor": "Font Color:",
       "backgroundColor": "Background Color:",
+      "colorWordsWhenTyped": "When a color word is typed:",
+      "colorWordsModeOptions": {
+        "off": "Off",
+        "word": "Color the word",
+        "screen": "Color the whole screen"
+      },
+      "colorWordsNote": "Color the word shows that color on the word itself as soon as it is spelled. Color the whole screen fills the screen when the word is finished with Space or Enter, and keeps that color until the next finished color word or until the screen is cleared. Names match the current language, and English color names work in every language.",
       "fontOptions": [
         "Arial",
         "Comic Sans",

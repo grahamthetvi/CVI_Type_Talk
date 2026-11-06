@@ -1,6 +1,6 @@
 # CVI Type Talker
 
-An accessible, browser-based typing app for learners with **Cortical Visual Impairment (CVI)**. Students type letters and words, hear them spoken with the **Web Speech API**, and see **real images** matched to completed words. Settings support high-contrast display, timing controls, optional background removal, profanity filtering, approved word lists, and **Teacher Mode** (guided spelling with audio prompts).
+An accessible, browser-based typing app for learners with **Cortical Visual Impairment (CVI)**. Students type letters and words, hear them spoken with the **Web Speech API**, and see **real images** matched to completed words. Settings support high-contrast display, timing controls, optional background removal, profanity filtering, approved word lists, **color words** (a typed color name can turn that color, or the whole screen can), and **Teacher Mode** (guided spelling with audio prompts).
 
 **Live site:** [https://cvitypetalk.com](https://cvitypetalk.com)
 

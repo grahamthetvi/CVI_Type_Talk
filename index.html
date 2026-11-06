@@ -127,6 +127,10 @@
                     <p data-i18n="settingsGuideModal.sectionTextAppearanceBody">Change the font style, size, and colour of the typing display, plus the background colour.</p>
                 </div>
                 <div class="guide-section">
+                    <h3 data-i18n="settingsGuideModal.sectionColorWordsTitle">🎨 Color Words</h3>
+                    <p data-i18n="settingsGuideModal.sectionColorWordsBody">Choose what happens when a student types a color name: the word itself can turn that color, or the whole screen can fill with that color.</p>
+                </div>
+                <div class="guide-section">
                     <h3 data-i18n="settingsGuideModal.sectionBubbleLettersTitle">🔵 Bubble Letters</h3>
                     <p data-i18n="settingsGuideModal.sectionBubbleLettersBody">Add a coloured outline around every letter to make text pop against any background.</p>
                 </div>
@@ -246,6 +250,20 @@
                         <option value="#808080">Gray</option>
                     </select>
                 </div>
+            </section>
+
+            <!-- Color Words -->
+            <section class="settings-section">
+                <h3 data-i18n="settingsPanel.sectionHeadings.colorWords">Color Words</h3>
+                <div class="setting-row">
+                    <label for="color-word-mode" data-i18n="settingsPanel.labelsAndControls.colorWordsWhenTyped">When a color word is typed:</label>
+                    <select id="color-word-mode" aria-describedby="color-word-mode-note">
+                        <option value="off">Off</option>
+                        <option value="word">Color the word</option>
+                        <option value="screen">Color the whole screen</option>
+                    </select>
+                </div>
+                <p id="color-word-mode-note" class="setting-note" data-i18n="settingsPanel.labelsAndControls.colorWordsNote">Color the word shows that color on the word itself as soon as it is spelled. Color the whole screen fills the screen when the word is finished with Space or Enter, and keeps that color until the next finished color word or until the screen is cleared. Names match the current language, and English color names work in every language.</p>
             </section>
 
             <!-- Bubble Letters Settings -->
@@ -571,6 +589,7 @@
     <script src="js/badwords.js"></script>
     <script src="js/word-dictionary.js"></script>
     <script src="js/images.js"></script>
+    <script src="js/colors.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/typing-history.js"></script>
     <script src="js/display.js"></script>

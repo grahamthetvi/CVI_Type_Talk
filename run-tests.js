@@ -54,4 +54,5 @@ function run(name, file) {
 }
 
 run('word dictionary tests', 'test-word-dictionary.js');
+run('color word tests', 'test-colors.js');
 run('locale key-tree tests', 'test-locales.js');

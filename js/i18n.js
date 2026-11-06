@@ -153,6 +153,10 @@ var CVII18n = {
         this._applyColorSelectOptions('arrow-color');
         this._applyFontOptions();
         this._applyCursorOptions();
+        this._applySelectOptionLabels(
+            'color-word-mode',
+            'settingsPanel.labelsAndControls.colorWordsModeOptions'
+        );
 
         var langSel = document.getElementById('language-select');
         if (langSel) langSel.value = this.current;
@@ -178,6 +182,18 @@ var CVII18n = {
         var opts = sel.querySelectorAll('option');
         for (var i = 0; i < opts.length && i < labels.length; i++) {
             opts[i].textContent = labels[i];
+        }
+    },
+
+    _applySelectOptionLabels(selectId, pathPrefix) {
+        var sel = document.getElementById(selectId);
+        if (!sel) return;
+        var opts = sel.querySelectorAll('option');
+        for (var i = 0; i < opts.length; i++) {
+            var opt = opts[i];
+            var path = pathPrefix + '.' + opt.value;
+            var label = this.t(path);
+            if (label && label !== path) opt.textContent = label;
         }
     },
 
