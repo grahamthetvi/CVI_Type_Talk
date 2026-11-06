@@ -126,6 +126,8 @@ body {
 }
 
 .image-nav-btn {
+    position: relative;
+    z-index: 1;
     flex-shrink: 0;
     width: 56px;
     height: 56px;
@@ -163,6 +165,7 @@ body {
     width: auto;
     height: auto;
     min-width: 0;
+    flex: 0 1 auto;
     max-width: 100%;
     max-height: min(55vh, calc(100vh - 180px));
     /* scale with slider; always leave room for label/attribution */
@@ -222,15 +225,21 @@ body {
 .lightbox-inner {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 24px;
+    width: 100%;
     max-width: 95vw;
+    box-sizing: border-box;
+    padding: 0 12px;
 }
 
 .lightbox-image {
     display: block;
     width: auto;
     height: auto;
-    max-width: 85vw;
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: 100%;
     max-height: 80vh;
     object-fit: contain;
     border: 3px solid #FFFFFF;
@@ -238,6 +247,8 @@ body {
 }
 
 .lightbox-nav-btn {
+    position: relative;
+    z-index: 1;
     background: none;
     border: 3px solid #FFFF00;
     border-radius: 50%;
@@ -246,7 +257,7 @@ body {
     width: 72px;
     height: 72px;
     cursor: pointer;
-    flex-shrink: 0;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -833,8 +844,15 @@ html[dir="rtl"] .floating-toolbar {
     display: none;
     align-items: center;
     justify-content: center;
+    align-items: safe center;
+    justify-content: safe center;
     z-index: 200;
-    overflow-y: auto;
+    /* Keep scrolling inside .settings-content. This panel is a centered flex
+       container, so if it scrolls, the card's full content height becomes a
+       scroll range and moving past the inner list slides the card off screen.
+       clip (not hidden) so it is not a scroll container at all. */
+    overflow: hidden;
+    overflow: clip;
 }
 
 .settings-panel.visible {
@@ -848,8 +866,11 @@ html[dir="rtl"] .floating-toolbar {
     padding: 40px;
     max-width: 800px;
     width: 90%;
+    min-height: 0;
     max-height: 90vh;
+    max-height: min(90dvh, calc(100dvh - 48px));
     overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .settings-content h2 {
