@@ -69,6 +69,42 @@ if (!check('pop large', CVIGames.popDiameter(0, 400) >= 160, true)) allPassed = 
 if (!check('pop min', CVIGames.popDiameter(20, 100) >= 140, true)) allPassed = false;
 if (!check('pop shrinks', CVIGames.popDiameter(8, 500) < CVIGames.popDiameter(0, 500), true)) allPassed = false;
 
+var defaults = CVIGames.typingAppearance(null);
+if (!check('typed default size', defaults.fontSize, '60px')) allPassed = false;
+if (!check('typed default color', defaults.color, '#000000')) allPassed = false;
+if (!check('typed default background', defaults.backgroundColor, '#000000')) allPassed = false;
+if (!check('typed default bubble', defaults.bubble, true)) allPassed = false;
+if (!check('typed default bubble color', defaults.bubbleColor, '#FF0000')) allPassed = false;
+if (!check('typed default outline', defaults.textShadow.indexOf('-4px -4px 0 #FF0000') === 0, true)) allPassed = false;
+
+var custom = CVIGames.typingAppearance({
+    fontFamily: 'Georgia, serif',
+    fontSize: 120,
+    fontColor: '#FFFF00',
+    backgroundColor: '#0000FF',
+    bubbleLettersEnabled: false
+});
+if (!check('typed custom family', custom.fontFamily, 'Georgia, serif')) allPassed = false;
+if (!check('typed custom size', custom.fontSize, '120px')) allPassed = false;
+if (!check('typed custom color', custom.color, '#FFFF00')) allPassed = false;
+if (!check('typed custom background', custom.backgroundColor, '#0000FF')) allPassed = false;
+if (!check('typed custom bubble off', custom.bubble, false)) allPassed = false;
+if (!check('typed custom no outline', custom.textShadow, 'none')) allPassed = false;
+
+var outline = CVIGames.bubbleTextShadow(1, '#FF0000');
+var expectedOutline = [
+    '-1px -1px 0 #FF0000',
+    '-1px 0px 0 #FF0000',
+    '-1px 1px 0 #FF0000',
+    '0px -1px 0 #FF0000',
+    '0px 1px 0 #FF0000',
+    '1px -1px 0 #FF0000',
+    '1px 0px 0 #FF0000',
+    '1px 1px 0 #FF0000'
+].join(', ');
+if (!check('bubble outline', outline, expectedOutline)) allPassed = false;
+if (!check('bubble size stops at setting', CVIGames.bubbleTextShadow(2, '#FFFFFF').indexOf('3px') === -1, true)) allPassed = false;
+
 try { fs.unlinkSync('./test-games-runner.js'); } catch (e) { /* ignore */ }
 
 if (!allPassed) {

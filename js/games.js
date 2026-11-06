@@ -81,6 +81,83 @@ var CVIGames = {
         return size;
     },
 
+    /**
+     * Letter size, colors, and bubble outline from Text Appearance settings.
+     * Missing values use the same defaults as CVISettings.
+     */
+    typingAppearance: function (settings) {
+        var defaults = {
+            fontFamily: 'Arial, sans-serif',
+            fontSize: 60,
+            fontColor: '#000000',
+            backgroundColor: '#000000',
+            bubbleLettersEnabled: true,
+            bubbleColor: '#FF0000',
+            bubbleSize: 4
+        };
+        var s = settings || {};
+        function val(key) {
+            if (s[key] === undefined || s[key] === null || s[key] === '') return defaults[key];
+            return s[key];
+        }
+        var fontSize = parseInt(val('fontSize'), 10);
+        if (!(fontSize > 0)) fontSize = defaults.fontSize;
+        var bubbleSize = parseInt(val('bubbleSize'), 10);
+        if (!(bubbleSize > 0)) bubbleSize = defaults.bubbleSize;
+        var bubble = !!val('bubbleLettersEnabled');
+        var bubbleColor = String(val('bubbleColor'));
+        return {
+            fontFamily: String(val('fontFamily')),
+            fontSize: fontSize + 'px',
+            fontSizePx: fontSize,
+            color: String(val('fontColor')),
+            backgroundColor: String(val('backgroundColor')),
+            bubble: bubble,
+            bubbleColor: bubbleColor,
+            bubbleSizePx: bubbleSize,
+            textShadow: bubble ? this.bubbleTextShadow(bubbleSize, bubbleColor) : 'none'
+        };
+    },
+
+    bubbleTextShadow: function (size, color) {
+        var shadows = [];
+        var n = parseInt(size, 10);
+        if (!(n >= 0)) n = 0;
+        for (var x = -n; x <= n; x++) {
+            for (var y = -n; y <= n; y++) {
+                if (x !== 0 || y !== 0) {
+                    shadows.push(x + 'px ' + y + 'px 0 ' + color);
+                }
+            }
+        }
+        return shadows.join(', ');
+    },
+
+    applyDriveTypingStyle: function (settings) {
+        if (typeof document === 'undefined') return null;
+        var el = document.getElementById('games-drive-typed');
+        if (!el) return null;
+        var source = settings;
+        if (!source && typeof CVISettings !== 'undefined') source = CVISettings.current;
+        var look = this.typingAppearance(source);
+        el.style.fontFamily = look.fontFamily;
+        el.style.fontSize = look.fontSize;
+        el.style.fontWeight = 'bold';
+        el.style.color = look.color;
+        el.style.backgroundColor = look.backgroundColor;
+        el.style.textShadow = look.textShadow;
+        var pad = look.bubble ? look.bubbleSizePx : 2;
+        el.style.padding = pad + 'px 8px';
+        if (look.bubble) {
+            el.classList.add('bubble-letters');
+            el.style.setProperty('--bubble-color', look.bubbleColor);
+        } else {
+            el.classList.remove('bubble-letters');
+            el.style.removeProperty('--bubble-color');
+        }
+        return look;
+    },
+
     init: function () {
         if (this._inited) return;
         this._inited = true;
@@ -614,6 +691,7 @@ var CVIGames = {
         if (this.drive.buffer) text = this.drive.buffer;
         else if (this.drive.label) text = this.drive.label;
         this._setText('games-drive-typed', text);
+        this.applyDriveTypingStyle();
     },
 
     _typeChar: function (ch) {

@@ -673,33 +673,43 @@ const CVISettings = {
         var previousRemoveBackground = this._lastAppliedRemoveBackground;
         var textDisplay = document.getElementById('text-display');
         if (textDisplay) {
-            textDisplay.style.fontFamily = this.current.fontFamily;
-            textDisplay.style.fontSize = this.current.fontSize + 'px';
-            textDisplay.style.color = this.current.fontColor;
+            var look = (typeof CVIGames !== 'undefined' && CVIGames.typingAppearance)
+                ? CVIGames.typingAppearance(this.current)
+                : null;
+            textDisplay.style.fontFamily = look ? look.fontFamily : this.current.fontFamily;
+            textDisplay.style.fontSize = look ? look.fontSize : this.current.fontSize + 'px';
+            textDisplay.style.color = look ? look.color : this.current.fontColor;
 
             // Apply background color
-            document.body.style.backgroundColor = this.current.backgroundColor;
+            document.body.style.backgroundColor = look ? look.backgroundColor : this.current.backgroundColor;
 
-            // Apply bubble letters
-            if (this.current.bubbleLettersEnabled) {
+            // Bubble outline matches Drive, which reads the same Text Appearance settings.
+            var bubbleOn = look ? look.bubble : this.current.bubbleLettersEnabled;
+            if (bubbleOn) {
                 textDisplay.classList.add('bubble-letters');
-                textDisplay.style.setProperty('--bubble-color', this.current.bubbleColor);
-
-                // Calculate text shadow for bubble effect
-                var shadows = [];
-                var size = this.current.bubbleSize;
-                for (var x = -size; x <= size; x++) {
-                    for (var y = -size; y <= size; y++) {
-                        if (x !== 0 || y !== 0) {
-                            shadows.push(x + 'px ' + y + 'px 0 ' + this.current.bubbleColor);
+                textDisplay.style.setProperty('--bubble-color', look ? look.bubbleColor : this.current.bubbleColor);
+                if (look) {
+                    textDisplay.style.textShadow = look.textShadow;
+                } else {
+                    var shadows = [];
+                    var size = this.current.bubbleSize;
+                    for (var x = -size; x <= size; x++) {
+                        for (var y = -size; y <= size; y++) {
+                            if (x !== 0 || y !== 0) {
+                                shadows.push(x + 'px ' + y + 'px 0 ' + this.current.bubbleColor);
+                            }
                         }
                     }
+                    textDisplay.style.textShadow = shadows.join(', ');
                 }
-                textDisplay.style.textShadow = shadows.join(', ');
             } else {
                 textDisplay.classList.remove('bubble-letters');
                 textDisplay.style.textShadow = 'none';
             }
+        }
+
+        if (typeof CVIGames !== 'undefined' && CVIGames.applyDriveTypingStyle) {
+            CVIGames.applyDriveTypingStyle(this.current);
         }
 
         // Apply typing interval to keyboard module
